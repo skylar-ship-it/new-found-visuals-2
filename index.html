@@ -1,0 +1,2693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Found Visuals — Brand Guidelines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ─── RESET ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ─── TOKENS ─── */
+:root {
+  --black:   #1A1A1A;
+  --white:   #FAFAFA;
+  --sand:    #D6CFC7;
+  --steel:   #8A8F98;
+  --sage:    #7D8C7F;
+  --serif:   'Cormorant Garamond', Georgia, serif;
+  --sans:    'Inter', sans-serif;
+  --pad:     64px;
+  --pad-v:   88px;
+}
+
+/* ─── BASE ─── */
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── SHARED PAGE SHELL ─── */
+.page {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: var(--pad-v) var(--pad);
+}
+
+/* ─── SHARED LABELS ─── */
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+/* ─── SECTION HEADER (used across pages) ─── */
+.sec-header {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 56px;
+  align-items: flex-start;
+  padding-bottom: 56px;
+  margin-bottom: 56px;
+  border-bottom: 1px solid rgba(26,26,26,0.12);
+}
+.sec-header--dark {
+  border-color: rgba(250,250,250,0.1);
+}
+.sec-header .eyebrow { padding-top: 6px; }
+
+.sec-title {
+  font-family: var(--serif);
+  font-size: clamp(44px, 6vw, 84px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.sec-intro {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: rgba(26,26,26,0.6);
+  max-width: 560px;
+  margin-top: 12px;
+}
+.sec-intro--dark { color: rgba(250,250,250,0.45); }
+
+/* ─── PAGE FOOTER META ─── */
+.pg-foot {
+  position: absolute;
+  bottom: 36px;
+  left: var(--pad);
+  right: var(--pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+.pg-foot span {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--steel);
+  opacity: 0.7;
+}
+
+
+/* ═══════════════════════════════════════════════
+   01  COVER
+═══════════════════════════════════════════════ */
+#cover {
+  min-height: 100vh;
+  background: var(--black);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* Video background */
+.cover-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.cover-video-wrap video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.38;
+}
+/* gradient overlay — heavier at bottom so text is readable */
+.cover-video-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(26,26,26,0.55) 0%,
+    rgba(26,26,26,0.25) 40%,
+    rgba(26,26,26,0.72) 80%,
+    rgba(26,26,26,0.95) 100%
+  );
+}
+
+/* top bar */
+.cover-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 40px var(--pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cover-topbar-logo {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cover-topbar-logo::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: rgba(250,250,250,0.25);
+}
+.cover-topbar-tag {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.25);
+}
+
+/* thin top rule */
+.cover-rule {
+  position: absolute;
+  top: 88px;
+  left: var(--pad);
+  right: var(--pad);
+  z-index: 2;
+  height: 1px;
+  background: rgba(250,250,250,0.08);
+}
+.cover-rule::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+
+/* main content at bottom */
+.cover-body {
+  position: relative;
+  z-index: 2;
+  padding: 0 var(--pad) 76px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-end;
+  gap: 64px;
+}
+
+.cover-eyebrow {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 28px;
+}
+
+.cover-brand {
+  font-family: var(--serif);
+  font-size: clamp(60px, 8.5vw, 116px);
+  font-weight: 300;
+  line-height: 0.97;
+  color: var(--white);
+  letter-spacing: -0.025em;
+}
+.cover-brand em { font-style: italic; }
+
+.cover-rule-mid {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, rgba(250,250,250,0.35), transparent);
+  margin: 32px 0;
+}
+
+.cover-tagline {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.4);
+  line-height: 2;
+}
+
+.cover-toc {
+  text-align: right;
+  flex-shrink: 0;
+}
+.cover-toc .eyebrow {
+  margin-bottom: 14px;
+  color: rgba(250,250,250,0.25);
+}
+.cover-toc p {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 300;
+  color: rgba(250,250,250,0.28);
+  letter-spacing: 0.06em;
+  line-height: 2.1;
+}
+
+/* ghost year */
+.cover-ghost {
+  position: absolute;
+  bottom: 80px;
+  right: var(--pad);
+  z-index: 1;
+  font-family: var(--serif);
+  font-size: clamp(120px, 22vw, 320px);
+  font-weight: 300;
+  color: rgba(250,250,250,0.025);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* vertical grid lines */
+.cover-vline {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: rgba(250,250,250,0.04);
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+/* ═══════════════════════════════════════════════
+   02  OVERVIEW
+═══════════════════════════════════════════════ */
+#overview {
+  min-height: 100vh;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+}
+
+.overview-headline-block {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 56px;
+  align-items: flex-start;
+  padding-bottom: 56px;
+  margin-bottom: 56px;
+  border-bottom: 1px solid rgba(26,26,26,0.1);
+}
+
+.overview-headline {
+  font-family: var(--serif);
+  font-size: clamp(38px, 5.5vw, 76px);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+.overview-headline em { font-style: italic; color: var(--steel); }
+
+.overview-desc {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-bottom: 64px;
+}
+.overview-desc p {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: rgba(26,26,26,0.65);
+}
+.overview-desc p strong {
+  font-weight: 500;
+  color: var(--black);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.overview-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(26,26,26,0.1);
+  margin-top: auto;
+}
+.stat {
+  padding: 36px 32px 36px 0;
+  border-right: 1px solid rgba(26,26,26,0.08);
+}
+.stat:not(:first-child) { padding-left: 32px; }
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--serif);
+  font-size: 54px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+}
+.stat-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--steel);
+  line-height: 1.8;
+}
+
+
+/* ═══════════════════════════════════════════════
+   03  POSITIONING
+═══════════════════════════════════════════════ */
+#positioning {
+  min-height: 100vh;
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+}
+
+.pos-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 64px;
+}
+
+.pos-statement {
+  font-family: var(--serif);
+  font-size: clamp(30px, 4.8vw, 68px);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--white);
+  max-width: 68%;
+  letter-spacing: -0.015em;
+}
+.pos-statement em { font-style: italic; color: var(--sand); }
+
+.pos-ghost-num {
+  font-family: var(--serif);
+  font-size: 88px;
+  font-weight: 300;
+  color: rgba(250,250,250,0.05);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  flex-shrink: 0;
+  margin-top: -10px;
+}
+
+.pos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(250,250,250,0.08);
+  border-left: 1px solid rgba(250,250,250,0.08);
+  flex: 1;
+}
+.pos-card {
+  padding: 36px 32px;
+  border-right: 1px solid rgba(250,250,250,0.08);
+  border-bottom: 1px solid rgba(250,250,250,0.08);
+}
+.pos-card-num {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 18px;
+}
+.pos-card-title {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.pos-card-body {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--steel);
+  line-height: 1.9;
+}
+
+.pos-keywords {
+  padding-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.pos-keywords-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.2);
+  margin-right: 12px;
+}
+.pos-kw {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.38);
+  border: 1px solid rgba(250,250,250,0.1);
+  padding: 7px 14px;
+}
+
+
+/* ═══════════════════════════════════════════════
+   04  COLORS
+═══════════════════════════════════════════════ */
+#colors {
+  background: var(--white);
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  margin-bottom: 56px;
+}
+.swatch {}
+.swatch-block {
+  height: 240px;
+  width: 100%;
+}
+.swatch-info {
+  padding: 18px 0 0 0;
+}
+.swatch-name {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 3px;
+}
+.swatch-hex {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--steel);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.swatch-use {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 300;
+  color: rgba(26,26,26,0.45);
+  line-height: 1.75;
+}
+
+.color-rules {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid rgba(26,26,26,0.08);
+  margin-bottom: 40px;
+}
+.color-rule {
+  padding: 32px 28px;
+  border-right: 1px solid rgba(26,26,26,0.08);
+}
+.color-rule:last-child { border-right: none; }
+.color-rule-title {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 16px;
+}
+.color-rule ul { list-style: none; }
+.color-rule ul li {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(26,26,26,0.6);
+  line-height: 2;
+  padding-left: 16px;
+  position: relative;
+}
+.color-rule ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--sand);
+}
+
+.color-combos {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 36px;
+}
+.color-combo {
+  display: flex;
+  height: 52px;
+  flex: 1;
+  min-width: 140px;
+}
+.combo-swatch { width: 52px; flex-shrink: 0; }
+.combo-label {
+  flex: 1;
+  border: 1px solid rgba(26,26,26,0.08);
+  border-left: none;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel);
+  line-height: 1.6;
+}
+
+
+/* ═══════════════════════════════════════════════
+   05  TYPOGRAPHY
+═══════════════════════════════════════════════ */
+#typography {
+  background: var(--sand);
+}
+
+.type-specimens {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  margin-bottom: 64px;
+}
+
+.type-block-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.38);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.type-block-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(26,26,26,0.12);
+}
+
+.spec-serif {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(44px, 5.5vw, 78px);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--black);
+}
+.spec-serif-italic {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(44px, 5.5vw, 78px);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin-bottom: 24px;
+}
+.spec-sans {
+  font-family: var(--sans);
+  font-weight: 200;
+  font-size: clamp(38px, 4.8vw, 70px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+.spec-sans-alpha {
+  font-family: var(--sans);
+  font-weight: 200;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.3);
+  margin-bottom: 24px;
+  line-height: 2;
+}
+.spec-meta {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 300;
+  color: rgba(26,26,26,0.45);
+  letter-spacing: 0.04em;
+  line-height: 1.9;
+  border-top: 1px solid rgba(26,26,26,0.12);
+  padding-top: 14px;
+}
+
+.type-hierarchy {
+  border-top: 1px solid rgba(26,26,26,0.12);
+  padding-top: 48px;
+}
+.hier-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.38);
+  margin-bottom: 32px;
+}
+.hier-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 180px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(26,26,26,0.07);
+  gap: 24px;
+}
+.hier-tag {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.32);
+}
+.hier-spec {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 300;
+  color: rgba(26,26,26,0.38);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+.hs-h1 { font-family: var(--serif); font-size: 52px; font-weight: 300; line-height: 1; letter-spacing: -0.02em; }
+.hs-h2 { font-family: var(--serif); font-size: 34px; font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+.hs-h3 { font-family: var(--sans); font-size: 18px; font-weight: 500; line-height: 1.3; }
+.hs-label { font-family: var(--sans); font-size: 11px; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; }
+.hs-body { font-family: var(--sans); font-size: 14px; font-weight: 300; line-height: 1.8; }
+.hs-caption { font-family: var(--sans); font-size: 10px; font-weight: 400; letter-spacing: 0.1em; color: var(--steel); }
+
+
+/* ═══════════════════════════════════════════════
+   06  LOGO USAGE
+═══════════════════════════════════════════════ */
+#logo {
+  background: var(--white);
+}
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-bottom: 48px;
+}
+.logo-variant {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.logo-variant-label {
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--steel);
+  opacity: 0.7;
+}
+.lv-white { background: var(--white); border: 1px solid rgba(26,26,26,0.07); }
+.lv-black { background: var(--black); }
+.lv-sand  { background: var(--sand); }
+.lv-steel { background: var(--steel); }
+
+.logo-mark {
+  text-align: center;
+}
+.logo-mark-primary {
+  font-family: var(--serif);
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.logo-mark-sub {
+  font-family: var(--sans);
+  font-size: 7px;
+  font-weight: 400;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-top: 8px;
+  display: block;
+}
+
+.logo-rules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid rgba(26,26,26,0.08);
+  margin-bottom: 40px;
+}
+.logo-rule-card {
+  padding: 32px 28px;
+  border-right: 1px solid rgba(26,26,26,0.08);
+  border-bottom: 1px solid rgba(26,26,26,0.08);
+}
+.logo-rule-card:nth-child(2n) { border-right: none; }
+.logo-rule-card:nth-last-child(-n+2) { border-bottom: none; }
+.logo-rule-title {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+.logo-rule-card p {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(26,26,26,0.58);
+  line-height: 1.9;
+}
+
+.misuse-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+.misuse-item {
+  height: 110px;
+  background: #F2F1EF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.misuse-item::after {
+  content: '✕';
+  position: absolute;
+  top: 10px; right: 12px;
+  font-size: 9px;
+  color: #C44444;
+  font-family: var(--sans);
+  font-weight: 600;
+}
+.misuse-item::before {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 10px; left: 12px;
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+.misuse-text { font-family: var(--serif); font-size: 22px; font-weight: 300; }
+
+
+/* ═══════════════════════════════════════════════
+   07  VISUAL DIRECTION
+═══════════════════════════════════════════════ */
+#visual {
+  background: var(--black);
+}
+
+.visual-film-strip {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 260px 180px;
+  gap: 3px;
+  margin-bottom: 56px;
+}
+.film-cell {
+  position: relative;
+  overflow: hidden;
+}
+.film-cell.tall { grid-row: 1 / 3; }
+.film-cell-bg {
+  position: absolute;
+  inset: 0;
+}
+.film-cell-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.film-cell-lines::before {
+  content: '';
+  position: absolute;
+  width: 1px; top: 0; bottom: 0; left: 33%;
+  background: rgba(250,250,250,0.04);
+}
+.film-cell-lines::after {
+  content: '';
+  position: absolute;
+  height: 1px; left: 0; right: 0; top: 42%;
+  background: rgba(250,250,250,0.04);
+}
+.film-cell-label {
+  position: absolute;
+  bottom: 14px; left: 18px;
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.28);
+}
+.film-cell-icon {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.06;
+}
+
+/* gradient tones for cells */
+.fc-1 { background: linear-gradient(150deg,#222 0%,#1a1a1a 50%,#252525 100%); }
+.fc-2 { background: linear-gradient(120deg,#1e1e1e 0%,#2a2a2a 100%); }
+.fc-3 { background: linear-gradient(155deg,#242424 0%,#1a1a1a 100%); }
+.fc-4 { background: linear-gradient(100deg,#1e2020 0%,#1a1a1a 100%); }
+.fc-5 { background: linear-gradient(135deg,#212121 0%,#262626 100%); }
+
+.visual-principles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(250,250,250,0.08);
+  border-left: 1px solid rgba(250,250,250,0.08);
+  margin-bottom: 48px;
+}
+.vp {
+  border-right: 1px solid rgba(250,250,250,0.08);
+  border-bottom: 1px solid rgba(250,250,250,0.08);
+  padding: 30px 26px;
+}
+.vp-bar {
+  width: 28px; height: 2px;
+  background: var(--sage);
+  margin-bottom: 18px;
+}
+.vp-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.vp-body {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--steel);
+  line-height: 1.85;
+}
+
+.avoid-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 24px;
+  align-items: flex-start;
+  padding-top: 36px;
+  border-top: 1px solid rgba(250,250,250,0.06);
+}
+.avoid-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.22);
+  padding-top: 3px;
+}
+.avoid-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.avoid-tag {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.3);
+  border: 1px solid rgba(250,250,250,0.09);
+  padding: 6px 12px;
+}
+.avoid-tag::before { content: '✕  '; color: #C44444; font-size: 7px; }
+
+
+/* ═══════════════════════════════════════════════
+   08  TONE OF VOICE
+═══════════════════════════════════════════════ */
+#tone {
+  background: var(--white);
+}
+
+.tone-pull {
+  font-family: var(--serif);
+  font-size: clamp(26px, 4vw, 56px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  position: relative;
+  padding: 8px 0 48px 44px;
+  margin-bottom: 48px;
+  border-bottom: 1px solid rgba(26,26,26,0.09);
+}
+.tone-pull span { color: var(--steel); }
+.tone-pull::before {
+  content: '"';
+  font-family: var(--serif);
+  font-size: 100px;
+  font-weight: 300;
+  color: var(--sand);
+  position: absolute;
+  top: -28px; left: -4px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.tone-attrs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid rgba(26,26,26,0.08);
+  margin-bottom: 48px;
+}
+.tone-attr {
+  padding: 28px;
+  border-right: 1px solid rgba(26,26,26,0.08);
+  border-bottom: 1px solid rgba(26,26,26,0.08);
+}
+.tone-attr:nth-child(2n) { border-right: none; }
+.tone-attr:nth-last-child(-n+2) { border-bottom: none; }
+.tone-attr-title {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 10px;
+}
+.tone-attr p {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(26,26,26,0.58);
+  line-height: 1.9;
+}
+
+.tone-examples {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.tone-ex { padding: 32px 28px; }
+.tone-ex-do {
+  background: rgba(125,140,127,0.07);
+  border: 1px solid rgba(125,140,127,0.18);
+}
+.tone-ex-dont {
+  background: rgba(196,68,68,0.04);
+  border: 1px solid rgba(196,68,68,0.12);
+}
+.tone-ex-flag {
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flag-do { color: var(--sage); }
+.flag-dont { color: #C44444; }
+.tone-ex-flag::before { content: ''; width: 18px; height: 1px; background: currentColor; }
+.tone-ex p {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(26,26,26,0.65);
+  line-height: 1.85;
+  margin-bottom: 10px;
+}
+.tone-ex p:last-child { margin-bottom: 0; }
+.tone-ex strong {
+  font-weight: 500;
+  color: var(--black);
+  display: block;
+  margin-bottom: 4px;
+}
+
+
+/* ═══════════════════════════════════════════════
+   09  SOCIAL
+═══════════════════════════════════════════════ */
+#social {
+  background: var(--sand);
+}
+
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  margin-bottom: 56px;
+}
+.ig-post {
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+}
+.ig-post-bg {
+  position: absolute;
+  inset: 0;
+}
+.ig-post-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 14px;
+  background: linear-gradient(to top, rgba(26,26,26,0.75) 0%, transparent 60%);
+}
+.ig-post-tag {
+  font-family: var(--sans);
+  font-size: 7px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.35);
+  margin-bottom: 4px;
+}
+.ig-post-cap {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 300;
+  color: rgba(250,250,250,0.78);
+  line-height: 1.5;
+}
+.ig-geo-line {
+  position: absolute;
+  background: rgba(250,250,250,0.04);
+  pointer-events: none;
+}
+.ig-brand-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-family: var(--serif);
+  font-weight: 300;
+  color: rgba(250,250,250,0.05);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+/* IG post tone backgrounds */
+.ig-bg-1 { background: linear-gradient(150deg,#1e1e1e,#252525,#1a1a1a); }
+.ig-bg-2 { background: linear-gradient(120deg,#22201d,#1a1a1a); }
+.ig-bg-3 { background: linear-gradient(140deg,#1e2024,#1a1a1a); }
+.ig-bg-4 { background: linear-gradient(130deg,#231f1c,#1e1e1e); }
+.ig-bg-5 { background: var(--black); }
+.ig-bg-6 { background: linear-gradient(150deg,#222,#29241e); }
+
+.content-pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(26,26,26,0.12);
+  border-left: 1px solid rgba(26,26,26,0.12);
+  margin-bottom: 40px;
+}
+.cp {
+  padding: 24px 22px;
+  border-right: 1px solid rgba(26,26,26,0.12);
+  border-bottom: 1px solid rgba(26,26,26,0.12);
+}
+.cp-num {
+  font-family: var(--serif);
+  font-size: 40px;
+  font-weight: 300;
+  color: rgba(26,26,26,0.09);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.cp-title {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+.cp-body {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 300;
+  color: rgba(26,26,26,0.52);
+  line-height: 1.8;
+}
+
+.caption-box {
+  background: var(--black);
+  padding: 32px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.caption-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 3px;
+  background: var(--sage);
+}
+.caption-box-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 16px;
+}
+.caption-box-text {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.55;
+  max-width: 580px;
+  margin-bottom: 12px;
+}
+.caption-box-note {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--steel);
+  letter-spacing: 0.04em;
+}
+
+
+/* ═══════════════════════════════════════════════
+   10  APPLICATIONS
+═══════════════════════════════════════════════ */
+#applications {
+  background: var(--white);
+}
+
+/* Website mockup */
+.web-mockup {
+  border: 1px solid rgba(26,26,26,0.09);
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+.web-bar {
+  background: #111;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.web-dot { width: 8px; height: 8px; border-radius: 50%; }
+.web-url {
+  flex: 1;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.18);
+  letter-spacing: 0.06em;
+}
+.web-nav {
+  background: var(--black);
+  padding: 18px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.web-nav-brand {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.web-nav-links {
+  display: flex;
+  gap: 28px;
+}
+.web-nav-links span {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+.web-hero {
+  background: linear-gradient(135deg,#1c1c1c 0%,#1a1a1a 60%,#202020 100%);
+  padding: 64px 36px 56px;
+  position: relative;
+  min-height: 240px;
+  display: flex;
+  align-items: flex-end;
+}
+.web-hero::before {
+  content: '';
+  position: absolute;
+  width: 1px; top: 0; bottom: 0; left: 44%;
+  background: rgba(255,255,255,0.03);
+}
+.web-hero::after {
+  content: '';
+  position: absolute;
+  height: 1px; left: 0; right: 0; top: 55%;
+  background: rgba(255,255,255,0.03);
+}
+.web-hero-inner { position: relative; }
+.web-hero-eyebrow {
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 14px;
+}
+.web-hero-h {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 18px;
+}
+.web-hero-h em { font-style: italic; }
+.web-hero-cta {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.22);
+  padding: 9px 22px;
+}
+
+/* Biz card */
+.biz-section { margin-bottom: 48px; }
+.biz-section-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 20px;
+}
+.biz-cards { display: flex; gap: 20px; flex-wrap: wrap; }
+.biz-card {
+  width: 300px; height: 168px;
+  position: relative;
+  overflow: hidden;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.bc-front {
+  background: var(--black);
+}
+.bc-front::before {
+  content: '';
+  position: absolute;
+  width: 1px; top: 0; bottom: 0; left: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.bc-front::after {
+  content: '';
+  position: absolute;
+  height: 1px; left: 0; right: 0; top: 54%;
+  background: rgba(255,255,255,0.04);
+}
+.bc-back { background: var(--sand); }
+.bc-name {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  position: relative;
+}
+.bc-role {
+  font-family: var(--sans);
+  font-size: 7px;
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 0.38;
+  margin-top: 4px;
+  position: relative;
+}
+.bc-info {
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 300;
+  line-height: 2;
+  opacity: 0.38;
+  letter-spacing: 0.06em;
+  position: relative;
+}
+.bc-back-logo {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--black);
+}
+.bc-back-url {
+  font-family: var(--sans);
+  font-size: 7px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.38);
+}
+
+/* Email sig */
+.email-sig {
+  max-width: 440px;
+  border: 1px solid rgba(26,26,26,0.09);
+  padding: 28px 30px;
+  background: var(--white);
+}
+.email-sig-top {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(26,26,26,0.08);
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+}
+.email-avatar {
+  width: 40px; height: 40px;
+  background: var(--sand);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 14px; font-weight: 300;
+  color: var(--black); flex-shrink: 0;
+}
+.email-name {
+  font-family: var(--serif);
+  font-size: 14px; font-weight: 400;
+  letter-spacing: 0.02em; color: var(--black);
+}
+.email-role {
+  font-family: var(--sans);
+  font-size: 9px; font-weight: 400;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--steel); margin-top: 3px;
+}
+.email-brand {
+  font-family: var(--sans);
+  font-size: 9px; font-weight: 300;
+  color: rgba(26,26,26,0.38); margin-top: 2px;
+  letter-spacing: 0.06em;
+}
+.email-links {
+  display: flex; gap: 16px;
+}
+.email-links span {
+  font-family: var(--sans);
+  font-size: 9px; font-weight: 300;
+  color: rgba(26,26,26,0.38);
+  letter-spacing: 0.1em;
+}
+
+
+/* ═══════════════════════════════════════════════
+   11  SUMMARY
+═══════════════════════════════════════════════ */
+#summary {
+  min-height: 100vh;
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.sum-eyebrow {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sum-eyebrow::after {
+  content: '';
+  width: 40px; height: 1px;
+  background: var(--steel); opacity: 0.4;
+}
+
+.sum-statement {
+  font-family: var(--serif);
+  font-size: clamp(34px, 5.8vw, 86px);
+  font-weight: 300;
+  line-height: 1.07;
+  color: var(--white);
+  letter-spacing: -0.022em;
+  margin-bottom: 56px;
+  max-width: 780px;
+}
+.sum-statement em { font-style: italic; color: var(--sand); }
+
+.sum-promise {
+  padding: 28px 0 28px 28px;
+  border-left: 2px solid var(--sage);
+  margin-bottom: 56px;
+  max-width: 680px;
+}
+.sum-promise-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 12px;
+}
+.sum-promise p {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(250,250,250,0.75);
+  line-height: 1.6;
+}
+
+.sum-pillars {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid rgba(250,250,250,0.08);
+}
+.sum-pillar {
+  padding: 28px 20px 0 0;
+  border-right: 1px solid rgba(250,250,250,0.06);
+}
+.sum-pillar:not(:first-child) { padding-left: 20px; padding-right: 0; }
+.sum-pillar:last-child { border-right: none; }
+.sum-pillar-label {
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.2);
+  margin-bottom: 10px;
+}
+.sum-pillar-val {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(250,250,250,0.45);
+  line-height: 1.6;
+}
+
+.sum-foot {
+  position: absolute;
+  bottom: 40px;
+  left: var(--pad);
+  right: var(--pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.sum-foot-left {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 300;
+  color: rgba(250,250,250,0.18);
+  letter-spacing: 0.1em;
+  line-height: 2;
+}
+.sum-foot-sig-name {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(250,250,250,0.35);
+  text-align: right;
+}
+.sum-foot-sig-role {
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.18);
+  margin-top: 3px;
+  text-align: right;
+}
+
+/* accent line */
+.sum-accent-line {
+  position: absolute;
+  top: 0; bottom: 0;
+  right: var(--pad);
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--sage), transparent);
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — TABLET  (max 900px)
+═══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  :root {
+    --pad:   40px;
+    --pad-v: 64px;
+  }
+
+  /* Section header: collapse to single column */
+  .sec-header {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .sec-header .eyebrow { padding-top: 0; }
+
+  /* Overview */
+  .overview-headline-block { grid-template-columns: 1fr; gap: 20px; }
+  .overview-desc { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .overview-stats { grid-template-columns: repeat(2, 1fr); }
+  .stat:nth-child(2) { border-right: none; }
+  .stat:nth-child(3) { border-right: 1px solid rgba(26,26,26,0.08); padding-left: 0; }
+  .stat:nth-child(3), .stat:nth-child(4) { border-top: 1px solid rgba(26,26,26,0.08); padding-top: 28px; }
+
+  /* Positioning */
+  .pos-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Colors */
+  .swatches { grid-template-columns: repeat(3, 1fr); }
+  .color-rules { grid-template-columns: 1fr; }
+  .color-rule { border-right: none; border-bottom: 1px solid rgba(26,26,26,0.08); }
+  .color-rule:last-child { border-bottom: none; }
+
+  /* Typography */
+  .type-specimens { grid-template-columns: 1fr; gap: 40px; }
+  .hier-row { grid-template-columns: 90px 1fr; }
+  .hier-spec { display: none; }
+
+  /* Logo */
+  .logo-grid { grid-template-columns: 1fr 1fr; }
+  .logo-rules-grid { grid-template-columns: 1fr; }
+  .logo-rule-card { border-right: none; }
+  .logo-rule-card:nth-last-child(-n+2) { border-bottom: 1px solid rgba(26,26,26,0.08); }
+  .logo-rule-card:last-child { border-bottom: none; }
+  .misuse-row { grid-template-columns: repeat(2, 1fr); }
+
+  /* Visual */
+  .visual-film-strip {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 160px 160px;
+  }
+  .film-cell.tall { grid-row: 1 / 2; grid-column: 1 / 3; }
+  .visual-principles { grid-template-columns: repeat(2, 1fr); }
+
+  /* Tone */
+  .tone-attrs { grid-template-columns: 1fr; }
+  .tone-attr { border-right: none; }
+  .tone-examples { grid-template-columns: 1fr; gap: 2px; }
+
+  /* Social */
+  .ig-grid { grid-template-columns: repeat(2, 1fr); }
+  .content-pillars { grid-template-columns: repeat(2, 1fr); }
+
+  /* Applications */
+  .web-nav-links { display: none; }
+  .biz-cards { flex-direction: column; }
+  .biz-card { width: 100%; max-width: 340px; }
+
+  /* Summary */
+  .sum-pillars { grid-template-columns: repeat(3, 1fr); }
+  .sum-pillar:nth-child(3) { border-right: none; }
+  .sum-pillar:nth-child(4), .sum-pillar:nth-child(5) {
+    border-top: 1px solid rgba(250,250,250,0.06);
+    padding-top: 24px;
+    padding-left: 0;
+  }
+  .sum-pillar:nth-child(5) { border-right: none; }
+  .sum-foot { flex-direction: column; gap: 12px; align-items: flex-start; }
+  .sum-foot-sig-name, .sum-foot-sig-role { text-align: left; }
+
+  /* Cover */
+  .cover-body {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .cover-toc { display: none; }
+  .cover-ghost { font-size: clamp(80px, 18vw, 180px); }
+}
+
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — MOBILE  (max 600px)
+═══════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  :root {
+    --pad:   24px;
+    --pad-v: 52px;
+  }
+
+  /* Cover */
+  .cover-topbar { padding: 24px var(--pad); }
+  .cover-topbar-tag { display: none; }
+  .cover-rule { top: 68px; left: var(--pad); right: var(--pad); }
+  .cover-ghost { display: none; }
+  .cover-vline { display: none; }
+  .cover-body {
+    padding: 0 var(--pad) 72px;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .cover-brand { font-size: clamp(48px, 13vw, 80px); }
+  .cover-toc { display: none; }
+  .cover-tagline { font-size: 9px; }
+
+  /* Overview */
+  .overview-desc { grid-template-columns: 1fr; gap: 24px; }
+  .overview-stats { grid-template-columns: repeat(2, 1fr); }
+
+  /* Positioning */
+  .pos-top { flex-direction: column; gap: 0; }
+  .pos-ghost-num { display: none; }
+  .pos-grid { grid-template-columns: 1fr; }
+  .pos-card { padding: 24px 20px; }
+
+  /* Colors */
+  .swatches { grid-template-columns: repeat(2, 1fr); }
+  .swatch-block { height: 160px; }
+  .color-combos { flex-direction: column; }
+  .color-combo { min-width: 0; }
+
+  /* Typography */
+  .spec-serif, .spec-serif-italic { font-size: clamp(36px, 11vw, 60px); }
+  .spec-sans { font-size: clamp(32px, 10vw, 56px); }
+  .hier-row { grid-template-columns: 80px 1fr; gap: 14px; }
+  .hier-spec { display: none; }
+  .hs-h1 { font-size: 36px; }
+  .hs-h2 { font-size: 26px; }
+
+  /* Logo */
+  .logo-grid { grid-template-columns: 1fr; gap: 2px; }
+  .logo-variant { height: 160px; }
+  .logo-rules-grid { grid-template-columns: 1fr; }
+  .misuse-row { grid-template-columns: repeat(2, 1fr); }
+
+  /* Visual */
+  .visual-film-strip {
+    grid-template-columns: 1fr;
+    grid-template-rows: 220px 140px 140px 140px 140px;
+  }
+  .film-cell.tall { grid-row: 1 / 2; grid-column: 1 / 2; }
+  .visual-principles { grid-template-columns: 1fr; }
+  .avoid-row { grid-template-columns: 1fr; gap: 12px; }
+  .avoid-label { padding-top: 0; }
+
+  /* Tone */
+  .tone-pull { font-size: clamp(22px, 6vw, 38px); padding-left: 28px; }
+  .tone-pull::before { font-size: 72px; top: -20px; left: -6px; }
+  .tone-attrs { grid-template-columns: 1fr; }
+  .tone-attr { border-right: none; }
+  .tone-examples { grid-template-columns: 1fr; }
+
+  /* Social */
+  .ig-grid { grid-template-columns: 1fr 1fr; }
+  .content-pillars { grid-template-columns: 1fr 1fr; }
+  .caption-box { padding: 24px; }
+
+  /* Applications */
+  .web-hero-h { font-size: 28px; }
+  .biz-cards { flex-direction: column; }
+  .biz-card { width: 100%; max-width: 100%; }
+  .email-sig { max-width: 100%; }
+  .email-sig-top { flex-direction: column; gap: 12px; }
+
+  /* Summary */
+  .sum-statement { font-size: clamp(28px, 9vw, 52px); }
+  .sum-pillars {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+  .sum-pillar { padding-left: 0; border-right: none; border-bottom: 1px solid rgba(250,250,250,0.06); padding-bottom: 20px; margin-bottom: 0; }
+  .sum-pillar:nth-child(odd) { border-right: 1px solid rgba(250,250,250,0.06); padding-right: 16px; }
+  .sum-pillar:nth-child(even) { padding-left: 16px; }
+  .sum-pillar:nth-child(3n) { border-right: none; }
+  .sum-pillar:last-child, .sum-pillar:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+  .sum-foot { flex-direction: column; gap: 14px; position: relative; bottom: auto; left: auto; right: auto; margin-top: 48px; }
+
+  /* Page footer — push above bottom edge */
+  .pg-foot { bottom: 24px; }
+  .pg-foot span:first-child { display: none; }
+
+  /* Shared: sec-header */
+  .sec-header { padding-bottom: 36px; margin-bottom: 36px; }
+  .sec-title { font-size: clamp(38px, 10vw, 60px); }
+}
+</style>
+</head>
+<body>
+
+
+<!-- ═══════════════════════════════════════════
+     01  COVER
+═══════════════════════════════════════════ -->
+<section class="page" id="cover">
+
+  <!-- Video Background -->
+  <div class="cover-video-wrap">
+    <video autoplay muted loop playsinline preload="auto">
+      <source src="broll.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Decorative vertical lines -->
+  <div class="cover-vline" style="right: var(--pad);"></div>
+  <div class="cover-vline" style="right: calc(var(--pad) + 33vw);"></div>
+
+  <!-- Top bar -->
+  <div class="cover-topbar">
+    <div class="cover-topbar-logo">NFV / LVN Studio</div>
+    <div class="cover-topbar-tag">Brand Guidelines — 2025</div>
+  </div>
+
+  <!-- Top rule with sage dot -->
+  <div class="cover-rule"></div>
+
+  <!-- Ghost year -->
+  <div class="cover-ghost">2025</div>
+
+  <!-- Main bottom content -->
+  <div class="cover-body">
+    <div>
+      <p class="cover-eyebrow">Brand Identity System</p>
+      <h1 class="cover-brand">
+        New Found<br>
+        <em>Visuals</em>
+      </h1>
+      <div class="cover-rule-mid"></div>
+      <p class="cover-tagline">
+        Real Estate Photography · Videography · Floor Plans<br>
+        Under LVN Studio &nbsp;·&nbsp; @dieegoedu
+      </p>
+    </div>
+
+    <div class="cover-toc">
+      <p class="eyebrow" style="color:rgba(250,250,250,0.2); margin-bottom:12px;">Contents</p>
+      <p>
+        Brand Overview<br>
+        Positioning<br>
+        Color System<br>
+        Typography<br>
+        Logo Usage<br>
+        Visual Direction<br>
+        Tone of Voice<br>
+        Social Style<br>
+        Applications<br>
+        Brand Summary
+      </p>
+    </div>
+  </div>
+
+  <div class="pg-foot" style="bottom:36px;">
+    <span>New Found Visuals</span>
+    <span>01 / 11</span>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     02  BRAND OVERVIEW
+═══════════════════════════════════════════ -->
+<section class="page" id="overview">
+
+  <div class="overview-headline-block">
+    <div>
+      <p class="eyebrow">02 — Brand Overview</p>
+    </div>
+    <h2 class="overview-headline">
+      We don't document<br>spaces. We <em>reveal</em> them.
+    </h2>
+  </div>
+
+  <div class="overview-desc">
+    <p>
+      <strong>New Found Visuals</strong>
+      is the creative arm of LVN Studio — a real estate photography and videography brand built for agents, developers, and luxury listings who refuse to settle for ordinary.
+    </p>
+    <p>
+      <strong>Founded by Diego</strong>
+      NFV approaches every property as a creative brief, not a listing. The result is imagery that earns attention, commands premium positioning, and reflects the ambition of the people who sell it.
+    </p>
+    <p>
+      <strong>This system</strong>
+      is designed to be applied consistently across all touchpoints — from social content and websites to printed collateral and client presentations.
+    </p>
+  </div>
+
+  <div class="overview-stats">
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Core Services<br>Photo · Video · Plans</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Point of View<br>Editorial, Always</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Listings Elevated<br>Beyond the Generic</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Compromises<br>On Creative Quality</div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>New Found Visuals</span>
+    <span>02 / 11</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     03  BRAND POSITIONING
+═══════════════════════════════════════════ -->
+<section class="page" id="positioning">
+
+  <div class="pos-top">
+    <div>
+      <p class="eyebrow" style="color:var(--steel); margin-bottom:36px;">03 — Brand Positioning</p>
+      <div class="pos-statement">
+        The space between<br>
+        <em>architecture</em> and<br>
+        aspiration — that's<br>
+        where we work.
+      </div>
+    </div>
+    <div class="pos-ghost-num">03</div>
+  </div>
+
+  <div class="pos-grid">
+    <div class="pos-card">
+      <p class="pos-card-num">01 / Audience</p>
+      <h3 class="pos-card-title">The Ambitious Agent</h3>
+      <p class="pos-card-body">Real estate professionals who understand that how a property looks is inseparable from what it's worth. They invest in quality because they expect returns.</p>
+    </div>
+    <div class="pos-card">
+      <p class="pos-card-num">02 / Niche</p>
+      <h3 class="pos-card-title">Luxury &amp; Elevated Listings</h3>
+      <p class="pos-card-body">Mid-range to luxury residential and commercial properties. Architecture with character. Spaces that deserve to be seen at their best.</p>
+    </div>
+    <div class="pos-card">
+      <p class="pos-card-num">03 / Promise</p>
+      <h3 class="pos-card-title">Creative Partner, Not Vendor</h3>
+      <p class="pos-card-body">NFV doesn't arrive with a checklist. We arrive with a perspective. Every project starts with creative intent and ends with images that make people feel something.</p>
+    </div>
+    <div class="pos-card">
+      <p class="pos-card-num">04 / Differentiator</p>
+      <h3 class="pos-card-title">Editorial Sensibility</h3>
+      <p class="pos-card-body">Inspired by architecture, fashion, and film — not MLS templates. Our compositions are crafted. Our light is considered. Our editing is intentional.</p>
+    </div>
+    <div class="pos-card">
+      <p class="pos-card-num">05 / Feel</p>
+      <h3 class="pos-card-title">Magazine, Not Catalog</h3>
+      <p class="pos-card-body">Think Wallpaper*, Kinfolk, Dwell — not Zillow. The brand and the work should feel like something worth saving, not just scrolling past.</p>
+    </div>
+    <div class="pos-card">
+      <p class="pos-card-num">06 / Positioning Line</p>
+      <h3 class="pos-card-title" style="font-style:italic;">"Visual storytelling for spaces worth seeing."</h3>
+      <p class="pos-card-body">Short. Confident. No fluff. It communicates creative craft and selective intent in a single breath.</p>
+    </div>
+  </div>
+
+  <div class="pos-keywords">
+    <span class="pos-keywords-label">Brand Keywords</span>
+    <span class="pos-kw">Editorial</span>
+    <span class="pos-kw">Architectural</span>
+    <span class="pos-kw">Minimal</span>
+    <span class="pos-kw">Confident</span>
+    <span class="pos-kw">Refined</span>
+    <span class="pos-kw">Intentional</span>
+    <span class="pos-kw">Still</span>
+    <span class="pos-kw">Light-Driven</span>
+    <span class="pos-kw">Creative-First</span>
+  </div>
+
+  <div class="pg-foot">
+    <span>New Found Visuals</span>
+    <span style="color:var(--steel);">03 / 11</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     04  COLOR SYSTEM
+═══════════════════════════════════════════ -->
+<section class="page" id="colors">
+
+  <div class="sec-header">
+    <div>
+      <p class="eyebrow" style="margin-bottom:20px;">04 — Color System</p>
+      <h2 class="sec-title">Color<br>Palette</h2>
+    </div>
+    <p class="sec-intro">The NFV palette lives in the space between concrete and linen — materials that anchor architecture without demanding attention. Black carries weight. Sand softens it. White gives it air. Every color earns its place on the page.</p>
+  </div>
+
+  <div class="swatches">
+    <div class="swatch">
+      <div class="swatch-block" style="background:#1A1A1A;"></div>
+      <div class="swatch-info">
+        <p class="swatch-name">Soft Black</p>
+        <p class="swatch-hex">#1A1A1A</p>
+        <p class="swatch-use">Primary text, backgrounds,<br>logo, strong UI elements.</p>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#FAFAFA; border:1px solid rgba(26,26,26,0.07);"></div>
+      <div class="swatch-info">
+        <p class="swatch-name">Off White</p>
+        <p class="swatch-hex">#FAFAFA</p>
+        <p class="swatch-use">Page backgrounds, reversed<br>text, breathing room.</p>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#D6CFC7;"></div>
+      <div class="swatch-info">
+        <p class="swatch-name">Sand</p>
+        <p class="swatch-hex">#D6CFC7</p>
+        <p class="swatch-use">Section backgrounds, dividers,<br>warm secondary surfaces.</p>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#8A8F98;"></div>
+      <div class="swatch-info">
+        <p class="swatch-name">Steel Gray</p>
+        <p class="swatch-hex">#8A8F98</p>
+        <p class="swatch-use">Supporting text, labels,<br>captions, metadata.</p>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#7D8C7F;"></div>
+      <div class="swatch-info">
+        <p class="swatch-name">Sage</p>
+        <p class="swatch-hex">#7D8C7F</p>
+        <p class="swatch-use">Accent — use sparingly.<br>Highlights, active states, tags.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-rules">
+    <div class="color-rule">
+      <p class="color-rule-title">Backgrounds</p>
+      <ul>
+        <li>Off White (#FAFAFA) — primary pages</li>
+        <li>Soft Black (#1A1A1A) — hero sections</li>
+        <li>Sand (#D6CFC7) — secondary, warmth</li>
+        <li>Never use pure white (#FFFFFF) as bg</li>
+      </ul>
+    </div>
+    <div class="color-rule">
+      <p class="color-rule-title">Typography</p>
+      <ul>
+        <li>Soft Black on Off White — primary combo</li>
+        <li>Off White on Soft Black — reversed headers</li>
+        <li>Steel Gray — all labels and captions</li>
+        <li>Never use Steel Gray for body copy</li>
+      </ul>
+    </div>
+    <div class="color-rule">
+      <p class="color-rule-title">Accents</p>
+      <ul>
+        <li>Sage — CTAs, active states, highlights</li>
+        <li>Sand — borders, dividers, light fills</li>
+        <li>Never combine multiple accents together</li>
+        <li>Never use Sage as a background fill</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="color-combos">
+    <div class="color-combo">
+      <div class="combo-swatch" style="background:#1A1A1A;"></div>
+      <div class="combo-label">Soft Black + Off White — Primary</div>
+    </div>
+    <div class="color-combo">
+      <div class="combo-swatch" style="background:#D6CFC7;"></div>
+      <div class="combo-label">Sand + Soft Black — Secondary</div>
+    </div>
+    <div class="color-combo">
+      <div class="combo-swatch" style="background:#8A8F98;"></div>
+      <div class="combo-label">Steel Gray + Off White — Metadata</div>
+    </div>
+    <div class="color-combo">
+      <div class="combo-swatch" style="background:#7D8C7F;"></div>
+      <div class="combo-label">Sage + Soft Black — Accent</div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>New Found Visuals</span>
+    <span>04 / 11</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     05  TYPOGRAPHY
+═══════════════════════════════════════════ -->
+<section class="page" id="typography">
+
+  <div class="sec-header" style="border-color:rgba(26,26,26,0.14);">
+    <div>
+      <p class="eyebrow" style="margin-bottom:20px;">05 — Typography</p>
+      <h2 class="sec-title">Type<br>System</h2>
+    </div>
+    <p class="sec-intro">Two voices. One editorial, one structural. The serif carries emotion and presence — the sans-serif delivers clarity and order. Together they define a hierarchy that feels curated, never corporate.</p>
+  </div>
+
+  <div class="type-specimens">
+    <div>
+      <p class="type-block-label">Primary — Display Serif</p>
+      <div class="spec-serif">Cormorant</div>
+      <div class="spec-serif-italic">Garamond</div>
+      <div class="spec-meta">
+        Cormorant Garamond · Light 300 / Light Italic<br>
+        Use: Headlines, pull quotes, section titles, editorial moments<br>
+        Tracking: −0.01em to −0.02em at display sizes
+      </div>
+    </div>
+    <div>
+      <p class="type-block-label">Secondary — Structural Sans</p>
+      <div class="spec-sans">Inter</div>
+      <div class="spec-sans-alpha">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+      <div class="spec-meta">
+        Inter · Extralight 200 / Light 300 / Regular 400 / Medium 500<br>
+        Use: Body copy, labels, captions, navigation, UI elements<br>
+        Tracking: +0.1em to +0.3em for uppercase labels
+      </div>
+    </div>
+  </div>
+
+  <div class="type-hierarchy">
+    <p class="hier-label">Typographic Hierarchy</p>
+    <div class="hier-row">
+      <span class="hier-tag">Display H1</span>
+      <span class="hs-h1">Architecture of Light</span>
+      <span class="hier-spec">Cormorant, 300, 52–88px</span>
+    </div>
+    <div class="hier-row">
+      <span class="hier-tag">Section H2</span>
+      <span class="hs-h2">Visual Storytelling</span>
+      <span class="hier-spec">Cormorant, 300, 32–42px</span>
+    </div>
+    <div class="hier-row">
+      <span class="hier-tag">Subheading</span>
+      <span class="hs-h3">Real Estate Photography</span>
+      <span class="hier-spec">Inter, 500, 16–20px</span>
+    </div>
+    <div class="hier-row">
+      <span class="hier-tag">Label / Tag</span>
+      <span class="hs-label">New Found Visuals</span>
+      <span class="hier-spec">Inter, 400, 9–11px, +0.2em</span>
+    </div>
+    <div class="hier-row">
+      <span class="hier-tag">Body Copy</span>
+      <span class="hs-body">We approach each property as a creative brief, not a listing.</span>
+      <span class="hier-spec">Inter, 300, 13–15px, 1.9lh</span>
+    </div>
+    <div class="hier-row" style="border-bottom:none;">
+      <span class="hier-tag">Caption</span>
+      <span class="hs-caption">1240 Hillside Drive, Los Angeles — Photography by NFV</span>
+      <span class="hier-spec">Inter, 400, 9–10px, Steel Gray</span>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>New Found Visuals</span>
+    <span>05 / 11</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     06  LOGO USAGE
+═══════════════════════════════════════════ -->
+<section class="page" id="logo">
+
+  <div class="sec-header">
+    <div>
+      <p class="eyebrow" style="margin-bottom:20px;">06 — Logo Usage</p>
+      <h2 class="sec-title">Logo<br>System</h2>
+    </div>
+    <p class="sec-intro">The NFV wordmark derives its authority from spacing and weight — not decoration. The mark should always command quiet attention, never compete with imagery. Restraint is the design.</p>
+  </div>
+
+  <div class="logo-grid">
+    <div class="logo-variant lv-white">
+      <div class="logo-mark">
+        <div class="logo-mark-primary" style="color:var(--black);">NFV</div>
+        <span class="logo-mark-sub" style="color:var(--steel);">New Found Visuals</span>
+      </div>
+      <span class="logo-variant-label">Primary — Light Background</span>
+    </div>
+    <div class="logo-variant lv-black">
+      <div class="logo-mark">
+        <div class="logo-mark-primary" style="color:var(--white);">NFV</div>
+        <span class="logo-mark-sub" style="color:rgba(250,250,250,0.35);">New Found Visuals</span>
+      </div>
+      <span class="logo-variant-label" style="color:rgba(250,250,250,0.3);">Reversed — Dark Background</span>
+    </div>
+    <div class="logo-variant lv-sand">
+      <div class="logo-mark">
+        <div class="logo-mark-primary" style="color:var(--black);">NFV</div>
+        <span class="logo-mark-sub" style="color:rgba(26,26,26,0.4);">New Found Visuals</span>
+      </div>
+      <span class="logo-variant-label">Sand — Warm Surface</span>
+    </div>
+    <div class="logo-variant lv-steel">
+      <div style="text-align:center;">
+        <div style="font-family:var(--serif); font-size:16px; font-weight:300; letter-spacing:0.14em; text-transform:uppercase; color:var(--white); line-height:1.5;">New Found<br>Visuals</div>
+        <div style="font-family:var(--sans); font-size:7px; font-weight:400; letter-spacing:0.32em; text-transform:uppercase; color:rgba(250,250,250,0.38); margin-top:8px;">LVN Studio</div>
+      </div>
+      <span class="logo-variant-label" style="color:rgba(250,250,250,0.3);">Wordmark — Longform</span>
+    </div>
+  </div>
+
+  <div class="logo-rules-grid">
+    <div class="logo-rule-card">
+      <p class="logo-rule-title">Clear Space</p>
+      <p>Maintain minimum clear space of 1× the cap-height of "NFV" on all sides. Never crowd the mark with text or imagery. It needs room to breathe — that's part of the brand.</p>
+    </div>
+    <div class="logo-rule-card">
+      <p class="logo-rule-title">Minimum Size</p>
+      <p>The wordmark "NFV" should never appear smaller than 24px on screen or 6mm in print. The full "New Found Visuals" lockup should never appear below 100px wide digital.</p>
+    </div>
+    <div class="logo-rule-card">
+      <p class="logo-rule-title">Approved Backgrounds</p>
+      <p>Off White, Soft Black, and Sand only. Never place the logo on busy photographic backgrounds without a clean overlay field or isolation zone first.</p>
+    </div>
+    <div class="logo-rule-card">
+      <p class="logo-rule-title">What Not To Do</p>
+      <p style="text-decoration:line-through; text-decoration-color:#C44444; opacity:0.5;">Do not stretch or distort · Do not add drop shadows · Do not outline or stroke · Do not use unauthorized colors · Do not rotate or tilt.</p>
+    </div>
+  </div>
+
+  <div class="misuse-row">
+    <div class="misuse-item" data-label="No Distortion">
+      <div class="misuse-text" style="transform:scaleX(1.5); opacity:0.4; color:var(--black);">NFV</div>
+    </div>
+    <div class="misuse-item" data-label="No Drop Shadow" style="background:#ebebeb;">
+      <div class="misuse-text" style="text-shadow:3px 3px 6px rgba(0,0,0,0.45); opacity:0.55; color:var(--black);">NFV</div>
+    </div>
+    <div class="misuse-item" data-label="No Busy Background" style="background:linear-gradient(135deg,#8A8F98,#D6CFC7,#7D8C7F,#1A1A1A);">
+      <div class="misuse-text" style="color:#fff; font-size:28px;">NFV</div>
+    </div>
+    <div class="misuse-item" data-label="No Rotation">
+      <div class="misuse-text" style="transform:rotate(-18deg); opacity:0.4; color:var(--black);">NFV</div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>New Found Visuals</span>
+    <span>06 / 11</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     07  VISUAL DIRECTION
+═══════════════════════════════════════════ -->
+<section class="page" id="visual">
+
+  <div class="sec-header sec-header--dark">
+    <div>
+      <p class="eyebrow" style="margin-bottom:20px;">07 — Visual Direction</p>
+      <h2 class="sec-title" style="color:var(--white);">Visual<br>Identity</h2>
+    </div>
+    <p class="sec-intro sec-intro--dark">NFV images should look like they belong in a magazine before they belong on a listing. Every frame is composed. Every shadow considered. Think negative space, natural gradients, and rooms that feel like they have a mood.</p>
+  </div>
+
+  <!-- Simulated editorial film strip -->
+  <div class="visual-film-strip">
+    <div class="film-cell tall fc-1">
+      <div class="film-cell-lines"></div>
+      <div class="film-cell-icon">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="8" y="8" width="40" height="40" stroke="white" stroke-width="0.6"/>
+          <line x1="8" y1="28" x2="48" y2="28" stroke="white" stroke-width="0.5"/>
+          <line x1="28" y1="8" x2="28" y2="48" stroke="white" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <span class="film-cell-label">Primary Editorial Frame</span>
+    </div>
+    <div class="film-cell fc-2">
+      <div class="film-cell-lines"></div>
+      <span class="film-cell-label">Detail Composition</span>
+    </div>
+    <div class="film-cell fc-3">
+      <div class="film-cell-lines"></div>
+      <span class="film-cell-label">Exterior Architecture</span>
+    </div>
+    <div class="film-cell fc-4">
+      <div class="film-cell-lines"></div>
+      <span class="film-cell-label">Interior — Wide</span>
+    </div>
+    <div class="film-cell fc-5">
+      <div class="film-cell-lines"></div>
+      <span class="film-cell-label">Lifestyle Context</span>
+    </div>
+  </div>
+
+  <div class="visual-principles">
+    <div class="vp">
+      <div class="vp-bar"></div>
+      <h3 class="vp-title">Architectural Framing</h3>
+      <p class="vp-body">Use the architecture itself as the compositional framework. Lines lead. Geometry balances. Rooms are framed like structures, not snapshots.</p>
+    </div>
+    <div class="vp">
+      <div class="vp-bar" style="background:var(--steel);"></div>
+      <h3 class="vp-title">Intentional Light</h3>
+      <p class="vp-body">Natural window light, dramatic contrast, or soft ambient fills. Never flash-on-lens. Light tells the story of the time of day.</p>
+    </div>
+    <div class="vp">
+      <div class="vp-bar" style="background:var(--sand);"></div>
+      <h3 class="vp-title">Editorial Cropping</h3>
+      <p class="vp-body">Tight on the interesting. Loose where the space earns it. Strategic cropping creates curiosity and tension — not every room needs to be shown in full.</p>
+    </div>
+    <div class="vp">
+      <div class="vp-bar" style="background:rgba(250,250,250,0.18);"></div>
+      <h3 class="vp-title">Tonal Restraint</h3>
+      <p class="vp-body">Editing should feel like a decision, not a filter. Muted shadows, controlled highlights, warm neutrals or cool monochromes — never over-saturated.</p>
+    </div>
+  </div>
+
+  <div class="avoid-row">
+    <span class="avoid-label">Avoid</span>
+    <div class="avoid-tags">
+      <span class="avoid-tag">HDR / Tone-mapped</span>
+      <span class="avoid-tag">Fish-eye Lens</span>
+      <span class="avoid-tag">On-camera Flash</span>
+      <span class="avoid-tag">Over-saturated Edits</span>
+      <span class="avoid-tag">Generic MLS Angles</span>
+      <span class="avoid-tag">Cluttered Props</span>
+      <span class="avoid-tag">Low-quality Virtual Staging</span>
+      <span class="avoid-tag">Barrel Distortion</span>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>New Found Visuals</span>
+    <span style="color:var(--steel);">07 / 11</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     08  TONE OF VOICE
+═══════════════════════════════════════════ -->
+<section class="page" id="tone">
+
+  <div class="sec-header">
+    <div>
+      <p class="eyebrow" style="margin-bottom:20px;">08 — Tone of Voice</p>
+      <h2 class="sec-title">Voice &amp;<br>Tone</h2>
+    </div>
+    <p class="sec-intro">NFV speaks like a creative director, not a sales representative. Assured without being arrogant. Minimal without being cold. It has a perspective — and it's not afraid to show it.</p>
+  </div>
+
+  <div class="tone-pull">
+    Every property has something <span>worth seeing.</span><br>
+    We find the frame that proves it.
+  </div>
+
+  <div class="tone-attrs">
+    <div class="tone-attr">
+      <p class="tone-attr-title">Confident</p>
+      <p>We don't hedge. Short sentences, direct phrasing. If the work is excellent, we say so — without qualification or apology.</p>
+    </div>
+    <div class="tone-attr">
+      <p class="tone-attr-title">Minimal</p>
+      <p>Every word earns its place. If a sentence can be shorter, it should be. White space in writing works the same as in design.</p>
+    </div>
+    <div class="tone-attr">
+      <p class="tone-attr-title">Slightly Artistic</p>
+      <p>We reference craft, light, composition, architecture. This isn't showing off — it's signaling to the right client that we speak their language.</p>
+    </div>
+    <div class="tone-attr">
+      <p class="tone-attr-title">Not Salesy</p>
+      <p>Never "Book now and get 20% off!" — instead, "Ready when you are." The brand assumes quality. It doesn't beg for business.</p>
+    </div>
+  </div>
+
+  <div class="tone-examples">
+    <div class="tone-ex tone-ex-do">
+      <p class="tone-ex-flag flag-do">Write Like This</p>
+      <p><strong>Caption:</strong> Architecture doesn't wait for perfect light. We do.</p>
+      <p><strong>Bio:</strong> Real estate photography and video for spaces that mean something. Based in [City], shooting nationally.</p>
+      <p><strong>CTA:</strong> View the work. Then let's talk.</p>
+    </div>
+    <div class="tone-ex tone-ex-dont">
+      <p class="tone-ex-flag flag-dont">Not Like This</p>
+      <p><strong>Avoid:</strong> "We provide HIGH QUALITY real estate photography at AFFORDABLE prices for agents!"</p>
+      <p><strong>Avoid:</strong> "Our passionate team goes above and beyond to deliver stunning visuals that make your listings POP!!!"</p>
+      <p><strong>Avoid:</strong> "Contact us today for a FREE quote — limited time offer!"</p>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>New Found Visuals</span>
+    <span>08 / 11</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     09  SOCIAL / CONTENT STYLE
+═══════════════════════════════════════════ -->
+<section class="page" id="social">
+
+  <div class="sec-header" style="border-color:rgba(26,26,26,0.14);">
+    <div>
+      <p class="eyebrow" style="margin-bottom:20px;">09 — Social Style</p>
+      <h2 class="sec-title">Content<br>System</h2>
+    </div>
+    <p class="sec-intro">Instagram is the primary brand touchpoint — and it should function as a portfolio, not a bulletin board. The feed is curated. The captions are intentional. Hashtags are minimal. Engagement is earned, not chased.</p>
+  </div>
+
+  <!-- 3×2 IG Feed Mockup -->
+  <div class="ig-grid">
+    <div class="ig-post">
+      <div class="ig-post-bg ig-bg-1"></div>
+      <div class="ig-brand-text" style="font-size:clamp(26px,4.5vw,52px);">NFV</div>
+      <div class="ig-geo-line" style="width:60%; height:1px; top:40%; left:20%;"></div>
+      <div class="ig-post-overlay">
+        <p class="ig-post-tag">Property — Hillside Modern</p>
+        <p class="ig-post-cap">The kitchen as architecture. Clean lines, morning light.</p>
+      </div>
+    </div>
+    <div class="ig-post">
+      <div class="ig-post-bg ig-bg-2"></div>
+      <div class="ig-brand-text" style="font-size:clamp(12px,2vw,20px); letter-spacing:0.12em;">New Found Visuals</div>
+      <div class="ig-geo-line" style="width:1px; height:60%; top:20%; left:50%;"></div>
+      <div class="ig-post-overlay">
+        <p class="ig-post-tag">Exterior — Golden Hour</p>
+        <p class="ig-post-cap">Architecture earns its lines at dusk.</p>
+      </div>
+    </div>
+    <div class="ig-post">
+      <div class="ig-post-bg ig-bg-3"></div>
+      <div class="ig-brand-text" style="font-size:clamp(38px,6.5vw,68px); font-style:italic;">nfv</div>
+      <div class="ig-geo-line" style="width:40%; height:40%; top:15%; left:15%; border:1px solid rgba(255,255,255,0.04); background:transparent;"></div>
+      <div class="ig-post-overlay">
+        <p class="ig-post-tag">Floor Plan — Brentwood</p>
+        <p class="ig-post-cap">Every sq ft rendered with intention.</p>
+      </div>
+    </div>
+    <div class="ig-post">
+      <div class="ig-post-bg ig-bg-4"></div>
+      <div class="ig-geo-line" style="width:1px; height:80%; top:10%; right:30%; left:auto;"></div>
+      <div class="ig-post-overlay">
+        <p class="ig-post-tag">Detail — Interior</p>
+        <p class="ig-post-cap">What the wide angle misses, the detail frame finds.</p>
+      </div>
+    </div>
+    <div class="ig-post" style="background:var(--black); display:flex; align-items:center; justify-content:center;">
+      <div style="text-align:center; padding:16px;">
+        <p style="font-family:var(--serif); font-size:clamp(13px,2.2vw,22px); font-weight:300; font-style:italic; color:var(--white); line-height:1.45; margin-bottom:12px;">"Light is the first material."</p>
+        <p style="font-family:var(--sans); font-size:8px; font-weight:300; letter-spacing:0.28em; text-transform:uppercase; color:var(--steel);">New Found Visuals</p>
+      </div>
+    </div>
+    <div class="ig-post">
+      <div class="ig-post-bg ig-bg-6"></div>
+      <div class="ig-brand-text" style="font-size:clamp(34px,5.5vw,58px);">NFV</div>
+      <div class="ig-post-overlay">
+        <p class="ig-post-tag">Video — Walkthrough</p>
+        <p class="ig-post-cap">Properties in motion. Four walls, one story.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-pillars">
+    <div class="cp">
+      <div class="cp-num">01</div>
+      <p class="cp-title">Property Work</p>
+      <p class="cp-body">Finished shoots. Lead with the strongest frame. Caption with context, not hype.</p>
+    </div>
+    <div class="cp">
+      <div class="cp-num">02</div>
+      <p class="cp-title">Process / BTS</p>
+      <p class="cp-body">Behind-the-scenes that shows craft, not chaos. Setup shots, gear, location scouting.</p>
+    </div>
+    <div class="cp">
+      <div class="cp-num">03</div>
+      <p class="cp-title">Brand Voice</p>
+      <p class="cp-body">Quote cards, brand statements, single-line perspective posts in the brand palette.</p>
+    </div>
+    <div class="cp">
+      <div class="cp-num">04</div>
+      <p class="cp-title">Architecture / Inspo</p>
+      <p class="cp-body">Curated references, spatial studies, or design moments aligned with the NFV aesthetic.</p>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <p class="caption-box-label">Caption Formula</p>
+    <p class="caption-box-text">Short observation. [Location or context.]<br>Optional second line expanding the idea.</p>
+    <p class="caption-box-note">Hashtags: 3–5 max, placed in first comment — never in caption body.<br>Example: #realestatephotography #architecturephotography #nfv</p>
+  </div>
+
+  <div class="pg-foot">
+    <span>New Found Visuals</span>
+    <span>09 / 11</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     10  APPLICATIONS
+═══════════════════════════════════════════ -->
+<section class="page" id="applications">
+
+  <div class="sec-header">
+    <div>
+      <p class="eyebrow" style="margin-bottom:20px;">10 — Applications</p>
+      <h2 class="sec-title">Brand in<br>Context</h2>
+    </div>
+    <p class="sec-intro">The brand system extends across digital and physical touchpoints. These are directional mockups — the visual language remains consistent regardless of medium. Restraint in layout, confidence in typography.</p>
+  </div>
+
+  <!-- Website Mockup -->
+  <div class="web-mockup">
+    <div class="web-bar">
+      <div class="web-dot" style="background:#FF5F57;"></div>
+      <div class="web-dot" style="background:#FEBC2E;"></div>
+      <div class="web-dot" style="background:#28C840;"></div>
+      <span class="web-url">newfoundvisuals.com</span>
+    </div>
+    <div class="web-nav">
+      <div class="web-nav-brand">New Found Visuals</div>
+      <div class="web-nav-links">
+        <span>Work</span>
+        <span>Services</span>
+        <span>About</span>
+        <span>Contact</span>
+      </div>
+    </div>
+    <div class="web-hero">
+      <div class="web-hero-inner">
+        <p class="web-hero-eyebrow">Real Estate Photography &amp; Videography — LVN Studio</p>
+        <h2 class="web-hero-h">Visual storytelling<br>for spaces <em>worth seeing.</em></h2>
+        <div class="web-hero-cta">View the Work</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Biz Cards -->
+  <div class="biz-section">
+    <p class="biz-section-label">Business Card — 3.5 × 2 in</p>
+    <div class="biz-cards">
+      <div class="biz-card bc-front">
+        <div>
+          <div class="bc-name" style="color:var(--white);">Diego</div>
+          <div class="bc-role" style="color:rgba(250,250,250,0.38);">Founder — New Found Visuals</div>
+        </div>
+        <div>
+          <div class="bc-info" style="color:rgba(250,250,250,0.38);">@dieegoedu<br>newfoundvisuals.com</div>
+        </div>
+      </div>
+      <div class="biz-card bc-back">
+        <div class="bc-back-logo">NFV</div>
+        <div>
+          <div style="font-family:var(--sans); font-size:7px; font-weight:400; letter-spacing:0.28em; text-transform:uppercase; color:rgba(26,26,26,0.32); margin-bottom:3px;">New Found Visuals</div>
+          <div class="bc-back-url">newfoundvisuals.com</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Signature -->
+  <div>
+    <p class="biz-section-label">Email Signature</p>
+    <div class="email-sig">
+      <div class="email-sig-top">
+        <div class="email-avatar">D</div>
+        <div>
+          <div class="email-name">Diego</div>
+          <div class="email-role">Founder &amp; Creative Director</div>
+          <div class="email-brand">New Found Visuals · LVN Studio</div>
+        </div>
+      </div>
+      <div class="email-links">
+        <span>newfoundvisuals.com</span>
+        <span>·</span>
+        <span>@dieegoedu</span>
+        <span>·</span>
+        <span>Photography &amp; Video</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>New Found Visuals</span>
+    <span>10 / 11</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     11  FINAL SUMMARY
+═══════════════════════════════════════════ -->
+<section class="page" id="summary">
+  <div class="sum-accent-line"></div>
+
+  <div class="sum-eyebrow">11 — Final Summary</div>
+
+  <h2 class="sum-statement">
+    This is a brand built<br>
+    on <em>perspective,</em><br>
+    not presentation.
+  </h2>
+
+  <div class="sum-promise">
+    <p class="sum-promise-label">Brand Promise</p>
+    <p>"New Found Visuals creates images and films that make real estate feel like a creative statement — not a transaction. We work with agents and developers who understand that the quality of the visual is a direct reflection of the quality of the listing."</p>
+  </div>
+
+  <div class="sum-pillars">
+    <div class="sum-pillar">
+      <p class="sum-pillar-label">Color</p>
+      <p class="sum-pillar-val">Soft Black<br>Off White<br>Sand<br>Steel Gray</p>
+    </div>
+    <div class="sum-pillar">
+      <p class="sum-pillar-label">Type</p>
+      <p class="sum-pillar-val">Cormorant<br>Garamond<br>+ Inter</p>
+    </div>
+    <div class="sum-pillar">
+      <p class="sum-pillar-label">Voice</p>
+      <p class="sum-pillar-val">Confident<br>Minimal<br>Artistic</p>
+    </div>
+    <div class="sum-pillar">
+      <p class="sum-pillar-label">Visual</p>
+      <p class="sum-pillar-val">Editorial<br>Architectural<br>Light-Driven</p>
+    </div>
+    <div class="sum-pillar">
+      <p class="sum-pillar-label">Feel</p>
+      <p class="sum-pillar-val">Magazine<br>Not Catalog<br>Always</p>
+    </div>
+  </div>
+
+  <div class="sum-foot">
+    <div class="sum-foot-left">
+      New Found Visuals — Brand Guidelines<br>
+      LVN Studio · Version 1.0 · 2025
+    </div>
+    <div>
+      <div class="sum-foot-sig-name">Diego · @dieegoedu</div>
+      <div class="sum-foot-sig-role">Founder, New Found Visuals</div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>New Found Visuals</span>
+    <span style="color:var(--steel);">11 / 11</span>
+  </div>
+
+</section>
+
+
+</body>
+</html>
