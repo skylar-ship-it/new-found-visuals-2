@@ -131,6 +131,16 @@
 
     .hdr-right { display: flex; align-items: center; gap: 18px; }
 
+    /* Pricing nav link */
+    .hdr-pricing-link {
+      font-family: var(--grotesk); font-size: 8px; font-weight: 600;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: rgba(237,234,228,.55);
+      text-decoration: none;
+      transition: color .3s;
+    }
+    .hdr-pricing-link:hover { color: var(--ox); }
+
     /* Scene name in header — fades between values */
     #hdr-name {
       font-family: var(--grotesk); font-size: 8px; font-weight: 600;
@@ -493,6 +503,7 @@
   <header id="site-header">
     <div class="hdr-logo"><span class="logo-nf">New Found</span><span class="logo-vis">Visuals</span></div>
     <div class="hdr-right">
+      <a href="pricing.html" class="hdr-pricing-link">Pricing</a>
       <span id="hdr-name">Exterior</span>
       <div class="hdr-counter" aria-live="polite">
         <span id="cc">01</span><span style="opacity:.22"> / </span>06
@@ -623,7 +634,7 @@
           <span class="q-line"><span class="q-inner">next listing's story?</span></span>
         </h2>
         <div class="cta-block">
-          <a href="#" class="cta-btn"><span>Book Your Shoot</span></a>
+          <a href="pricing.html" class="cta-btn"><span>Book Your Shoot</span></a>
           <p class="cta-sub">New Found Visuals &nbsp;·&nbsp; Real estate photography &amp; videography</p>
         </div>
       </div>
