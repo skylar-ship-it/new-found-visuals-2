@@ -490,51 +490,95 @@
       .cat-chip, .cat-more-btn { font-size: 7px; padding: 7px 10px; }
     }
 
-    /* ── Client reels (scene 03) ─────────────────────────────────── */
+    /* ── Client reels (scene 03) — reels ARE the scene ─────────── */
+
+    /* Kill the background video & overlay on scene 03 */
+    #scene-living .scene-video  { display: none; }
+    #scene-living               { background: #0a0a0a; }
+    #scene-living .scene-overlay,
+    #scene-living .scene-vignette,
+    #scene-living .scene-bg-num { display: none; }
+
+    /* Reels fill the whole scene — centred */
     .scene-reels {
-      position: absolute; top: 0; right: 0; bottom: 0;
-      width: 45%; z-index: 6;
-      display: flex; align-items: center; justify-content: flex-end;
-      gap: 10px; padding: 80px 40px 80px 0;
+      position: absolute; inset: 0; z-index: 4;
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 14px;
+      padding: 72px 48px 0;  /* top pad clears header */
       pointer-events: none;
     }
+
     .reel-card {
-      width: 110px; flex-shrink: 0;
+      flex: 0 0 auto;
+      height: calc(var(--vh, 1svh) * 82);
+      max-height: 520px;
+      width: auto;
       aspect-ratio: 9/16;
       overflow: hidden; position: relative;
-      border: 1px solid rgba(237,234,228,.14);
-      background: linear-gradient(160deg, rgba(230,184,0,.06) 0%, rgba(8,8,8,.5) 100%);
-      opacity: 0; transform: translateY(30px);
-      transition: opacity .7s var(--ease), transform .7s var(--ease);
+      border: 1px solid rgba(237,234,228,.12);
+      background: #111;
+      opacity: 0; transform: translateY(40px);
+      transition: opacity .8s var(--ease), transform .8s var(--ease);
     }
-    .reel-card:nth-child(1) { transition-delay: .2s; }
-    .reel-card:nth-child(2) { transition-delay: .35s; margin-top: -30px; }
-    .reel-card:nth-child(3) { transition-delay: .5s; margin-top: 20px; }
-    .scene.active .reel-card { opacity: 1; transform: translateY(0); }
-    /* Subtle play-circle placeholder when video not yet loaded */
+    .reel-card:nth-child(1) { transition-delay: .15s; }
+    .reel-card:nth-child(2) { transition-delay: .28s; transform: translateY(20px); } /* centre card sits higher */
+    .reel-card:nth-child(3) { transition-delay: .41s; }
+    .scene.active .reel-card { opacity: 1; transform: translateY(0) !important; }
+
+    /* Gold edge glow on the middle card */
+    .reel-card:nth-child(2) {
+      border-color: rgba(230,184,0,.35);
+      box-shadow: 0 0 40px rgba(230,184,0,.08);
+    }
+
+    /* Play-circle placeholder shown when no video is loaded */
     .reel-card::after {
       content: '';
-      position: absolute; top: calc(50% - 16px); left: calc(50% - 16px);
-      width: 32px; height: 32px; border-radius: 50%;
-      border: 1px solid rgba(237,234,228,.18);
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpolygon points='3.5,2 8,5 3.5,8' fill='rgba(237,234,228,0.25)'/%3E%3C/svg%3E") center/14px no-repeat;
+      position: absolute; top: calc(50% - 20px); left: calc(50% - 20px);
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid rgba(237,234,228,.15);
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpolygon points='3.5,2 8,5 3.5,8' fill='rgba(237,234,228,0.2)'/%3E%3C/svg%3E") center/16px no-repeat;
       z-index: 1; pointer-events: none;
     }
     .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 2; }
+
+    /* Client label at bottom of each reel */
     .reel-label {
       position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-      padding: 28px 8px 8px;
-      background: linear-gradient(to top, rgba(8,8,8,.88) 0%, transparent 100%);
-      font-size: 7px; font-weight: 700; letter-spacing: .18em;
-      text-transform: uppercase; color: rgba(237,234,228,.6);
+      padding: 40px 12px 12px;
+      background: linear-gradient(to top, rgba(8,8,8,.92) 0%, transparent 100%);
+      font-size: 8px; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: rgba(237,234,228,.7);
+      text-align: center;
     }
-    /* On mobile, hide reels to save space */
-    @media (max-width: 700px) { .scene-reels { display: none; } }
 
-    /* Client names list */
+    /* Headline overlays the top of the scene */
+    #scene-living .scene-content {
+      max-width: 100%;
+      justify-content: flex-start;
+      padding: 80px 56px 0;
+      align-items: flex-start;
+      pointer-events: none; z-index: 6;
+    }
+    #scene-living .scene-quote {
+      font-size: clamp(28px, 3.6vw, 52px);
+      max-width: 100%;
+    }
+
+    /* Mobile — show stacked client names instead of reels */
+    @media (max-width: 700px) {
+      .scene-reels { display: none; }
+      #scene-living .scene-content {
+        justify-content: flex-end;
+        padding: 0 20px 120px;
+        align-items: flex-start;
+      }
+    }
+
+    /* Client names list (mobile fallback) */
     .scene-clients {
       display: flex; flex-direction: column; gap: 10px;
-      margin-top: 22px;
+      margin-top: 20px;
       opacity: 0; transform: translateY(14px);
       transition: opacity .7s var(--ease) .5s, transform .7s var(--ease) .5s;
     }
@@ -546,15 +590,11 @@
       display: flex; align-items: center; gap: 10px;
       transition: color .2s;
     }
-    .client-name::before {
-      content: ''; width: 18px; height: 1px;
-      background: var(--ox); flex-shrink: 0;
-    }
+    .client-name::before { content: ''; width: 18px; height: 1px; background: var(--ox); flex-shrink: 0; }
     .client-name:hover { color: var(--wh); }
-    @media (max-width: 600px) {
-      .client-name { font-size: 9px; }
-      .scene-clients { gap: 8px; margin-top: 16px; }
-    }
+    /* Hide client list on desktop — the reel labels do that job */
+    @media (min-width: 701px) { .scene-clients { display: none; } }
+    @media (max-width: 600px) { .client-name { font-size: 9px; } .scene-clients { gap: 8px; margin-top: 14px; } }
 
     /* ── CTA  ────────────────────────────────────────────────────── */
     .cta-block {
