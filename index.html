@@ -445,6 +445,95 @@
       text-transform: none; letter-spacing: 0;
     }
 
+    /* ── Service categories (scene 02) ─────────────────────────── */
+    .scene-cats {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 24px;
+      opacity: 0; transform: translateY(14px);
+      transition: opacity .7s var(--ease) .55s, transform .7s var(--ease) .55s;
+    }
+    .scene.active .scene-cats { opacity: 1; transform: translateY(0); }
+    .cat-chip {
+      font-family: var(--grotesk); font-size: 8px; font-weight: 700;
+      letter-spacing: .22em; text-transform: uppercase;
+      padding: 8px 14px; border: 1px solid rgba(237,234,228,.18);
+      color: rgba(237,234,228,.55); background: rgba(237,234,228,.04);
+      cursor: default;
+    }
+    .cat-chip.hero { border-color: var(--ox); color: var(--ox); background: rgba(230,184,0,.08); }
+    .cat-chip.photo { border-color: rgba(237,234,228,.35); color: var(--wh); }
+    .cat-more-btn {
+      font-family: var(--grotesk); font-size: 8px; font-weight: 700;
+      letter-spacing: .22em; text-transform: uppercase;
+      padding: 8px 14px; border: 1px dashed rgba(237,234,228,.22);
+      color: rgba(237,234,228,.35); background: transparent; cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+    .cat-more-btn:hover { border-color: var(--ox); color: var(--ox); }
+    .cat-hidden { display: none; }
+    .cat-hidden.shown { display: inline-block; animation: catFadeIn .35s ease forwards; }
+    @keyframes catFadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+    @media (max-width: 600px) {
+      .scene-cats { gap: 6px; margin-top: 16px; }
+      .cat-chip, .cat-more-btn { font-size: 7px; padding: 7px 10px; }
+    }
+
+    /* ── Client reels (scene 03) ─────────────────────────────────── */
+    .scene-reels {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 45%; z-index: 6;
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 10px; padding: 80px 40px 80px 0;
+      pointer-events: none;
+    }
+    .reel-card {
+      width: 110px; flex-shrink: 0;
+      aspect-ratio: 9/16;
+      overflow: hidden; position: relative;
+      border: 1px solid rgba(237,234,228,.14);
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
+    .reel-card:nth-child(1) { transition-delay: .2s; }
+    .reel-card:nth-child(2) { transition-delay: .35s; margin-top: -30px; }
+    .reel-card:nth-child(3) { transition-delay: .5s; margin-top: 20px; }
+    .scene.active .reel-card { opacity: 1; transform: translateY(0); }
+    .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .reel-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 8px 8px 6px;
+      background: linear-gradient(to top, rgba(8,8,8,.85), transparent);
+      font-size: 7px; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: rgba(237,234,228,.7);
+    }
+    /* On mobile, hide reels to save space */
+    @media (max-width: 700px) { .scene-reels { display: none; } }
+
+    /* Client names list */
+    .scene-clients {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-top: 22px;
+      opacity: 0; transform: translateY(14px);
+      transition: opacity .7s var(--ease) .5s, transform .7s var(--ease) .5s;
+    }
+    .scene.active .scene-clients { opacity: 1; transform: translateY(0); }
+    .client-name {
+      font-family: var(--grotesk); font-size: 11px; font-weight: 600;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(237,234,228,.5);
+      display: flex; align-items: center; gap: 10px;
+      transition: color .2s;
+    }
+    .client-name::before {
+      content: ''; width: 18px; height: 1px;
+      background: var(--ox); flex-shrink: 0;
+    }
+    .client-name:hover { color: var(--wh); }
+    @media (max-width: 600px) {
+      .client-name { font-size: 9px; }
+      .scene-clients { gap: 8px; margin-top: 16px; }
+    }
+
     /* ── CTA  ────────────────────────────────────────────────────── */
     .cta-block {
       display: flex; flex-direction: column; align-items: center;
@@ -561,7 +650,7 @@
     <div class="hdr-logo"><span class="logo-nf">New Found</span><span class="logo-vis">Visuals</span></div>
     <div class="hdr-right">
       <a href="pricing.html" class="hdr-pricing-link">Pricing</a>
-      <span id="hdr-name">Exterior</span>
+      <span id="hdr-name">Chicago</span>
       <div class="hdr-counter" aria-live="polite">
         <span id="cc">01</span><span style="opacity:.22"> / </span>06
       </div>
@@ -570,22 +659,22 @@
 
   <!-- Side nav (desktop) -->
   <nav id="side-nav" aria-label="Scene navigation">
-    <div class="snav-item active" data-target="scene-exterior" role="button" tabindex="0"><span class="snav-label">Exterior</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-entry"   role="button" tabindex="0"><span class="snav-label">Kitchen & Entry</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-living"  role="button" tabindex="0"><span class="snav-label">Master Suite</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-details" role="button" tabindex="0"><span class="snav-label">Kitchen & Living</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-aerial"  role="button" tabindex="0"><span class="snav-label">Aerial View</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-sunset"  role="button" tabindex="0"><span class="snav-label">Sunset</span><span class="snav-dot"></span></div>
+    <div class="snav-item active" data-target="scene-exterior" role="button" tabindex="0"><span class="snav-label">Chicago</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-entry"   role="button" tabindex="0"><span class="snav-label">Services</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-living"  role="button" tabindex="0"><span class="snav-label">Clients</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-details" role="button" tabindex="0"><span class="snav-label">Portfolio</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-aerial"  role="button" tabindex="0"><span class="snav-label">Aerial</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-sunset"  role="button" tabindex="0"><span class="snav-label">Book</span><span class="snav-dot"></span></div>
   </nav>
 
   <!-- Mobile dot nav -->
   <nav id="mob-nav" aria-label="Scene navigation">
-    <span class="mob-dot active" data-target="scene-exterior" role="button" tabindex="0" aria-label="Exterior"></span>
-    <span class="mob-dot" data-target="scene-entry"   role="button" tabindex="0" aria-label="Kitchen & Entry"></span>
-    <span class="mob-dot" data-target="scene-living"  role="button" tabindex="0" aria-label="Master Suite"></span>
-    <span class="mob-dot" data-target="scene-details" role="button" tabindex="0" aria-label="Kitchen & Living"></span>
-    <span class="mob-dot" data-target="scene-aerial"  role="button" tabindex="0" aria-label="Aerial View"></span>
-    <span class="mob-dot" data-target="scene-sunset"  role="button" tabindex="0" aria-label="Sunset"></span>
+    <span class="mob-dot active" data-target="scene-exterior" role="button" tabindex="0" aria-label="Chicago"></span>
+    <span class="mob-dot" data-target="scene-entry"   role="button" tabindex="0" aria-label="Services"></span>
+    <span class="mob-dot" data-target="scene-living"  role="button" tabindex="0" aria-label="Clients"></span>
+    <span class="mob-dot" data-target="scene-details" role="button" tabindex="0" aria-label="Portfolio"></span>
+    <span class="mob-dot" data-target="scene-aerial"  role="button" tabindex="0" aria-label="Aerial"></span>
+    <span class="mob-dot" data-target="scene-sunset"  role="button" tabindex="0" aria-label="Book"></span>
   </nav>
 
   <!-- Scroll hint -->
@@ -608,50 +697,81 @@
        ================================================================ -->
   <div id="scroll-wrap">
 
-    <!-- 01 — EXTERIOR ──────────────────────────────────────────── -->
-    <section class="scene" id="scene-exterior" data-num="01" data-name="Exterior">
-      <video class="scene-video" autoplay muted loop playsinline webkit-playsinline preload="auto" src="exterior.mp4"></video>
+    <!-- 01 — HOOK / CHICAGO DRONE ──────────────────────────────── -->
+    <section class="scene" id="scene-exterior" data-num="01" data-name="Chicago">
+      <video class="scene-video" autoplay muted loop playsinline webkit-playsinline preload="auto" src="droneshot.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">01</div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">01</span><span class="ew-rule"></span><span class="ew-lbl">Exterior</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Modern single-family residence · Front elevation</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">01</span><span class="ew-rule"></span><span class="ew-lbl">New Found Visuals</span></div>
+        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · Real estate photography &amp; videography</span></div>
         <h2 class="scene-quote">
-          <span class="q-line"><span class="q-inner">An arrival</span></span>
-          <span class="q-line"><span class="q-inner">worth</span></span>
-          <span class="q-line"><span class="q-inner"><span class="ink">noticing</span></span></span>
+          <span class="q-line"><span class="q-inner">Chicago's most</span></span>
+          <span class="q-line"><span class="q-inner"><span class="ink">cinematic</span></span></span>
+          <span class="q-line"><span class="q-inner">listings.</span></span>
         </h2>
       </div>
     </section>
 
-    <!-- 02 — ENTRY & KITCHEN ────────────────────────────────────── -->
-    <section class="scene" id="scene-entry" data-num="02" data-name="Kitchen &amp; Entry">
+    <!-- 02 — SERVICES ───────────────────────────────────────────── -->
+    <section class="scene" id="scene-entry" data-num="02" data-name="Services">
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="entry.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">02</div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">02</span><span class="ew-rule"></span><span class="ew-lbl">Entry & Kitchen</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Ground floor · Chef's kitchen & entry foyer</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">02</span><span class="ew-rule"></span><span class="ew-lbl">What We Do</span></div>
+        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Photography &amp; Videography · Every tier, every style</span></div>
         <h2 class="scene-quote">
-          <span class="q-line"><span class="q-inner">First impressions</span></span>
-          <span class="q-line"><span class="q-inner">shape</span></span>
-          <span class="q-line"><span class="q-inner">the story</span></span>
+          <span class="q-line"><span class="q-inner">Every listing</span></span>
+          <span class="q-line"><span class="q-inner">has a <span class="ink">story</span></span></span>
+          <span class="q-line"><span class="q-inner">we tell it.</span></span>
         </h2>
+        <div class="scene-cats">
+          <span class="cat-chip hero">Luxury Video</span>
+          <span class="cat-chip hero">Mid-Tier Video</span>
+          <span class="cat-chip hero">Neighborhood Video</span>
+          <span class="cat-chip photo">Photography</span>
+          <span class="cat-chip photo">Floor Plans</span>
+          <button class="cat-more-btn" id="cat-more-btn" aria-expanded="false">+ See More</button>
+          <span class="cat-chip cat-hidden" id="cat-mls">MLS Video</span>
+          <span class="cat-chip cat-hidden" id="cat-lifestyle">Lifestyle Video</span>
+        </div>
       </div>
     </section>
 
-    <!-- 03 — MASTER BEDROOM ─────────────────────────────────────── -->
-    <section class="scene" id="scene-living" data-num="03" data-name="Master Suite">
+    <!-- 03 — TOP CLIENTS + REELS ───────────────────────────────── -->
+    <section class="scene" id="scene-living" data-num="03" data-name="Clients">
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="living.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">03</div>
+      <!-- 3 reels playing simultaneously (desktop) -->
+      <div class="scene-reels" aria-hidden="true">
+        <div class="reel-card">
+          <video muted loop playsinline webkit-playsinline preload="none" data-src="reel1.mp4"></video>
+          <span class="reel-label">Laricy Team</span>
+        </div>
+        <div class="reel-card">
+          <video muted loop playsinline webkit-playsinline preload="none" data-src="reel2.mp4"></video>
+          <span class="reel-label">C. McCormick</span>
+        </div>
+        <div class="reel-card">
+          <video muted loop playsinline webkit-playsinline preload="none" data-src="reel3.mp4"></video>
+          <span class="reel-label">Dawn McKenna</span>
+        </div>
+      </div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">03</span><span class="ew-rule"></span><span class="ew-lbl">Master Suite</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Upper level · Primary bedroom & retreat</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">03</span><span class="ew-rule"></span><span class="ew-lbl">Our Clients</span></div>
+        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago's top agents · Trust New Found Visuals</span></div>
         <h2 class="scene-quote">
-          <span class="q-line"><span class="q-inner">Built for</span></span>
-          <span class="q-line"><span class="q-inner"><span class="ink">presence</span></span></span>
+          <span class="q-line"><span class="q-inner">Trusted by</span></span>
+          <span class="q-line"><span class="q-inner">the <span class="ink">best</span></span></span>
         </h2>
+        <div class="scene-clients">
+          <span class="client-name">Laricy Team</span>
+          <span class="client-name">Carrie McCormick</span>
+          <span class="client-name">Dowell</span>
+          <span class="client-name">Dawn McKenna</span>
+        </div>
       </div>
     </section>
 
@@ -1001,6 +1121,56 @@
   ['wheel','touchstart','keydown'].forEach(evt =>
     window.addEventListener(evt, () => { if (!hinted) { hinted=true; scrollHint.classList.add('gone'); } }, { passive:true, once:true })
   );
+
+  /* ================================================================
+     SEE MORE — services category toggle (scene 02)
+     ================================================================ */
+  const catMoreBtn = document.getElementById('cat-more-btn');
+  if (catMoreBtn) {
+    catMoreBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const expanded = catMoreBtn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.cat-hidden').forEach(el => {
+        if (!expanded) { el.classList.add('shown'); }
+        else           { el.classList.remove('shown'); }
+      });
+      catMoreBtn.textContent = expanded ? '+ See More' : '— Less';
+      catMoreBtn.setAttribute('aria-expanded', String(!expanded));
+    });
+  }
+
+  /* ================================================================
+     REEL VIDEOS — lazy load + autoplay when clients scene is active
+     The IntersectionObserver already handles lazy loading via data-src.
+     We additionally autoplay all reel videos when scene-living activates.
+     ================================================================ */
+  function syncReels(scene) {
+    scene.querySelectorAll('.reel-card video').forEach(v => {
+      if (v.dataset.src && !v.src) {
+        v.src = v.dataset.src;
+        v.removeAttribute('data-src');
+      }
+      v.play().catch(() => {});
+    });
+  }
+
+  /* Hook into the existing scene-activation flow */
+  const origOnActive = window._onSceneActive;
+  window._onSceneActive = function(scene) {
+    if (origOnActive) origOnActive(scene);
+    if (scene.id === 'scene-living') syncReels(scene);
+  };
+
+  /* Also patch the IntersectionObserver callback to call syncReels */
+  const livingScene = document.getElementById('scene-living');
+  if (livingScene) {
+    const reelObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.intersectionRatio > 0.4) syncReels(livingScene);
+      });
+    }, { root: scrollWrap, threshold: 0.4 });
+    reelObs.observe(livingScene);
+  }
 
   </script>
 </body>
