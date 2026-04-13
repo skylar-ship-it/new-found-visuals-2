@@ -20,8 +20,8 @@
     :root {
       --k:       #080808;
       --s1:      #0D0D0D;
-      --ox:      #FF4514;
-      --am:      #F5A623;
+      --ox:      #E6B800;
+      --am:      #FFD84D;
       --bl:      #0057FF;
       --wh:      #EDEAE4;
       --dim:     rgba(237,234,228,.48);
@@ -84,7 +84,7 @@
     #glow-living   { background: radial-gradient(ellipse 55% 50% at 50% 48%, rgba(245,175,35,.08), transparent 68%); }
     #glow-details  { background: radial-gradient(ellipse 55% 40% at 32% 32%, rgba(255,248,220,.06), transparent 68%); }
     #glow-aerial   { background: radial-gradient(ellipse 70% 45% at 50% 12%, rgba(0,80,255,.10), transparent 68%); }
-    #glow-sunset   { background: radial-gradient(ellipse 75% 60% at 50% 68%, rgba(255,69,20,.15), transparent 68%); }
+    #glow-sunset   { background: radial-gradient(ellipse 75% 60% at 50% 68%, rgba(230,184,0,.15), transparent 68%); }
 
     /* ================================================================
        CURSOR  (desktop)
@@ -101,7 +101,7 @@
     #cur-ring {
       z-index: 9998;
       width: 40px; height: 40px;
-      border: 1px solid rgba(255,69,20,.45);
+      border: 1px solid rgba(230,184,0,.45);
       transition: width .4s var(--ease), height .4s var(--ease), border-color .3s;
     }
     #cur.hov      { width: 14px; height: 14px; }
@@ -196,7 +196,7 @@
     }
     .snav-item:hover .snav-label { color: rgba(237,234,228,.45); transform: translateX(0); }
     .snav-item.active .snav-label { color: rgba(237,234,228,.45); transform: translateX(0); }
-    .snav-item.active .snav-dot  { background: var(--ox); transform: scale(1.7); box-shadow: 0 0 8px rgba(255,69,20,.55); }
+    .snav-item.active .snav-dot  { background: var(--ox); transform: scale(1.7); box-shadow: 0 0 8px rgba(230,184,0,.55); }
     @media (max-width: 900px) { #side-nav { display: none; } }
 
     /* ================================================================
@@ -224,14 +224,14 @@
     }
     .mob-dot.active {
       background: var(--ox); transform: scale(1.4);
-      box-shadow: 0 0 10px rgba(255,69,20,.6);
+      box-shadow: 0 0 10px rgba(230,184,0,.6);
     }
     /* Ripple on tap */
     .mob-dot.tapped::after {
       content: ''; position: absolute;
       top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0);
       width: 32px; height: 32px; border-radius: 50%;
-      background: rgba(255,69,20,.25);
+      background: rgba(230,184,0,.25);
       animation: tapRipple .5s ease-out forwards;
     }
     @keyframes tapRipple { to { transform: translate(-50%,-50%) scale(1); opacity: 0; } }
@@ -266,7 +266,7 @@
       font-family: var(--grotesk); font-size: 8px; font-weight: 700;
       letter-spacing: .28em; text-transform: uppercase;
       color: var(--wh); text-decoration: none;
-      background: rgba(255,69,20,.92);
+      background: rgba(230,184,0,.92);
       padding: 12px 20px;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
@@ -280,7 +280,8 @@
       #pricing-fab { bottom: calc(32px + env(safe-area-inset-bottom)); }
     }
     @media (max-width: 900px) {
-      #pricing-fab { bottom: calc(68px + env(safe-area-inset-bottom, 0px)); right: 16px; padding: 11px 16px; }
+      /* On mobile, hide FAB — the header Pricing link + CTA button are enough */
+      #pricing-fab { display: none; }
     }
 
     /* ================================================================
@@ -470,38 +471,67 @@
       transition: transform .4s var(--ease);
     }
     .cta-btn:hover::before { transform: translateX(0); }
-    .cta-btn:hover { box-shadow: 0 20px 48px rgba(255,69,20,.35); }
+    .cta-btn:hover { box-shadow: 0 20px 48px rgba(230,184,0,.35); }
     .cta-btn span { position: relative; z-index: 1; display: block; }
 
     .cta-sub { font-family: var(--grotesk); font-size: 8px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: rgba(237,234,228,.22); text-align: center; }
+
+    /* Inline contact under CTA */
+    .contact-inline {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center;
+    }
+    .ci-link {
+      font-family: var(--grotesk); font-size: 9px; font-weight: 500; letter-spacing: .12em;
+      color: rgba(237,234,228,.32); text-decoration: none;
+      display: flex; align-items: center; gap: 5px;
+      transition: color .2s;
+    }
+    .ci-link:hover { color: var(--ox); }
+    .ci-sep { color: rgba(237,234,228,.15); font-size: 9px; }
+    @media (max-width: 600px) {
+      .contact-inline { gap: 6px; }
+      .ci-link { font-size: 8px; }
+      .ci-sep { display: none; }
+      .contact-inline { flex-direction: column; gap: 4px; }
+    }
 
     /* ================================================================
        RESPONSIVE
        ================================================================ */
     @media (max-width: 900px) {
-      .scene-content { padding: 0 32px 70px; }
-      .scene-quote   { font-size: clamp(40px, 8vw, 62px); }
+      .scene-content { padding: 0 28px 80px; }
+      .scene-quote   { font-size: clamp(34px, 7vw, 58px); }
     }
     @media (max-width: 600px) {
-      .scene-content              { padding: 0 22px 68px; }
-      .scene-quote                { font-size: clamp(36px, 9.5vw, 54px); max-width: 100%; }
-      .loc-text                   { font-size: 11px; }
-      #scene-sunset .scene-content{ padding: 0 22px; }
-      #scene-sunset .scene-quote  { font-size: clamp(26px, 7.5vw, 42px); }
-      .cta-block                  { margin-top: 36px; }
-      .cta-btn                    { cursor: pointer; padding: 18px 40px; font-size: 10px; display: block; text-align: center; }
-      .scene-bg-num               { font-size: clamp(70px, 24vw, 140px); }
+      /* Reduce font sizes so nothing is "zoomed in" on phone */
+      .scene-content              { padding: 0 20px 100px; }
+      .scene-quote                { font-size: clamp(26px, 7.5vw, 44px); max-width: 100%; line-height: .96; }
+      .loc-text                   { font-size: 10px; }
+      .scene-eyebrow              { gap: 10px; margin-bottom: 8px; }
+      .ew-num                     { font-size: 8px; }
+      .ew-lbl                     { font-size: 8px; }
+      /* Sunset scene: centre content with room for nav at bottom */
+      #scene-sunset .scene-content{ padding: 0 20px 120px; justify-content: flex-end; align-items: center; text-align: center; }
+      #scene-sunset .scene-quote  { font-size: clamp(22px, 6.5vw, 36px); }
+      /* CTA button — full width, no overlap */
+      .cta-block                  { margin-top: 24px; width: 100%; gap: 12px; }
+      .cta-btn                    { cursor: pointer; padding: 16px 28px; font-size: 9px; display: block; text-align: center; width: 100%; }
+      .cta-sub                    { font-size: 7px; }
+      .scene-bg-num               { font-size: clamp(60px, 20vw, 110px); opacity: .6; }
     }
-    @media (max-width: 380px) {
-      .scene-quote   { font-size: clamp(30px, 10vw, 46px); }
-      .scene-content { padding: 0 18px 60px; }
+    @media (max-width: 400px) {
+      .scene-quote   { font-size: clamp(22px, 7vw, 36px); }
+      .scene-content { padding: 0 16px 110px; }
+      #scene-sunset .scene-content{ padding: 0 16px 130px; }
     }
 
     /* iPhone notch / Dynamic Island safe areas */
     @supports (padding: env(safe-area-inset-bottom)) {
-      .scene-content { padding-bottom: calc(82px + env(safe-area-inset-bottom)); }
-      @media (max-width: 600px) { .scene-content { padding-bottom: calc(68px + env(safe-area-inset-bottom)); } }
-      #scene-sunset .scene-content { padding-bottom: 0; }
+      .scene-content { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
+      @media (max-width: 600px) {
+        .scene-content { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+        #scene-sunset .scene-content { padding-bottom: calc(120px + env(safe-area-inset-bottom)); }
+      }
       #mob-nav { bottom: calc(20px + env(safe-area-inset-bottom)); }
     }
 
@@ -670,7 +700,16 @@
         </h2>
         <div class="cta-block">
           <a href="pricing.html" class="cta-btn"><span>Book Your Shoot</span></a>
-          <p class="cta-sub">New Found Visuals &nbsp;·&nbsp; Real estate photography &amp; videography</p>
+          <div class="contact-inline">
+            <a href="tel:8153037537" class="ci-link">
+              <svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2h3l1.5 3.5L5 7a9 9 0 003 3l1.5-1.5L13 10v3a1 1 0 01-1 1A11 11 0 012 3a1 1 0 011-1z"/></svg>
+              (815) 303-7537
+            </a>
+            <span class="ci-sep">·</span>
+            <a href="mailto:diego@lvnstudio.com" class="ci-link">diego@lvnstudio.com</a>
+            <span class="ci-sep">·</span>
+            <a href="https://www.instagram.com/newfound_visuals/" target="_blank" rel="noopener" class="ci-link">@newfound_visuals</a>
+          </div>
         </div>
       </div>
     </section>
