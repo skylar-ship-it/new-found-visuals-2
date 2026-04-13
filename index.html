@@ -420,6 +420,18 @@
       max-width: 18ch; line-height: 1.06;
       letter-spacing: -.022em; text-align: center;
     }
+    /* Clients scene — smaller headline so it doesn't crash into the reels */
+    #scene-living .scene-quote {
+      font-size: clamp(32px, 4.2vw, 62px);
+      max-width: 10ch;
+    }
+    /* Constrain text to left half so it doesn't bleed into reel cards */
+    #scene-living .scene-content {
+      max-width: 52%;
+    }
+    @media (max-width: 700px) {
+      #scene-living .scene-content { max-width: 100%; }
+    }
 
     /* Each line wraps in a clip container */
     .q-line {
@@ -491,6 +503,7 @@
       aspect-ratio: 9/16;
       overflow: hidden; position: relative;
       border: 1px solid rgba(237,234,228,.14);
+      background: linear-gradient(160deg, rgba(230,184,0,.06) 0%, rgba(8,8,8,.5) 100%);
       opacity: 0; transform: translateY(30px);
       transition: opacity .7s var(--ease), transform .7s var(--ease);
     }
@@ -498,13 +511,22 @@
     .reel-card:nth-child(2) { transition-delay: .35s; margin-top: -30px; }
     .reel-card:nth-child(3) { transition-delay: .5s; margin-top: 20px; }
     .scene.active .reel-card { opacity: 1; transform: translateY(0); }
-    .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Subtle play-circle placeholder when video not yet loaded */
+    .reel-card::after {
+      content: '';
+      position: absolute; top: calc(50% - 16px); left: calc(50% - 16px);
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid rgba(237,234,228,.18);
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpolygon points='3.5,2 8,5 3.5,8' fill='rgba(237,234,228,0.25)'/%3E%3C/svg%3E") center/14px no-repeat;
+      z-index: 1; pointer-events: none;
+    }
+    .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 2; }
     .reel-label {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 8px 8px 6px;
-      background: linear-gradient(to top, rgba(8,8,8,.85), transparent);
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+      padding: 28px 8px 8px;
+      background: linear-gradient(to top, rgba(8,8,8,.88) 0%, transparent 100%);
       font-size: 7px; font-weight: 700; letter-spacing: .18em;
-      text-transform: uppercase; color: rgba(237,234,228,.7);
+      text-transform: uppercase; color: rgba(237,234,228,.6);
     }
     /* On mobile, hide reels to save space */
     @media (max-width: 700px) { .scene-reels { display: none; } }
