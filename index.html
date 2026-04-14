@@ -652,26 +652,35 @@
 
     /* Mobile — carousel stacks to single card */
     @media (max-width: 700px) {
-      /* Track: left padding = arrow width + buffer, right shows card peek */
-      .reels-track {
-        padding: 0 40px 0 40px;
-        gap: 10px;
-        /* Pull track to full bleed so peek is visible at right edge */
-        margin-right: -20px;
+      /* Push carousel up from bottom to clear browser chrome */
+      .reels-carousel {
+        justify-content: flex-end;
+        padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
       }
+      .reels-track {
+        padding: 0 38px;
+        gap: 10px;
+      }
+      /* Card: fixed width so exactly ~1 card + peek of next */
       .reel-card {
-        height: calc(var(--vh, 1svh) * 70);
-        max-height: 400px;
-        /* Force width so ~1 card + peek of next fits screen */
-        width: calc(100vw - 96px);
-        aspect-ratio: unset; /* override 9/16 so our width wins */
+        height: calc(var(--vh, 1svh) * 56);
+        max-height: 340px;
+        width: calc(100vw - 90px);
+        aspect-ratio: unset;
       }
       .reel-card video { height: 100%; width: 100%; object-fit: cover; }
-      .reel-arrow { bottom: calc(var(--vh, 1svh) * 35); width: 28px; height: 28px; }
-      #scene-living .scene-content {
-        justify-content: flex-start;
-        padding: 68px 20px 0;
+      /* Arrow centred on card height */
+      .reel-arrow {
+        bottom: calc(var(--vh, 1svh) * 28);
+        width: 28px; height: 28px;
       }
+      /* Anchor headline just above the carousel rather than floating at top */
+      #scene-living .scene-content {
+        justify-content: flex-end;
+        padding: 0 20px calc(var(--vh, 1svh) * 60);
+        align-items: flex-start;
+      }
+      #scene-living .scene-quote { font-size: clamp(24px, 7vw, 40px); }
     }
 
     /* Client names list (mobile text fallback — hidden, carousel works on mobile now) */
@@ -1427,7 +1436,8 @@
     });
 
     reelsTrack.addEventListener('scroll', updateArrows, { passive: true });
-    updateArrows(); /* set initial state */
+    /* Delay initial check so layout is fully painted */
+    requestAnimationFrame(() => requestAnimationFrame(updateArrows));
   }
 
   /* — touch tap on mobile toggles metrics overlay — */
