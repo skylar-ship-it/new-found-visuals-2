@@ -335,6 +335,10 @@
     @keyframes kb-panR { from { transform: scale(1.05) translateX(-2%);   } to { transform: scale(1.05) translateX(2%);    } }
     @keyframes kb-panL { from { transform: scale(1.05) translateX( 2%);   } to { transform: scale(1.05) translateX(-2%);   } }
     @media (prefers-reduced-motion: reduce) { .scene-video { animation: none !important; } }
+    /* Mobile — kill Ken Burns zoom (landscape video in portrait frame already looks zoomed) */
+    @media (max-width: 768px) {
+      .scene-video { animation: none !important; transform: none !important; }
+    }
 
     /* ── Overlays ───────────────────────────────────────────────── */
     .scene-overlay {
@@ -729,10 +733,10 @@
     .ci-link:hover { color: var(--ox); }
     .ci-sep { color: rgba(237,234,228,.15); font-size: 9px; }
     @media (max-width: 600px) {
-      .contact-inline { gap: 6px; }
+      /* Keep contact as inline row (wraps if needed) — stacking vertically wastes too much height */
+      .contact-inline { flex-direction: row; flex-wrap: wrap; gap: 6px 10px; justify-content: center; }
       .ci-link { font-size: 8px; }
-      .ci-sep { display: none; }
-      .contact-inline { flex-direction: column; gap: 4px; }
+      .ci-sep { display: inline; font-size: 8px; }
     }
 
     /* ================================================================
@@ -750,12 +754,12 @@
       .scene-eyebrow              { gap: 10px; margin-bottom: 8px; }
       .ew-num                     { font-size: 8px; }
       .ew-lbl                     { font-size: 8px; }
-      /* Sunset scene: centre content with room for nav at bottom */
-      #scene-sunset .scene-content{ padding: 0 20px 120px; justify-content: flex-end; align-items: center; text-align: center; }
-      #scene-sunset .scene-quote  { font-size: clamp(22px, 6.5vw, 36px); }
+      /* Sunset scene: centre content, allow scroll if content taller than screen */
+      #scene-sunset .scene-content{ padding: 72px 20px 100px; justify-content: center; align-items: center; text-align: center; overflow-y: auto; }
+      #scene-sunset .scene-quote  { font-size: clamp(20px, 6vw, 34px); }
       /* CTA button — full width, no overlap */
-      .cta-block                  { margin-top: 24px; width: 100%; gap: 12px; }
-      .cta-btn                    { cursor: pointer; padding: 16px 28px; font-size: 9px; display: block; text-align: center; width: 100%; }
+      .cta-block                  { margin-top: 20px; width: 100%; gap: 10px; }
+      .cta-btn                    { cursor: pointer; padding: 14px 24px; font-size: 9px; display: block; text-align: center; width: 100%; }
       .cta-sub                    { font-size: 7px; }
       .scene-bg-num               { font-size: clamp(60px, 20vw, 110px); opacity: .6; }
     }
@@ -1163,11 +1167,21 @@
   /* ================================================================
      LAZY VIDEO LOADING
      Videos 2–6 load only when their scene is one viewport away.
+     On mobile, skip background scene-video elements — only reel
+     videos load (via syncReels). This saves ~80% of mobile data.
      ================================================================ */
+  const isMobile = window.innerWidth <= 768;
+
   const lazyObs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       const vid = entry.target.querySelector('video[data-src]');
+      /* On mobile, skip the decorative background scene videos */
+      if (vid && isMobile && vid.classList.contains('scene-video')) {
+        entry.target.classList.add('loaded'); /* dismiss spinner */
+        lazyObs.unobserve(entry.target);
+        return;
+      }
       if (vid && !vid.getAttribute('src')) {
         vid.setAttribute('src', vid.dataset.src);
         vid.load();
@@ -1184,8 +1198,9 @@
 
   scenes.slice(1).forEach(s => lazyObs.observe(s));
 
-  /* First video */
+  /* First video — skip on mobile (decorative background, saves data) */
   const v0 = scenes[0].querySelector('video');
+  if (isMobile && v0) { v0.removeAttribute('src'); v0.load(); scenes[0].classList.add('loaded'); }
   v0.play().catch(() => {
     document.addEventListener('touchstart', () => v0.play().catch(()=>{}), { once:true, passive:true });
   });
