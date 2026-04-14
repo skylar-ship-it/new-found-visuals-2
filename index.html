@@ -589,11 +589,14 @@
       z-index: 1; pointer-events: none;
       transition: opacity .3s;
     }
-    .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 2; }
+    .reel-card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    /* Metrics — pinned to top of card, above the video */
+    /* Metrics — pinned to top of card, forced above video layer */
     .reel-metrics {
-      position: absolute; top: 0; left: 0; right: 0; z-index: 4;
+      position: absolute; top: 0; left: 0; right: 0;
+      z-index: 10;
+      transform: translateZ(0);   /* own compositing layer — beats video GPU layer */
+      -webkit-transform: translateZ(0);
       padding: 14px 14px 48px;
       background: linear-gradient(to bottom, rgba(6,6,6,.95) 0%, rgba(6,6,6,.6) 60%, transparent 100%);
       pointer-events: none;
