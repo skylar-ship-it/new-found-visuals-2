@@ -40,6 +40,11 @@
     .hdr-logo { display: flex; flex-direction: column; gap: 2px; text-decoration: none; }
     .logo-nf  { font-family: var(--grf); font-size: 17px; color: var(--ox); line-height: 1; }
     .logo-vis { font-family: var(--syne); font-size: 6px; font-weight: 800; letter-spacing: .42em; text-transform: uppercase; color: rgba(237,234,228,.35); }
+    .hdr-faq {
+      font-family: var(--grotesk); font-size: 8px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--dim); text-decoration: none; transition: color .2s;
+    }
+    .hdr-faq:hover { color: var(--wh); }
     .hdr-right { display: flex; align-items: center; gap: 20px; }
     .hdr-back {
       font-family: var(--grotesk); font-size: 8px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
@@ -206,6 +211,7 @@
       <span class="logo-vis">Visuals</span>
     </a>
     <div class="hdr-right">
+      <a href="faq.html" class="hdr-faq">FAQ</a>
       <a href="index.html" class="hdr-back">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 1L3 6L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span>Back to Story</span>
@@ -475,7 +481,7 @@
 
   <footer>
     <span class="foot-brand">New Found Visuals · 2026</span>
-    <span class="foot-note">Real estate photography & videography · Diego Levano</span>
+    <span class="foot-note">Real estate photography & videography · Diego Levano &nbsp;·&nbsp; <a href="privacy.html" style="color:inherit;text-decoration:none;opacity:.6;">Privacy Policy</a></span>
   </footer>
 
   <script>
