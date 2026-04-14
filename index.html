@@ -340,9 +340,14 @@
       .scene-video { animation: none !important; transform: none !important; }
     }
 
-    /* ── Scene 02 photo slideshow ───────────────────────────────── */
+    /* ── Scene 02 photo slideshow (mobile only) ─────────────────── */
     .story-slides {
       position: absolute; inset: 0; z-index: 0;
+      display: none; /* hidden on desktop — video plays instead */
+    }
+    @media (max-width: 768px) {
+      .story-slides { display: block; }
+      #scene-entry .scene-video { display: none; } /* hide video on mobile */
     }
     .story-slide {
       position: absolute; inset: 0;
