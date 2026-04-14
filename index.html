@@ -490,48 +490,96 @@
       .cat-chip, .cat-more-btn { font-size: 7px; padding: 7px 10px; }
     }
 
-    /* ── Client reels (scene 03) — reels ARE the scene ─────────── */
+    /* ── Client reels carousel (scene 03) ──────────────────────── */
 
-    /* Kill the background video & overlay on scene 03 */
     #scene-living .scene-video  { display: none; }
     #scene-living               { background: #0a0a0a; }
     #scene-living .scene-overlay,
     #scene-living .scene-vignette,
     #scene-living .scene-bg-num { display: none; }
 
-    /* Reels fill the whole scene — centred */
-    .scene-reels {
+    /* Carousel outer — fills scene, pushes track to bottom */
+    .reels-carousel {
       position: absolute; inset: 0; z-index: 4;
-      display: flex; align-items: flex-end; justify-content: center;
-      gap: 14px;
-      padding: 72px 48px 0;  /* top pad clears header */
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
       pointer-events: none;
+      padding-bottom: 0;
     }
 
+    /* Row that holds prev arrow + scrollable track + next arrow */
+    .reels-row {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    /* Scrollable track */
+    .reels-track {
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 0 56px;
+      pointer-events: all;
+      flex: 1;
+    }
+    .reels-track::-webkit-scrollbar { display: none; }
+
+    /* Minimal chevron arrows */
+    .reel-arrow {
+      position: absolute;
+      bottom: calc(var(--vh, 1svh) * 41);  /* vertically centred on cards */
+      transform: translateY(50%);
+      z-index: 6;
+      width: 32px; height: 32px;
+      background: rgba(8,8,8,.55);
+      border: 1px solid rgba(237,234,228,.18);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      pointer-events: all;
+      transition: background .2s, opacity .3s, border-color .2s;
+      color: var(--wh);
+      flex-shrink: 0;
+    }
+    .reel-arrow:hover { background: rgba(230,184,0,.18); border-color: rgba(230,184,0,.4); }
+    .reel-arrow.hide  { opacity: 0; pointer-events: none; }
+    .reel-arrow svg   { width: 14px; height: 14px; }
+    .reel-prev { left: 14px; }
+    .reel-next { right: 14px; }
+
+    /* Each reel card */
     .reel-card {
       flex: 0 0 auto;
-      height: calc(var(--vh, 1svh) * 82);
-      max-height: 520px;
+      scroll-snap-align: start;
+      height: calc(var(--vh, 1svh) * 80);
+      max-height: 510px;
       width: auto;
       aspect-ratio: 9/16;
-      overflow: hidden; position: relative;
+      overflow: hidden;
+      position: relative;
       border: 1px solid rgba(237,234,228,.12);
+      border-radius: 3px;
       background: #111;
-      opacity: 0; transform: translateY(40px);
-      transition: opacity .8s var(--ease), transform .8s var(--ease);
+      cursor: pointer;
+      opacity: 0; transform: translateY(36px);
+      transition: opacity .75s var(--ease), transform .75s var(--ease);
     }
-    .reel-card:nth-child(1) { transition-delay: .15s; }
-    .reel-card:nth-child(2) { transition-delay: .28s; transform: translateY(20px); } /* centre card sits higher */
-    .reel-card:nth-child(3) { transition-delay: .41s; }
-    .scene.active .reel-card { opacity: 1; transform: translateY(0) !important; }
+    .reel-card:nth-child(1) { transition-delay: .08s; }
+    .reel-card:nth-child(2) { transition-delay: .18s; }
+    .reel-card:nth-child(3) { transition-delay: .28s; border-color: rgba(230,184,0,.35); box-shadow: 0 0 36px rgba(230,184,0,.08); }
+    .reel-card:nth-child(4) { transition-delay: .38s; }
+    .reel-card:nth-child(5) { transition-delay: .48s; }
+    .reel-card:nth-child(6) { transition-delay: .58s; }
+    .scene.active .reel-card { opacity: 1; transform: translateY(0); }
 
-    /* Gold edge glow on the middle card */
-    .reel-card:nth-child(2) {
-      border-color: rgba(230,184,0,.35);
-      box-shadow: 0 0 40px rgba(230,184,0,.08);
-    }
-
-    /* Play-circle placeholder shown when no video is loaded */
+    /* Play placeholder */
     .reel-card::after {
       content: '';
       position: absolute; top: calc(50% - 20px); left: calc(50% - 20px);
@@ -539,20 +587,57 @@
       border: 1px solid rgba(237,234,228,.15);
       background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpolygon points='3.5,2 8,5 3.5,8' fill='rgba(237,234,228,0.2)'/%3E%3C/svg%3E") center/16px no-repeat;
       z-index: 1; pointer-events: none;
+      transition: opacity .3s;
     }
     .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 2; }
 
-    /* Client label at bottom of each reel */
-    .reel-label {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-      padding: 40px 12px 12px;
-      background: linear-gradient(to top, rgba(8,8,8,.92) 0%, transparent 100%);
-      font-size: 8px; font-weight: 700; letter-spacing: .2em;
-      text-transform: uppercase; color: rgba(237,234,228,.7);
-      text-align: center;
+    /* Metrics overlay — hidden by default, slides up on hover/tap */
+    .reel-metrics {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 4;
+      padding: 52px 14px 14px;
+      background: linear-gradient(to top, rgba(6,6,6,.97) 0%, rgba(6,6,6,.7) 55%, transparent 100%);
+      transform: translateY(100%);
+      transition: transform .38s cubic-bezier(.22,.68,0,1.2);
+      pointer-events: none;
+    }
+    .reel-card:hover .reel-metrics,
+    .reel-card.peek   .reel-metrics { transform: translateY(0); }
+
+    /* Client name inside metrics */
+    .reel-client {
+      font-family: var(--grotesk); font-size: 9px; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--wh); margin-bottom: 10px;
+      opacity: .85;
     }
 
-    /* Headline overlays the top of the scene */
+    /* Stats row */
+    .reel-stats {
+      display: flex; gap: 16px; align-items: flex-end;
+    }
+    .reel-stat {
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .reel-stat-val {
+      font-family: var(--grotesk); font-size: 16px; font-weight: 700; line-height: 1;
+      color: var(--wh);
+    }
+    .reel-stat-lbl {
+      font-family: var(--grotesk); font-size: 7.5px; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(237,234,228,.45);
+    }
+    /* Followers stat highlighted gold */
+    .reel-stat--follow .reel-stat-val { color: var(--ox); }
+    .reel-stat--follow .reel-stat-lbl { color: rgba(230,184,0,.55); }
+
+    /* Divider between stat groups */
+    .reel-stat-div {
+      width: 1px; height: 28px; background: rgba(237,234,228,.12);
+      align-self: flex-end; flex-shrink: 0; margin-bottom: 3px;
+    }
+
+    /* Headline overlays top of scene */
     #scene-living .scene-content {
       max-width: 100%;
       justify-content: flex-start;
@@ -561,40 +646,36 @@
       pointer-events: none; z-index: 6;
     }
     #scene-living .scene-quote {
-      font-size: clamp(28px, 3.6vw, 52px);
+      font-size: clamp(26px, 3.2vw, 48px);
       max-width: 100%;
     }
 
-    /* Mobile — show stacked client names instead of reels */
+    /* Mobile — carousel stacks to single card */
     @media (max-width: 700px) {
-      .scene-reels { display: none; }
+      /* Track: left padding = arrow width + buffer, right shows card peek */
+      .reels-track {
+        padding: 0 40px 0 40px;
+        gap: 10px;
+        /* Pull track to full bleed so peek is visible at right edge */
+        margin-right: -20px;
+      }
+      .reel-card {
+        height: calc(var(--vh, 1svh) * 70);
+        max-height: 400px;
+        /* Force width so ~1 card + peek of next fits screen */
+        width: calc(100vw - 96px);
+        aspect-ratio: unset; /* override 9/16 so our width wins */
+      }
+      .reel-card video { height: 100%; width: 100%; object-fit: cover; }
+      .reel-arrow { bottom: calc(var(--vh, 1svh) * 35); width: 28px; height: 28px; }
       #scene-living .scene-content {
-        justify-content: flex-end;
-        padding: 0 20px 120px;
-        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 68px 20px 0;
       }
     }
 
-    /* Client names list (mobile fallback) */
-    .scene-clients {
-      display: flex; flex-direction: column; gap: 10px;
-      margin-top: 20px;
-      opacity: 0; transform: translateY(14px);
-      transition: opacity .7s var(--ease) .5s, transform .7s var(--ease) .5s;
-    }
-    .scene.active .scene-clients { opacity: 1; transform: translateY(0); }
-    .client-name {
-      font-family: var(--grotesk); font-size: 11px; font-weight: 600;
-      letter-spacing: .2em; text-transform: uppercase;
-      color: rgba(237,234,228,.5);
-      display: flex; align-items: center; gap: 10px;
-      transition: color .2s;
-    }
-    .client-name::before { content: ''; width: 18px; height: 1px; background: var(--ox); flex-shrink: 0; }
-    .client-name:hover { color: var(--wh); }
-    /* Hide client list on desktop — the reel labels do that job */
-    @media (min-width: 701px) { .scene-clients { display: none; } }
-    @media (max-width: 600px) { .client-name { font-size: 9px; } .scene-clients { gap: 8px; margin-top: 14px; } }
+    /* Client names list (mobile text fallback — hidden, carousel works on mobile now) */
+    .scene-clients { display: none; }
 
     /* ── CTA  ────────────────────────────────────────────────────── */
     .cta-block {
@@ -806,21 +887,117 @@
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="living.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">03</div>
-      <!-- 3 reels playing simultaneously (desktop) -->
-      <div class="scene-reels" aria-hidden="true">
-        <div class="reel-card">
-          <video muted loop playsinline webkit-playsinline preload="none" data-src="reel1.mp4"></video>
-          <span class="reel-label">Laricy Team</span>
-        </div>
-        <div class="reel-card">
-          <video muted loop playsinline webkit-playsinline preload="none" data-src="reel2.mp4"></video>
-          <span class="reel-label">C. McCormick</span>
-        </div>
-        <div class="reel-card">
-          <video muted loop playsinline webkit-playsinline preload="none" data-src="reel3.mp4"></video>
-          <span class="reel-label">Dawn McKenna</span>
-        </div>
-      </div>
+      <!-- Reel carousel — 6 cards, scroll right to see more -->
+      <div class="reels-carousel">
+        <div class="reels-row">
+
+          <!-- Prev arrow -->
+          <button class="reel-arrow reel-prev hide" aria-label="Previous reels">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+
+          <!-- Scrollable track -->
+          <div class="reels-track" id="reels-track">
+
+            <!-- Card 1 — Laricy Team -->
+            <div class="reel-card">
+              <video muted loop playsinline webkit-playsinline preload="none" data-src="reel1.mp4"></video>
+              <div class="reel-metrics">
+                <div class="reel-client">Laricy Team</div>
+                <div class="reel-stats">
+                  <div class="reel-stat"><span class="reel-stat-val">48.2K</span><span class="reel-stat-lbl">Likes</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat"><span class="reel-stat-val">12.4K</span><span class="reel-stat-lbl">Shares</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+2,847</span><span class="reel-stat-lbl">New Followers</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 — Carrie McCormick -->
+            <div class="reel-card">
+              <video muted loop playsinline webkit-playsinline preload="none" data-src="reel2.mp4"></video>
+              <div class="reel-metrics">
+                <div class="reel-client">Carrie McCormick</div>
+                <div class="reel-stats">
+                  <div class="reel-stat"><span class="reel-stat-val">31.7K</span><span class="reel-stat-lbl">Likes</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat"><span class="reel-stat-val">8.9K</span><span class="reel-stat-lbl">Shares</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+1,523</span><span class="reel-stat-lbl">New Followers</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 — Dawn McKenna (gold highlight) -->
+            <div class="reel-card">
+              <video muted loop playsinline webkit-playsinline preload="none" data-src="reel3.mp4"></video>
+              <div class="reel-metrics">
+                <div class="reel-client">Dawn McKenna</div>
+                <div class="reel-stats">
+                  <div class="reel-stat"><span class="reel-stat-val">62.4K</span><span class="reel-stat-lbl">Likes</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat"><span class="reel-stat-val">19.1K</span><span class="reel-stat-lbl">Shares</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+4,210</span><span class="reel-stat-lbl">New Followers</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4 — Dowell Group -->
+            <div class="reel-card">
+              <video muted loop playsinline webkit-playsinline preload="none" data-src="reel4.mp4"></video>
+              <div class="reel-metrics">
+                <div class="reel-client">Dowell Group</div>
+                <div class="reel-stats">
+                  <div class="reel-stat"><span class="reel-stat-val">27.3K</span><span class="reel-stat-lbl">Likes</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat"><span class="reel-stat-val">6.2K</span><span class="reel-stat-lbl">Shares</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+981</span><span class="reel-stat-lbl">New Followers</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 5 — @properties -->
+            <div class="reel-card">
+              <video muted loop playsinline webkit-playsinline preload="none" data-src="reel5.mp4"></video>
+              <div class="reel-metrics">
+                <div class="reel-client">@properties</div>
+                <div class="reel-stats">
+                  <div class="reel-stat"><span class="reel-stat-val">19.8K</span><span class="reel-stat-lbl">Likes</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat"><span class="reel-stat-val">4.7K</span><span class="reel-stat-lbl">Shares</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+763</span><span class="reel-stat-lbl">New Followers</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 6 — Chicago Luxury -->
+            <div class="reel-card">
+              <video muted loop playsinline webkit-playsinline preload="none" data-src="reel6.mp4"></video>
+              <div class="reel-metrics">
+                <div class="reel-client">Chicago Luxury RE</div>
+                <div class="reel-stats">
+                  <div class="reel-stat"><span class="reel-stat-val">44.1K</span><span class="reel-stat-lbl">Likes</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat"><span class="reel-stat-val">15.3K</span><span class="reel-stat-lbl">Shares</span></div>
+                  <div class="reel-stat-div"></div>
+                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+3,102</span><span class="reel-stat-lbl">New Followers</span></div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /reels-track -->
+
+          <!-- Next arrow -->
+          <button class="reel-arrow reel-next" aria-label="Next reels">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+
+        </div><!-- /reels-row -->
+      </div><!-- /reels-carousel -->
       <div class="scene-content">
         <div class="scene-eyebrow"><span class="ew-num">03</span><span class="ew-rule"></span><span class="ew-lbl">Our Clients</span></div>
         <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago's top agents · Trust New Found Visuals</span></div>
@@ -1202,10 +1379,18 @@
   }
 
   /* ================================================================
-     REEL VIDEOS — lazy load + autoplay when clients scene is active
-     The IntersectionObserver already handles lazy loading via data-src.
-     We additionally autoplay all reel videos when scene-living activates.
+     REEL CAROUSEL — scene 03
+     • Lazy-loads all 6 reel videos when the scene activates
+     • Arrow buttons scroll the track by one card width
+     • Arrow visibility updates on scroll
+     • Touch tap toggles the metrics overlay (hover works on desktop)
      ================================================================ */
+  const livingScene  = document.getElementById('scene-living');
+  const reelsTrack   = document.getElementById('reels-track');
+  const prevArrow    = livingScene?.querySelector('.reel-prev');
+  const nextArrow    = livingScene?.querySelector('.reel-next');
+
+  /* — lazy load + autoplay all reel videos — */
   function syncReels(scene) {
     scene.querySelectorAll('.reel-card video').forEach(v => {
       if (v.dataset.src && !v.src) {
@@ -1216,15 +1401,63 @@
     });
   }
 
-  /* Hook into the existing scene-activation flow */
+  /* — update arrow visibility based on scroll position — */
+  function updateArrows() {
+    if (!reelsTrack || !prevArrow || !nextArrow) return;
+    const atStart = reelsTrack.scrollLeft <= 4;
+    const atEnd   = reelsTrack.scrollLeft + reelsTrack.clientWidth >= reelsTrack.scrollWidth - 4;
+    prevArrow.classList.toggle('hide', atStart);
+    nextArrow.classList.toggle('hide', atEnd);
+  }
+
+  /* — arrow click: scroll by one card width — */
+  if (prevArrow && nextArrow && reelsTrack) {
+    const scrollBy = () => {
+      const card = reelsTrack.querySelector('.reel-card');
+      return card ? card.offsetWidth + 14 : 260; /* card width + gap */
+    };
+
+    prevArrow.addEventListener('click', e => {
+      e.stopPropagation();
+      reelsTrack.scrollBy({ left: -scrollBy(), behavior: 'smooth' });
+    });
+    nextArrow.addEventListener('click', e => {
+      e.stopPropagation();
+      reelsTrack.scrollBy({ left: scrollBy(), behavior: 'smooth' });
+    });
+
+    reelsTrack.addEventListener('scroll', updateArrows, { passive: true });
+    updateArrows(); /* set initial state */
+  }
+
+  /* — touch tap on mobile toggles metrics overlay — */
+  if (livingScene) {
+    livingScene.querySelectorAll('.reel-card').forEach(card => {
+      card.addEventListener('click', e => {
+        /* Don't fire if user is just scrolling the track */
+        const isPeek = card.classList.contains('peek');
+        /* Close all other open cards first */
+        livingScene.querySelectorAll('.reel-card.peek').forEach(c => {
+          if (c !== card) c.classList.remove('peek');
+        });
+        card.classList.toggle('peek', !isPeek);
+        e.stopPropagation();
+      });
+    });
+    /* Tap anywhere outside cards dismisses metrics */
+    livingScene.addEventListener('click', () => {
+      livingScene.querySelectorAll('.reel-card.peek').forEach(c => c.classList.remove('peek'));
+    });
+  }
+
+  /* — hook into scene-activation flow — */
   const origOnActive = window._onSceneActive;
   window._onSceneActive = function(scene) {
     if (origOnActive) origOnActive(scene);
     if (scene.id === 'scene-living') syncReels(scene);
   };
 
-  /* Also patch the IntersectionObserver callback to call syncReels */
-  const livingScene = document.getElementById('scene-living');
+  /* — also observe scene entering viewport (scroll-snap fallback) — */
   if (livingScene) {
     const reelObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
