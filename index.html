@@ -343,12 +343,10 @@
     /* ── Scene 02 photo slideshow (mobile only) ─────────────────── */
     .story-slides {
       position: absolute; inset: 0; z-index: 0;
-      display: none; /* hidden on desktop — video plays instead */
+      display: block; /* shows on all screens */
     }
-    @media (max-width: 768px) {
-      .story-slides { display: block; }
-      #scene-entry .scene-video { display: none; } /* hide video on mobile */
-    }
+    /* Hide the video on all screens — photos replace it */
+    #scene-entry .scene-video { display: none; }
     .story-slide {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
