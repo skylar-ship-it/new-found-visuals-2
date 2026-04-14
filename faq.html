@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>FAQ — New Found Visuals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ox: #E6B800;
+      --am: #FFD84D;
+      --wh: #EDEAE4;
+      --dim: rgba(237,234,228,.45);
+      --k:  #080808;
+      --card: #111111;
+      --border: rgba(237,234,228,.08);
+      --syne: 'Syne', sans-serif;
+      --grotesk: 'Space Grotesk', sans-serif;
+      --grf: 'Permanent Marker', cursive;
+      --ease: cubic-bezier(.22,.68,0,1.2);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--k); color: var(--wh); font-family: var(--grotesk); -webkit-font-smoothing: antialiased; }
+
+    /* Progress bar */
+    #top-bar { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 999; background: rgba(230,184,0,.15); }
+    #top-bar-fill { height: 100%; background: linear-gradient(90deg, var(--ox), var(--am)); transform: scaleX(0); transform-origin: left; transition: transform .1s linear; }
+
+    /* Header */
+    #hdr {
+      position: sticky; top: 0; z-index: 900;
+      background: rgba(8,8,8,.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 60px;
+    }
+    .hdr-logo { display: flex; flex-direction: column; gap: 2px; text-decoration: none; }
+    .logo-nf  { font-family: var(--grf); font-size: 17px; color: var(--ox); line-height: 1; }
+    .logo-vis { font-family: var(--syne); font-size: 6px; font-weight: 800; letter-spacing: .42em; text-transform: uppercase; color: rgba(237,234,228,.35); }
+    .hdr-right { display: flex; align-items: center; gap: 20px; }
+    .hdr-back {
+      font-family: var(--grotesk); font-size: 8px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--dim); text-decoration: none; display: flex; align-items: center; gap: 7px; transition: color .2s;
+    }
+    .hdr-back:hover { color: var(--wh); }
+    .hdr-book {
+      font-family: var(--grotesk); font-size: 8px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--k); background: var(--ox); padding: 10px 20px; text-decoration: none; transition: background .2s;
+    }
+    .hdr-book:hover { background: var(--am); }
+    @media (max-width: 600px) { #hdr { padding: 0 20px; } .hdr-back span { display: none; } }
+
+    /* Layout */
+    .wrap { max-width: 820px; margin: 0 auto; padding: 0 40px; }
+    @media (max-width: 600px) { .wrap { padding: 0 20px; } }
+
+    /* Hero */
+    .hero { padding: 80px 0 72px; border-bottom: 1px solid var(--border); }
+    .hero-eyebrow { font-size: 9px; font-weight: 600; letter-spacing: .35em; text-transform: uppercase; color: var(--ox); margin-bottom: 18px; }
+    .hero-title {
+      font-family: var(--syne); font-size: clamp(36px, 7vw, 72px);
+      font-weight: 800; letter-spacing: -.025em; line-height: 1.02;
+      color: var(--wh); margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: 14px; color: var(--dim); max-width: 48ch; line-height: 1.65;
+    }
+    @media (max-width: 600px) { .hero { padding: 52px 0 48px; } }
+
+    /* FAQ list */
+    .faq-list { padding: 16px 0 100px; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .faq-trigger {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: 36px 0;
+      text-align: left;
+      color: var(--wh);
+    }
+
+    .faq-num {
+      font-family: var(--syne); font-size: 11px; font-weight: 800;
+      color: var(--ox); letter-spacing: .1em;
+      flex-shrink: 0; width: 28px;
+    }
+
+    .faq-q {
+      font-family: var(--syne); font-size: clamp(16px, 2.4vw, 22px);
+      font-weight: 800; letter-spacing: -.01em; line-height: 1.2;
+      flex: 1;
+    }
+
+    .faq-icon {
+      flex-shrink: 0; width: 32px; height: 32px;
+      border: 1px solid rgba(237,234,228,.15); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .3s, background .3s;
+    }
+    .faq-icon svg { transition: transform .4s var(--ease); }
+    .faq-trigger:hover .faq-icon { border-color: var(--ox); background: rgba(230,184,0,.08); }
+
+    .faq-item.open .faq-icon { background: var(--ox); border-color: var(--ox); }
+    .faq-item.open .faq-icon svg { transform: rotate(45deg); }
+    .faq-item.open .faq-icon svg path { stroke: var(--k); }
+
+    .faq-body {
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows .4s var(--ease);
+    }
+    .faq-item.open .faq-body { grid-template-rows: 1fr; }
+
+    .faq-body-inner {
+      overflow: hidden;
+    }
+
+    .faq-a {
+      padding: 0 0 36px 44px;
+      font-size: 15px; line-height: 1.7;
+      color: rgba(237,234,228,.7);
+      max-width: 62ch;
+    }
+    .faq-a strong { color: var(--wh); font-weight: 600; }
+    .faq-a a { color: var(--ox); text-decoration: none; }
+    .faq-a a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .faq-trigger { padding: 28px 0; gap: 16px; }
+      .faq-a { padding: 0 0 28px 0; font-size: 14px; }
+      .faq-num { display: none; }
+    }
+
+    /* CTA strip */
+    .cta-strip {
+      border-top: 1px solid var(--border);
+      padding: 72px 0 100px;
+      display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px;
+    }
+    .cta-strip-label { font-size: 9px; font-weight: 600; letter-spacing: .35em; text-transform: uppercase; color: var(--ox); }
+    .cta-strip-headline {
+      font-family: var(--syne); font-size: clamp(24px, 4vw, 40px);
+      font-weight: 800; letter-spacing: -.02em; color: var(--wh);
+    }
+    .cta-strip-btn {
+      display: inline-block; font-family: var(--grotesk); font-size: 9px; font-weight: 700;
+      letter-spacing: .24em; text-transform: uppercase;
+      color: var(--k); background: var(--ox); padding: 16px 36px;
+      text-decoration: none; transition: background .2s;
+    }
+    .cta-strip-btn:hover { background: var(--am); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .foot-brand { font-size: 9px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: rgba(237,234,228,.2); }
+    .foot-note  { font-size: 9px; color: rgba(237,234,228,.15); }
+    .foot-note a { color: inherit; text-decoration: none; opacity: .6; }
+    @media (max-width: 600px) { footer { padding: 24px 20px; flex-direction: column; align-items: flex-start; } }
+  </style>
+</head>
+<body>
+
+  <div id="top-bar"><div id="top-bar-fill"></div></div>
+
+  <header id="hdr">
+    <a href="index.html" class="hdr-logo" aria-label="New Found Visuals home">
+      <span class="logo-nf">NFV</span>
+      <span class="logo-vis">New Found Visuals</span>
+    </a>
+    <div class="hdr-right">
+      <a href="index.html" class="hdr-back">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2L4 6l4 4"/></svg>
+        <span>Back to site</span>
+      </a>
+      <a href="pricing.html" class="hdr-book">Book a Shoot</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <div class="hero">
+        <p class="hero-eyebrow">FAQ</p>
+        <h1 class="hero-title">Your questions,<br>answered.</h1>
+        <p class="hero-sub">Everything you need to know before booking your shoot with New Found Visuals.</p>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span class="faq-num">01</span>
+            <span class="faq-q">How fast do you deliver photos and videos?</span>
+            <span class="faq-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2v8M2 6h8"/></svg>
+            </span>
+          </button>
+          <div class="faq-body">
+            <div class="faq-body-inner">
+              <p class="faq-a"><strong>Photos</strong> are delivered within <strong>24–48 hours</strong> of your shoot. <strong>Videos and reels</strong> take a bit more time — expect delivery within <strong>2–5 business days</strong> depending on the scope of the project.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span class="faq-num">02</span>
+            <span class="faq-q">What areas do you serve?</span>
+            <span class="faq-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2v8M2 6h8"/></svg>
+            </span>
+          </button>
+          <div class="faq-body">
+            <div class="faq-body-inner">
+              <p class="faq-a">We cover the full <strong>Chicagoland area</strong> — both the city and surrounding suburbs. Not sure if your listing falls within range? <a href="pricing.html#contact">Reach out</a> and we'll confirm.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span class="faq-num">03</span>
+            <span class="faq-q">How long does a shoot take?</span>
+            <span class="faq-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2v8M2 6h8"/></svg>
+            </span>
+          </button>
+          <div class="faq-body">
+            <div class="faq-body-inner">
+              <p class="faq-a">Most shoots wrap in about <strong>1 hour</strong>. Larger properties or listings that include both photo and video packages may take <strong>up to 2 hours</strong> on-site.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span class="faq-num">04</span>
+            <span class="faq-q">Do you offer rush delivery?</span>
+            <span class="faq-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2v8M2 6h8"/></svg>
+            </span>
+          </button>
+          <div class="faq-body">
+            <div class="faq-body-inner">
+              <p class="faq-a">Yes. Rush delivery is available — <strong>additional fees may apply</strong> depending on the timeline requested. Mention it when you book and we'll work something out.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span class="faq-num">05</span>
+            <span class="faq-q">What happens if the weather is bad?</span>
+            <span class="faq-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2v8M2 6h8"/></svg>
+            </span>
+          </button>
+          <div class="faq-body">
+            <div class="faq-body-inner">
+              <p class="faq-a">Weather happens — especially in Chicago. Cancellations due to weather receive <strong>priority rescheduling</strong> and are <strong>not subject to cancellation fees</strong>. We'll get you back on the calendar as soon as conditions clear.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span class="faq-num">06</span>
+            <span class="faq-q">How do I receive my files?</span>
+            <span class="faq-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2v8M2 6h8"/></svg>
+            </span>
+          </button>
+          <div class="faq-body">
+            <div class="faq-body-inner">
+              <p class="faq-a">All deliverables are shared via <strong>Google Drive</strong>. You'll receive a link to your folder where you can download everything at full resolution. Reels and videos will need to be downloaded before posting to Instagram or any other platform.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /faq-list -->
+
+      <div class="cta-strip">
+        <p class="cta-strip-label">Ready to book?</p>
+        <h2 class="cta-strip-headline">Let's tell your listing's story.</h2>
+        <a href="pricing.html#contact" class="cta-strip-btn">Book Your Shoot</a>
+      </div>
+
+    </div><!-- /wrap -->
+  </main>
+
+  <footer>
+    <span class="foot-brand">New Found Visuals · 2026</span>
+    <span class="foot-note">Real estate photography & videography · Diego Levano &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a></span>
+  </footer>
+
+  <script>
+    /* Progress bar */
+    const fill = document.getElementById('top-bar-fill');
+    window.addEventListener('scroll', () => {
+      const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      fill.style.transform = `scaleX(${Math.min(pct, 1)})`;
+    }, { passive: true });
+
+    /* FAQ accordion */
+    document.querySelectorAll('.faq-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+
+        /* Close all */
+        document.querySelectorAll('.faq-item.open').forEach(el => {
+          el.classList.remove('open');
+          el.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+        });
+
+        /* Open clicked (unless it was already open) */
+        if (!isOpen) {
+          item.classList.add('open');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
