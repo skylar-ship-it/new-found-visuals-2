@@ -591,17 +591,13 @@
     }
     .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 2; }
 
-    /* Metrics overlay — hidden by default, slides up on hover/tap */
+    /* Metrics — always visible at bottom of card */
     .reel-metrics {
       position: absolute; bottom: 0; left: 0; right: 0; z-index: 4;
       padding: 52px 14px 14px;
       background: linear-gradient(to top, rgba(6,6,6,.97) 0%, rgba(6,6,6,.7) 55%, transparent 100%);
-      transform: translateY(100%);
-      transition: transform .38s cubic-bezier(.22,.68,0,1.2);
       pointer-events: none;
     }
-    .reel-card:hover .reel-metrics,
-    .reel-card.peek   .reel-metrics { transform: translateY(0); }
 
     /* Client name inside metrics */
     .reel-client {
@@ -916,8 +912,6 @@
                   <div class="reel-stat"><span class="reel-stat-val">16.3K</span><span class="reel-stat-lbl">Likes</span></div>
                   <div class="reel-stat-div"></div>
                   <div class="reel-stat"><span class="reel-stat-val">814K</span><span class="reel-stat-lbl">Views</span></div>
-                  <div class="reel-stat-div"></div>
-                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+2,847</span><span class="reel-stat-lbl">New Followers</span></div>
                 </div>
               </div>
             </div>
@@ -931,8 +925,6 @@
                   <div class="reel-stat"><span class="reel-stat-val">31.7K</span><span class="reel-stat-lbl">Likes</span></div>
                   <div class="reel-stat-div"></div>
                   <div class="reel-stat"><span class="reel-stat-val">8.9K</span><span class="reel-stat-lbl">Shares</span></div>
-                  <div class="reel-stat-div"></div>
-                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+1,523</span><span class="reel-stat-lbl">New Followers</span></div>
                 </div>
               </div>
             </div>
@@ -946,8 +938,6 @@
                   <div class="reel-stat"><span class="reel-stat-val">62.4K</span><span class="reel-stat-lbl">Likes</span></div>
                   <div class="reel-stat-div"></div>
                   <div class="reel-stat"><span class="reel-stat-val">19.1K</span><span class="reel-stat-lbl">Shares</span></div>
-                  <div class="reel-stat-div"></div>
-                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+4,210</span><span class="reel-stat-lbl">New Followers</span></div>
                 </div>
               </div>
             </div>
@@ -961,8 +951,6 @@
                   <div class="reel-stat"><span class="reel-stat-val">27.3K</span><span class="reel-stat-lbl">Likes</span></div>
                   <div class="reel-stat-div"></div>
                   <div class="reel-stat"><span class="reel-stat-val">6.2K</span><span class="reel-stat-lbl">Shares</span></div>
-                  <div class="reel-stat-div"></div>
-                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+981</span><span class="reel-stat-lbl">New Followers</span></div>
                 </div>
               </div>
             </div>
@@ -976,8 +964,6 @@
                   <div class="reel-stat"><span class="reel-stat-val">19.8K</span><span class="reel-stat-lbl">Likes</span></div>
                   <div class="reel-stat-div"></div>
                   <div class="reel-stat"><span class="reel-stat-val">4.7K</span><span class="reel-stat-lbl">Shares</span></div>
-                  <div class="reel-stat-div"></div>
-                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+763</span><span class="reel-stat-lbl">New Followers</span></div>
                 </div>
               </div>
             </div>
@@ -991,8 +977,6 @@
                   <div class="reel-stat"><span class="reel-stat-val">44.1K</span><span class="reel-stat-lbl">Likes</span></div>
                   <div class="reel-stat-div"></div>
                   <div class="reel-stat"><span class="reel-stat-val">15.3K</span><span class="reel-stat-lbl">Shares</span></div>
-                  <div class="reel-stat-div"></div>
-                  <div class="reel-stat reel-stat--follow"><span class="reel-stat-val">+3,102</span><span class="reel-stat-lbl">New Followers</span></div>
                 </div>
               </div>
             </div>
@@ -1439,25 +1423,6 @@
     requestAnimationFrame(() => requestAnimationFrame(updateArrows));
   }
 
-  /* — touch tap on mobile toggles metrics overlay — */
-  if (livingScene) {
-    livingScene.querySelectorAll('.reel-card').forEach(card => {
-      card.addEventListener('click', e => {
-        /* Don't fire if user is just scrolling the track */
-        const isPeek = card.classList.contains('peek');
-        /* Close all other open cards first */
-        livingScene.querySelectorAll('.reel-card.peek').forEach(c => {
-          if (c !== card) c.classList.remove('peek');
-        });
-        card.classList.toggle('peek', !isPeek);
-        e.stopPropagation();
-      });
-    });
-    /* Tap anywhere outside cards dismisses metrics */
-    livingScene.addEventListener('click', () => {
-      livingScene.querySelectorAll('.reel-card.peek').forEach(c => c.classList.remove('peek'));
-    });
-  }
 
   /* — hook into scene-activation flow — */
   const origOnActive = window._onSceneActive;
