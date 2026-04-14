@@ -591,11 +591,11 @@
     }
     .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 2; }
 
-    /* Metrics — always visible at bottom of card */
+    /* Metrics — pinned to top of card, above the video */
     .reel-metrics {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 4;
-      padding: 52px 14px 14px;
-      background: linear-gradient(to top, rgba(6,6,6,.97) 0%, rgba(6,6,6,.7) 55%, transparent 100%);
+      position: absolute; top: 0; left: 0; right: 0; z-index: 4;
+      padding: 14px 14px 48px;
+      background: linear-gradient(to bottom, rgba(6,6,6,.95) 0%, rgba(6,6,6,.6) 60%, transparent 100%);
       pointer-events: none;
     }
 
@@ -603,7 +603,7 @@
     .reel-client {
       font-family: var(--grotesk); font-size: 9px; font-weight: 700;
       letter-spacing: .18em; text-transform: uppercase;
-      color: var(--wh); margin-bottom: 10px;
+      color: var(--wh); margin-bottom: 8px;
       opacity: .85;
     }
 
