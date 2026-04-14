@@ -340,6 +340,41 @@
       .scene-video { animation: none !important; transform: none !important; }
     }
 
+    /* ── Scene 02 photo slideshow ───────────────────────────────── */
+    .story-slides {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    .story-slide {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center center;
+      opacity: 0;
+      animation: story-fade 24s infinite;
+      will-change: opacity;
+    }
+    .story-slide:nth-child(1) { animation-delay:  0s; }
+    .story-slide:nth-child(2) { animation-delay:  6s; }
+    .story-slide:nth-child(3) { animation-delay: 12s; }
+    .story-slide:nth-child(4) { animation-delay: 18s; }
+    @keyframes story-fade {
+      0%   { opacity: 0; }
+      6%   { opacity: 1; }
+      22%  { opacity: 1; }
+      28%  { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { .story-slide { animation: none !important; opacity: 1; } }
+
+    /* Photo credit line */
+    .story-credit {
+      font-family: var(--grotesk); font-size: 8px; font-weight: 500;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(237,234,228,.38);
+      margin-top: 14px;
+      transition: color .2s;
+    }
+    .story-credit:hover { color: rgba(237,234,228,.65); }
+
     /* Hero: desktop shows drone video, mobile shows portrait JPG */
     .scene-video--mob  { display: none; }
     .scene-video--desk { display: block; }
@@ -881,7 +916,13 @@
 
     <!-- 02 — SERVICES ───────────────────────────────────────────── -->
     <section class="scene" id="scene-entry" data-num="02" data-name="Services">
-      <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="entry.mp4"></video>
+      <!-- Crossfading photo slideshow — Dowell Group · Gold Coast -->
+      <div class="story-slides" aria-hidden="true">
+        <img class="story-slide" src="story1.jpg" alt="" loading="eager" />
+        <img class="story-slide" src="story2.jpg" alt="" loading="lazy" />
+        <img class="story-slide" src="story3.jpg" alt="" loading="lazy" />
+        <img class="story-slide" src="story4.jpg" alt="" loading="lazy" />
+      </div>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">02</div>
       <div class="scene-content">
@@ -892,6 +933,7 @@
           <span class="q-line"><span class="q-inner">has a <span class="ink">story</span></span></span>
           <span class="q-line"><span class="q-inner">we tell it.</span></span>
         </h2>
+        <p class="story-credit">Dowell Group &nbsp;·&nbsp; Ecaterina &nbsp;·&nbsp; Gold Coast, Chicago</p>
         <div class="scene-cats">
           <span class="cat-chip hero">Luxury Video</span>
           <span class="cat-chip hero">Mid-Tier Video</span>
@@ -1211,14 +1253,20 @@
 
   /* First video — skip the drone on mobile (replaced by portrait JPG) */
   const v0 = scenes[0].querySelector('.scene-video--desk');
-  if (isMobile && v0) { v0.removeAttribute('src'); v0.load(); scenes[0].classList.add('loaded'); }
-  v0.play().catch(() => {
-    document.addEventListener('touchstart', () => v0.play().catch(()=>{}), { once:true, passive:true });
-  });
+  if (v0) {
+    if (isMobile) {
+      v0.removeAttribute('src'); v0.load(); scenes[0].classList.add('loaded');
+    } else {
+      v0.play().catch(() => {
+        document.addEventListener('touchstart', () => v0.play().catch(()=>{}), { once:true, passive:true });
+      });
+    }
+  }
 
-  /* Mark scene loaded when video can play */
+  /* Mark scene loaded when video can play — skip scenes with no video (e.g. photo slideshow) */
   scenes.forEach(scene => {
     const vid = scene.querySelector('video');
+    if (!vid) { scene.classList.add('loaded'); return; }
     const mark = () => scene.classList.add('loaded');
     if (vid.readyState >= 3) { mark(); } else { vid.addEventListener('canplay', mark, { once: true }); }
   });
