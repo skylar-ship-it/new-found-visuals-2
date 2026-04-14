@@ -1231,8 +1231,8 @@
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       const vid = entry.target.querySelector('video[data-src]');
-      /* On mobile, skip the decorative background scene videos */
-      if (vid && isMobile && vid.classList.contains('scene-video')) {
+      /* On mobile, skip decorative background videos — except stopscrolling.mp4 (scene 5) */
+      if (vid && isMobile && vid.classList.contains('scene-video') && entry.target.id !== 'scene-aerial') {
         entry.target.classList.add('loaded'); /* dismiss spinner */
         lazyObs.unobserve(entry.target);
         return;
