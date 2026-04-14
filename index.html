@@ -378,13 +378,9 @@
     }
     .story-credit:hover { color: rgba(237,234,228,.65); }
 
-    /* Hero: desktop shows drone video, mobile shows portrait JPG */
-    .scene-video--mob  { display: none; }
-    .scene-video--desk { display: block; }
-    @media (max-width: 768px) {
-      .scene-video--desk { display: none; }
-      .scene-video--mob  { display: block; object-fit: cover; object-position: center center; }
-    }
+    /* Hero: same image on desktop and mobile */
+    .scene-video--desk { display: none; }
+    .scene-video--mob  { display: block; object-fit: cover; object-position: center center; }
 
     /* ── Overlays ───────────────────────────────────────────────── */
     .scene-overlay {
