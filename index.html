@@ -661,23 +661,22 @@
         padding: 0 38px;
         gap: 10px;
       }
-      /* Card: fixed width so exactly ~1 card + peek of next */
+      /* Tall portrait cards — 9:16 ratio, height drives width */
       .reel-card {
-        height: calc(var(--vh, 1svh) * 56);
-        max-height: 340px;
-        width: calc(100vw - 90px);
-        aspect-ratio: unset;
+        height: calc(var(--vh, 1svh) * 62);
+        max-height: 460px;
+        width: auto;
+        aspect-ratio: 9/16;
       }
-      .reel-card video { height: 100%; width: 100%; object-fit: cover; }
       /* Arrow centred on card height */
       .reel-arrow {
         bottom: calc(var(--vh, 1svh) * 28);
         width: 28px; height: 28px;
       }
-      /* Anchor headline just above the carousel rather than floating at top */
+      /* Anchor headline just above the carousel */
       #scene-living .scene-content {
         justify-content: flex-end;
-        padding: 0 20px calc(var(--vh, 1svh) * 60);
+        padding: 0 20px calc(var(--vh, 1svh) * 64);
         align-items: flex-start;
       }
       #scene-living .scene-quote { font-size: clamp(24px, 7vw, 40px); }
