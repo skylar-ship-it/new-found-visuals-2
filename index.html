@@ -340,6 +340,14 @@
       .scene-video { animation: none !important; transform: none !important; }
     }
 
+    /* Hero: desktop shows drone video, mobile shows portrait JPG */
+    .scene-video--mob  { display: none; }
+    .scene-video--desk { display: block; }
+    @media (max-width: 768px) {
+      .scene-video--desk { display: none; }
+      .scene-video--mob  { display: block; object-fit: cover; object-position: center center; }
+    }
+
     /* ── Overlays ───────────────────────────────────────────────── */
     .scene-overlay {
       position: absolute; inset: 0; z-index: 1; pointer-events: none;
@@ -854,7 +862,10 @@
 
     <!-- 01 — HOOK / CHICAGO DRONE ──────────────────────────────── -->
     <section class="scene" id="scene-exterior" data-num="01" data-name="Chicago">
-      <video class="scene-video" autoplay muted loop playsinline webkit-playsinline preload="auto" src="droneshot.mp4"></video>
+      <!-- Desktop: landscape drone video -->
+      <video class="scene-video scene-video--desk" autoplay muted loop playsinline webkit-playsinline preload="auto" src="droneshot.mp4"></video>
+      <!-- Mobile: portrait hero image (JPG) -->
+      <img class="scene-video scene-video--mob" src="heroimagemobile.jpg" alt="Chicago skyline at golden hour" loading="eager" />
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">01</div>
       <div class="scene-content">
@@ -1198,8 +1209,8 @@
 
   scenes.slice(1).forEach(s => lazyObs.observe(s));
 
-  /* First video — skip on mobile (decorative background, saves data) */
-  const v0 = scenes[0].querySelector('video');
+  /* First video — skip the drone on mobile (replaced by portrait JPG) */
+  const v0 = scenes[0].querySelector('.scene-video--desk');
   if (isMobile && v0) { v0.removeAttribute('src'); v0.load(); scenes[0].classList.add('loaded'); }
   v0.play().catch(() => {
     document.addEventListener('touchstart', () => v0.play().catch(()=>{}), { once:true, passive:true });
