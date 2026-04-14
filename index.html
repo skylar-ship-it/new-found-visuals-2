@@ -735,6 +735,100 @@
     /* Client names list (mobile text fallback — hidden, carousel works on mobile now) */
     .scene-clients { display: none; }
 
+    /* ── Testimonial Carousel (scene 05) ────────────────────────── */
+    #scene-aerial .scene-bg-num  { display: none; }
+    #scene-aerial .scene-overlay { opacity: .72; }
+
+    .testi-wrap {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 5;
+      padding: 56px 32px 48px;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .testi-eyebrow {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 52px;
+      color: rgba(237,234,228,.42);
+      font-family: var(--grotesk); font-size: 9px;
+      font-weight: 600; letter-spacing: .28em; text-transform: uppercase;
+    }
+    .testi-eyebrow .t-rule {
+      display: block; width: 36px; height: 1px;
+      background: rgba(237,234,228,.22);
+    }
+
+    .testi-track-outer {
+      width: 100%; max-width: 780px;
+      overflow: hidden; position: relative;
+      pointer-events: all;
+      cursor: grab;
+    }
+    .testi-track-outer:active { cursor: grabbing; }
+
+    .testi-track {
+      display: flex;
+      transition: transform .55s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
+    }
+
+    .testi-slide {
+      min-width: 100%;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 0 20px;
+    }
+
+    .testi-quote {
+      font-family: var(--inter);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(19px, 2.8vw, 36px);
+      line-height: 1.55;
+      color: rgba(237,234,228,.95);
+      margin: 0 0 32px;
+    }
+    .testi-quote::before { content: '\201C'; color: var(--ox); margin-right: 3px; }
+    .testi-quote::after  { content: '\201D'; color: var(--ox); margin-left: 3px; }
+
+    .testi-rule {
+      width: 32px; height: 1px;
+      background: rgba(230,184,0,.55);
+      margin: 0 auto 20px;
+    }
+
+    .testi-attr {
+      font-family: var(--grotesk);
+      font-size: 11.5px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(237,234,228,.52);
+    }
+    .testi-attr strong { color: rgba(237,234,228,.88); font-weight: 600; }
+
+    .testi-dots {
+      display: flex; gap: 10px; margin-top: 48px;
+      pointer-events: all;
+    }
+    .tdot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,.25);
+      border: none; padding: 0; cursor: pointer;
+      transition: background .3s, transform .3s;
+    }
+    .tdot.active {
+      background: var(--ox);
+      transform: scale(1.4);
+    }
+
+    @media (max-width: 700px) {
+      .testi-wrap { padding: 52px 20px 40px; }
+      .testi-eyebrow { margin-bottom: 36px; }
+      .testi-quote { font-size: clamp(17px, 5.5vw, 24px); }
+      .testi-dots  { margin-top: 36px; }
+    }
+
     /* ── CTA  ────────────────────────────────────────────────────── */
     .cta-block {
       display: flex; flex-direction: column; align-items: center;
@@ -863,8 +957,8 @@
     <div class="snav-item active" data-target="scene-exterior" role="button" tabindex="0"><span class="snav-label">Chicago</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-entry"   role="button" tabindex="0"><span class="snav-label">Services</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-living"  role="button" tabindex="0"><span class="snav-label">Clients</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-details" role="button" tabindex="0"><span class="snav-label">Portfolio</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-aerial"  role="button" tabindex="0"><span class="snav-label">Aerial</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-details" role="button" tabindex="0"><span class="snav-label">Viral</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-aerial"  role="button" tabindex="0"><span class="snav-label">Reviews</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-sunset"  role="button" tabindex="0"><span class="snav-label">Book</span><span class="snav-dot"></span></div>
   </nav>
 
@@ -873,8 +967,8 @@
     <span class="mob-dot active" data-target="scene-exterior" role="button" tabindex="0" aria-label="Chicago"></span>
     <span class="mob-dot" data-target="scene-entry"   role="button" tabindex="0" aria-label="Services"></span>
     <span class="mob-dot" data-target="scene-living"  role="button" tabindex="0" aria-label="Clients"></span>
-    <span class="mob-dot" data-target="scene-details" role="button" tabindex="0" aria-label="Portfolio"></span>
-    <span class="mob-dot" data-target="scene-aerial"  role="button" tabindex="0" aria-label="Aerial"></span>
+    <span class="mob-dot" data-target="scene-details" role="button" tabindex="0" aria-label="Viral"></span>
+    <span class="mob-dot" data-target="scene-aerial"  role="button" tabindex="0" aria-label="Reviews"></span>
     <span class="mob-dot" data-target="scene-sunset"  role="button" tabindex="0" aria-label="Book"></span>
   </nav>
 
@@ -1054,11 +1148,11 @@
         </div><!-- /reels-row -->
       </div><!-- /reels-carousel -->
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">03</span><span class="ew-rule"></span><span class="ew-lbl">Our Clients</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago's top agents · Trust New Found Visuals</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">03</span><span class="ew-rule"></span><span class="ew-lbl">Client Reels</span></div>
+        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago's top agents · New Found Visuals</span></div>
         <h2 class="scene-quote">
-          <span class="q-line"><span class="q-inner">Trusted by</span></span>
-          <span class="q-line"><span class="q-inner">the <span class="ink">best</span></span></span>
+          <span class="q-line"><span class="q-inner">Built to</span></span>
+          <span class="q-line"><span class="q-inner">stop the <span class="ink">scroll.</span></span></span>
         </h2>
         <div class="scene-clients">
           <span class="client-name">Laricy Team</span>
@@ -1069,35 +1163,71 @@
       </div>
     </section>
 
-    <!-- 04 — KITCHEN & LIVING ROOM ──────────────────────────────── -->
-    <section class="scene" id="scene-details" data-num="04" data-name="Kitchen &amp; Living">
-      <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="details.mp4"></video>
+    <!-- 04 — 19.2M VIRAL VIDEO ──────────────────────────────────── -->
+    <section class="scene" id="scene-details" data-num="04" data-name="Viral">
+      <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="stopscrolling.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">04</div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">04</span><span class="ew-rule"></span><span class="ew-lbl">Kitchen & Living</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Interiors · Built for social, shot to perform</span></div>
-        <h2 class="scene-quote">
-          <span class="q-line"><span class="q-inner">Built to</span></span>
-          <span class="q-line"><span class="q-inner">stop the <span class="ink">scroll.</span></span></span>
-        </h2>
-      </div>
-    </section>
-
-    <!-- 05 — AERIAL CITY VIEW ───────────────────────────────────── -->
-    <section class="scene" id="scene-aerial" data-num="05" data-name="Aerial View">
-      <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="stopscrolling.mp4"></video>
-      <div class="scene-overlay"></div><div class="scene-vignette"></div>
-      <div class="scene-bg-num" aria-hidden="true">05</div>
-      <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">05</span><span class="ew-rule"></span><span class="ew-lbl">Aerial View</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Aerial · Diego's personal Instagram · Chicago</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">04</span><span class="ew-rule"></span><span class="ew-lbl">Aerial</span></div>
+        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Aerial · Diego Edu · Chicago</span></div>
         <h2 class="scene-quote">
           <span class="q-line"><span class="q-inner">19.2 million</span></span>
           <span class="q-line"><span class="q-inner">stopped</span></span>
           <span class="q-line"><span class="q-inner"><span class="ink">scrolling.</span></span></span>
         </h2>
       </div>
+    </section>
+
+    <!-- 05 — TESTIMONIALS ───────────────────────────────────────── -->
+    <section class="scene" id="scene-aerial" data-num="05" data-name="Testimonials">
+      <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="details.mp4"></video>
+      <div class="scene-overlay"></div><div class="scene-vignette"></div>
+
+      <div class="testi-wrap">
+        <div class="testi-eyebrow">
+          <span class="t-rule"></span>
+          What clients say
+          <span class="t-rule"></span>
+        </div>
+
+        <div class="testi-track-outer" id="testi-track-outer">
+          <div class="testi-track" id="testi-track">
+
+            <div class="testi-slide">
+              <p class="testi-quote">Diego's work stopped our listing in its feed. We saw three times more saves within 24 hours of going live.</p>
+              <div class="testi-rule"></div>
+              <div class="testi-attr"><strong>Matt Laricy</strong> &nbsp;·&nbsp; Laricy Team</div>
+            </div>
+
+            <div class="testi-slide">
+              <p class="testi-quote">Every frame felt intentional. Our clients said it was the best listing video they had ever seen.</p>
+              <div class="testi-rule"></div>
+              <div class="testi-attr"><strong>Katie Hutchens</strong> &nbsp;·&nbsp; katiehutchens_realestate</div>
+            </div>
+
+            <div class="testi-slide">
+              <p class="testi-quote">The aerial footage alone generated three out-of-state inquiries. It sells before buyers even walk through the door.</p>
+              <div class="testi-rule"></div>
+              <div class="testi-attr"><strong>Dowell Group</strong> &nbsp;·&nbsp; Chicago</div>
+            </div>
+
+            <div class="testi-slide">
+              <p class="testi-quote">We have worked with a lot of photographers. Diego operates on a different level — the engagement numbers prove it.</p>
+              <div class="testi-rule"></div>
+              <div class="testi-attr"><strong>@properties</strong> &nbsp;·&nbsp; Chicago</div>
+            </div>
+
+          </div><!-- /testi-track -->
+        </div><!-- /testi-track-outer -->
+
+        <div class="testi-dots" id="testi-dots">
+          <button class="tdot active" data-idx="0" aria-label="Testimonial 1"></button>
+          <button class="tdot"        data-idx="1" aria-label="Testimonial 2"></button>
+          <button class="tdot"        data-idx="2" aria-label="Testimonial 3"></button>
+          <button class="tdot"        data-idx="3" aria-label="Testimonial 4"></button>
+        </div>
+      </div><!-- /testi-wrap -->
     </section>
 
     <!-- 06 — SUNSET + CTA ───────────────────────────────────────── -->
@@ -1231,8 +1361,8 @@
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       const vid = entry.target.querySelector('video[data-src]');
-      /* On mobile, skip decorative background videos — except stopscrolling.mp4 (scene 5) */
-      if (vid && isMobile && vid.classList.contains('scene-video') && entry.target.id !== 'scene-aerial') {
+      /* On mobile, skip decorative background videos — except stopscrolling.mp4 (scene 4) */
+      if (vid && isMobile && vid.classList.contains('scene-video') && entry.target.id !== 'scene-details') {
         entry.target.classList.add('loaded'); /* dismiss spinner */
         lazyObs.unobserve(entry.target);
         return;
@@ -1525,6 +1655,68 @@
     }, { root: scrollWrap, threshold: 0.4 });
     reelObs.observe(livingScene);
   }
+
+  /* ================================================================
+     TESTIMONIAL CAROUSEL (scene 04)
+     Swipe / drag / dot navigation. Auto-advances every 6s.
+     ================================================================ */
+  (function() {
+    const track = document.getElementById('testi-track');
+    const outer = document.getElementById('testi-track-outer');
+    const dots  = document.querySelectorAll('#testi-dots .tdot');
+    if (!track || !outer) return;
+
+    let cur = 0;
+    const total = track.children.length;
+    let autoTimer = null;
+
+    function goTo(idx) {
+      cur = ((idx % total) + total) % total;
+      track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === cur); });
+    }
+
+    function startAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(function() { goTo(cur + 1); }, 6000);
+    }
+    startAuto();
+
+    /* Dot clicks */
+    dots.forEach(function(d) {
+      d.addEventListener('click', function() {
+        goTo(+d.dataset.idx);
+        startAuto();
+      });
+    });
+
+    /* Touch swipe */
+    let tStartX = 0;
+    outer.addEventListener('touchstart', function(e) {
+      tStartX = e.touches[0].clientX;
+      clearInterval(autoTimer);
+    }, { passive: true });
+    outer.addEventListener('touchend', function(e) {
+      const dx = e.changedTouches[0].clientX - tStartX;
+      if (Math.abs(dx) > 40) goTo(cur + (dx < 0 ? 1 : -1));
+      startAuto();
+    }, { passive: true });
+
+    /* Mouse drag (desktop) */
+    let mStartX = 0, mDown = false;
+    outer.addEventListener('mousedown', function(e) {
+      mStartX = e.clientX; mDown = true;
+      clearInterval(autoTimer);
+    });
+    outer.addEventListener('mouseup', function(e) {
+      if (!mDown) return;
+      const dx = e.clientX - mStartX;
+      if (Math.abs(dx) > 40) goTo(cur + (dx < 0 ? 1 : -1));
+      mDown = false;
+      startAuto();
+    });
+    outer.addEventListener('mouseleave', function() { mDown = false; });
+  })();
 
   </script>
 </body>
