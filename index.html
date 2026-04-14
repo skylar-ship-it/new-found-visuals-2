@@ -328,7 +328,7 @@
     #scene-living   .scene-video { object-position: center 40%; animation: kb-zoom 28s ease-in-out infinite alternate; }
     #scene-details  .scene-video { object-position: center 50%; animation: kb-panL 32s ease-in-out infinite alternate; }
     #scene-aerial   .scene-video { object-position: center 35%; animation: kb-out  40s ease-in-out infinite alternate; }
-    #scene-sunset   .scene-video { object-position: center 55%; animation: kb-zoom 44s ease-in-out infinite alternate; }
+    #scene-sunset   .scene-video { display: none; }
 
     @keyframes kb-zoom { from { transform: scale(1)    translateY( 1.5%); } to { transform: scale(1.09) translateY(-1%);   } }
     @keyframes kb-out  { from { transform: scale(1.09);                   } to { transform: scale(1);                      } }
@@ -738,6 +738,7 @@
     /* ── Testimonial Carousel (scene 05) ────────────────────────── */
     #scene-aerial .scene-bg-num  { display: none; }
     #scene-aerial .scene-overlay { opacity: .72; }
+    #scene-aerial .scene-video   { display: none; }
 
     .testi-wrap {
       position: absolute; inset: 0;
