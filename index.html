@@ -1241,6 +1241,89 @@
       .clients-header { margin-bottom: 36px; }
     }
 
+    /* ================================================================
+       PHOTOGRAPHY SCENE (scene-photography)
+       Full-screen cinematic crossfade slideshow
+       ================================================================ */
+    #scene-photography { background: #040404; overflow: hidden; }
+
+    /* Slideshow stack — all photos absolute, crossfade */
+    .photo-slideshow {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    .photo-slide {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center center;
+      opacity: 0;
+      animation: photo-xfade 32s infinite;
+      will-change: opacity;
+    }
+    /* Stagger each slide — 8 photos, 4s visible each, 1s fade */
+    .photo-slide:nth-child(1) { animation-delay:  0s;  }
+    .photo-slide:nth-child(2) { animation-delay:  4s;  }
+    .photo-slide:nth-child(3) { animation-delay:  8s;  }
+    .photo-slide:nth-child(4) { animation-delay: 12s;  }
+    .photo-slide:nth-child(5) { animation-delay: 16s;  }
+    .photo-slide:nth-child(6) { animation-delay: 20s;  }
+    .photo-slide:nth-child(7) { animation-delay: 24s;  }
+    .photo-slide:nth-child(8) { animation-delay: 28s;  }
+
+    @keyframes photo-xfade {
+      0%    { opacity: 0; transform: scale(1.04); }
+      4%    { opacity: 1; transform: scale(1.04); }
+      10%   { opacity: 1; transform: scale(1);    }
+      14%   { opacity: 0; transform: scale(1);    }
+      100%  { opacity: 0; transform: scale(1);    }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .photo-slide { animation: none !important; opacity: 0; }
+      .photo-slide:nth-child(1) { opacity: 1; }
+    }
+
+    /* Heavier overlay so content text reads clearly */
+    #scene-photography .scene-overlay {
+      background: linear-gradient(
+        to top,
+        rgba(4,4,4,.95) 0%,
+        rgba(4,4,4,.35) 40%,
+        rgba(4,4,4,.1)  70%,
+        rgba(4,4,4,.4)  100%
+      );
+      z-index: 1;
+    }
+
+    /* Photo counter — bottom right */
+    .photo-counter {
+      position: absolute; bottom: 48px; right: 56px;
+      z-index: 6; pointer-events: none;
+      font-family: var(--grotesk); font-size: 9px; font-weight: 600;
+      letter-spacing: .28em; color: rgba(237,234,228,.3);
+      opacity: 0; transform: translateY(8px);
+      transition: opacity .6s var(--ease) .6s, transform .6s var(--ease) .6s;
+    }
+    #scene-photography.active .photo-counter { opacity: 1; transform: translateY(0); }
+    #photo-current { color: var(--wh); font-weight: 700; }
+
+    /* Dot indicators */
+    .photo-dots {
+      position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%);
+      z-index: 6; display: flex; gap: 8px; pointer-events: none;
+      opacity: 0; transition: opacity .6s var(--ease) .7s;
+    }
+    #scene-photography.active .photo-dots { opacity: 1; }
+    .photo-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: rgba(237,234,228,.25);
+      transition: background .4s, transform .4s;
+    }
+    .photo-dot.active { background: var(--ox); transform: scale(1.6); }
+
+    @media (max-width: 700px) {
+      .photo-counter { bottom: 80px; right: 24px; }
+      .photo-dots    { bottom: 80px; }
+    }
+
   </style>
 </head>
 
@@ -1275,7 +1358,7 @@
       <a href="pricing.html" class="hdr-pricing-link">Services</a>
       <span id="hdr-name">Chicago</span>
       <div class="hdr-counter" aria-live="polite">
-        <span id="cc">01</span><span style="opacity:.22"> / </span>05
+        <span id="cc">01</span><span style="opacity:.22"> / </span>07
       </div>
     </div>
   </header>
@@ -1285,6 +1368,7 @@
     <div class="snav-item active" data-target="scene-exterior"   role="button" tabindex="0"><span class="snav-label">Chicago</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-entry"       role="button" tabindex="0"><span class="snav-label">Services</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-details"     role="button" tabindex="0"><span class="snav-label">Viral</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-photography" role="button" tabindex="0"><span class="snav-label">Photos</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-clients"     role="button" tabindex="0"><span class="snav-label">Clients</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-living"      role="button" tabindex="0"><span class="snav-label">Our Work</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-sunset"      role="button" tabindex="0"><span class="snav-label">Contact</span><span class="snav-dot"></span></div>
@@ -1295,6 +1379,7 @@
     <span class="mob-dot active" data-target="scene-exterior"   role="button" tabindex="0" aria-label="Chicago"></span>
     <span class="mob-dot" data-target="scene-entry"       role="button" tabindex="0" aria-label="Services"></span>
     <span class="mob-dot" data-target="scene-details"     role="button" tabindex="0" aria-label="Viral"></span>
+    <span class="mob-dot" data-target="scene-photography" role="button" tabindex="0" aria-label="Photography"></span>
     <span class="mob-dot" data-target="scene-clients"     role="button" tabindex="0" aria-label="Our Clients"></span>
     <span class="mob-dot" data-target="scene-living"      role="button" tabindex="0" aria-label="Our Work"></span>
     <span class="mob-dot" data-target="scene-sunset"      role="button" tabindex="0" aria-label="Contact"></span>
@@ -1383,10 +1468,48 @@
       </div>
     </section>
 
-    <!-- 04 — OUR CLIENTS ────────────────────────────────────────── -->
-    <section class="scene loaded" id="scene-clients" data-num="04" data-name="Clients">
-      <div class="scene-overlay" style="background:rgba(6,6,6,.96);"></div>
+    <!-- 04 — PHOTOGRAPHY ────────────────────────────────────────── -->
+    <section class="scene" id="scene-photography" data-num="04" data-name="Photography">
+      <div class="photo-slideshow">
+        <img class="photo-slide" src="photo1.jpg" alt="New Found Visuals photography" loading="eager" />
+        <img class="photo-slide" src="photo2.jpg" alt="New Found Visuals photography" loading="lazy" />
+        <img class="photo-slide" src="photo3.jpg" alt="New Found Visuals photography" loading="lazy" />
+        <img class="photo-slide" src="photo4.jpg" alt="New Found Visuals photography" loading="lazy" />
+        <img class="photo-slide" src="photo5.jpg" alt="New Found Visuals photography" loading="lazy" />
+        <img class="photo-slide" src="photo6.jpg" alt="New Found Visuals photography" loading="lazy" />
+        <img class="photo-slide" src="photo7.jpg" alt="New Found Visuals photography" loading="lazy" />
+        <img class="photo-slide" src="photo8.jpg" alt="New Found Visuals photography" loading="lazy" />
+      </div>
+      <div class="scene-overlay"></div>
+      <div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">04</div>
+      <div class="scene-content">
+        <div class="scene-eyebrow"><span class="ew-num">04</span><span class="ew-rule"></span><span class="ew-lbl">Photography</span></div>
+        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · New Found Visuals</span></div>
+        <h2 class="scene-quote">
+          <span class="q-line"><span class="q-inner">Every frame</span></span>
+          <span class="q-line"><span class="q-inner">tells a <span class="ink">story.</span></span></span>
+        </h2>
+      </div>
+      <!-- Dot indicators -->
+      <div class="photo-dots" id="photo-dots">
+        <div class="photo-dot active"></div>
+        <div class="photo-dot"></div>
+        <div class="photo-dot"></div>
+        <div class="photo-dot"></div>
+        <div class="photo-dot"></div>
+        <div class="photo-dot"></div>
+        <div class="photo-dot"></div>
+        <div class="photo-dot"></div>
+      </div>
+      <!-- Counter -->
+      <div class="photo-counter"><span id="photo-current">01</span> / 08</div>
+    </section>
+
+    <!-- 05 — OUR CLIENTS ────────────────────────────────────────── -->
+    <section class="scene loaded" id="scene-clients" data-num="05" data-name="Clients">
+      <div class="scene-overlay" style="background:rgba(6,6,6,.96);"></div>
+      <div class="scene-bg-num" aria-hidden="true">05</div>
 
       <div class="clients-wrap">
 
@@ -1490,10 +1613,10 @@
     </section>
 
     <!-- 05 — OUR WORK / REELS ───────────────────────────────────── -->
-    <section class="scene" id="scene-living" data-num="05" data-name="Reels">
+    <section class="scene" id="scene-living" data-num="06" data-name="Reels">
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="living.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
-      <div class="scene-bg-num" aria-hidden="true">05</div>
+      <div class="scene-bg-num" aria-hidden="true">06</div>
       <!-- Reel carousel — 6 cards, scroll right to see more -->
       <div class="reels-carousel">
         <div class="reels-row">
@@ -1592,7 +1715,7 @@
         </div><!-- /reels-row -->
       </div><!-- /reels-carousel -->
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">05</span><span class="ew-rule"></span><span class="ew-lbl">Our Work</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">06</span><span class="ew-rule"></span><span class="ew-lbl">Our Work</span></div>
         <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago's top agents · New Found Visuals</span></div>
         <h2 class="scene-quote">
           <span class="q-line"><span class="q-inner">Built to</span></span>
@@ -1603,12 +1726,12 @@
 
 
     <!-- 06 — CONTACT ───────────────────────────────────────────── -->
-    <section class="scene loaded" id="scene-sunset" data-num="05" data-name="Contact">
+    <section class="scene loaded" id="scene-sunset" data-num="07" data-name="Contact">
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="sunset.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
-      <div class="scene-bg-num" aria-hidden="true">05</div>
+      <div class="scene-bg-num" aria-hidden="true">07</div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">05</span><span class="ew-rule"></span><span class="ew-lbl">Let's Connect</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">07</span><span class="ew-rule"></span><span class="ew-lbl">Let's Connect</span></div>
         <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · Tell us about your project</span></div>
         <h2 class="scene-quote">
           <span class="q-line"><span class="q-inner">Start the</span></span>
@@ -1671,6 +1794,7 @@
     'scene-exterior':    document.getElementById('glow-exterior'),
     'scene-entry':       document.getElementById('glow-entry'),
     'scene-living':      document.getElementById('glow-living'),
+    'scene-photography': document.getElementById('glow-photography'),
     'scene-clients':     document.getElementById('glow-clients'),
     'scene-details':     document.getElementById('glow-details'),
     'scene-aerial':      document.getElementById('glow-aerial'),
@@ -2093,6 +2217,45 @@
       startAuto();
     });
     outer.addEventListener('mouseleave', function() { mDown = false; });
+  })();
+
+  /* ================================================================
+     PHOTO SLIDESHOW COUNTER + DOTS (scene-photography)
+     ================================================================ */
+  (function() {
+    const TOTAL    = 8;
+    const INTERVAL = 4000; /* ms per slide — matches CSS */
+    const counterEl = document.getElementById('photo-current');
+    const dots      = document.querySelectorAll('#photo-dots .photo-dot');
+    let idx = 0;
+    let timer = null;
+
+    function updatePhoto(n) {
+      idx = ((n % TOTAL) + TOTAL) % TOTAL;
+      if (counterEl) counterEl.textContent = String(idx + 1).padStart(2, '0');
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+
+    function startTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => updatePhoto(idx + 1), INTERVAL);
+    }
+
+    /* Start only when scene is active */
+    const photoScene = document.getElementById('scene-photography');
+    if (photoScene) {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting && e.intersectionRatio > 0.4) {
+            updatePhoto(0);
+            startTimer();
+          } else {
+            clearInterval(timer);
+          }
+        });
+      }, { threshold: 0.4 });
+      obs.observe(photoScene);
+    }
   })();
 
   </script>
