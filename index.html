@@ -402,6 +402,33 @@
         rgba(8,8,8,.48) 100%
       );
     }
+    #scene-exterior .scene-overlay {
+      background: linear-gradient(
+        to top,
+        rgba(8,8,8,.97) 0%,
+        rgba(8,8,8,.65) 30%,
+        rgba(8,8,8,.35) 60%,
+        rgba(8,8,8,.55) 100%
+      );
+    }
+    #scene-exterior .scene-overlay {
+      background: linear-gradient(
+        to top,
+        rgba(8,8,8,.98) 0%,
+        rgba(8,8,8,.65) 30%,
+        rgba(8,8,8,.35) 60%,
+        rgba(8,8,8,.6) 100%
+      );
+    }
+    #scene-exterior .scene-overlay {
+      background: linear-gradient(
+        to top,
+        rgba(8,8,8,.98) 0%,
+        rgba(8,8,8,.75) 30%,
+        rgba(8,8,8,.25) 60%,
+        rgba(8,8,8,.55) 100%
+      );
+    }
     #scene-sunset .scene-overlay {
       background: linear-gradient(
         to top,
@@ -1257,9 +1284,9 @@
   <nav id="side-nav" aria-label="Scene navigation">
     <div class="snav-item active" data-target="scene-exterior"   role="button" tabindex="0"><span class="snav-label">Chicago</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-entry"       role="button" tabindex="0"><span class="snav-label">Services</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-clients"     role="button" tabindex="0"><span class="snav-label">Clients</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-living"      role="button" tabindex="0"><span class="snav-label">Reels</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-details"     role="button" tabindex="0"><span class="snav-label">Viral</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-clients"     role="button" tabindex="0"><span class="snav-label">Clients</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-living"      role="button" tabindex="0"><span class="snav-label">Our Work</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-sunset"      role="button" tabindex="0"><span class="snav-label">Contact</span><span class="snav-dot"></span></div>
   </nav>
 
@@ -1267,9 +1294,9 @@
   <nav id="mob-nav" aria-label="Scene navigation">
     <span class="mob-dot active" data-target="scene-exterior"   role="button" tabindex="0" aria-label="Chicago"></span>
     <span class="mob-dot" data-target="scene-entry"       role="button" tabindex="0" aria-label="Services"></span>
-    <span class="mob-dot" data-target="scene-clients"     role="button" tabindex="0" aria-label="Our Clients"></span>
-    <span class="mob-dot" data-target="scene-living"      role="button" tabindex="0" aria-label="Reels"></span>
     <span class="mob-dot" data-target="scene-details"     role="button" tabindex="0" aria-label="Viral"></span>
+    <span class="mob-dot" data-target="scene-clients"     role="button" tabindex="0" aria-label="Our Clients"></span>
+    <span class="mob-dot" data-target="scene-living"      role="button" tabindex="0" aria-label="Our Work"></span>
     <span class="mob-dot" data-target="scene-sunset"      role="button" tabindex="0" aria-label="Contact"></span>
   </nav>
 
@@ -1340,10 +1367,26 @@
       </div>
     </section>
 
-    <!-- 03 — OUR CLIENTS ────────────────────────────────────────── -->
-    <section class="scene loaded" id="scene-clients" data-num="03" data-name="Clients">
-      <div class="scene-overlay" style="background:rgba(6,6,6,.96);"></div>
+    <!-- 03 — 19.2M VIRAL VIDEO ─────────────────────────────────── -->
+    <section class="scene" id="scene-details" data-num="03" data-name="Viral">
+      <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="stoppedscroll.mp4"></video>
+      <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">03</div>
+      <div class="scene-content">
+        <div class="scene-eyebrow"><span class="ew-num">03</span><span class="ew-rule"></span><span class="ew-lbl">Aerial</span></div>
+        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Aerial · Diego Edu · Chicago</span></div>
+        <h2 class="scene-quote">
+          <span class="q-line"><span class="q-inner">19.2 million</span></span>
+          <span class="q-line"><span class="q-inner">stopped</span></span>
+          <span class="q-line"><span class="q-inner"><span class="ink">scrolling.</span></span></span>
+        </h2>
+      </div>
+    </section>
+
+    <!-- 04 — OUR CLIENTS ────────────────────────────────────────── -->
+    <section class="scene loaded" id="scene-clients" data-num="04" data-name="Clients">
+      <div class="scene-overlay" style="background:rgba(6,6,6,.96);"></div>
+      <div class="scene-bg-num" aria-hidden="true">04</div>
 
       <div class="clients-wrap">
 
@@ -1446,11 +1489,11 @@
       </div><!-- /clients-wrap -->
     </section>
 
-    <!-- 04 — TOP CLIENTS + REELS ───────────────────────────────── -->
-    <section class="scene" id="scene-living" data-num="04" data-name="Reels">
+    <!-- 05 — OUR WORK / REELS ───────────────────────────────────── -->
+    <section class="scene" id="scene-living" data-num="05" data-name="Reels">
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="living.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
-      <div class="scene-bg-num" aria-hidden="true">04</div>
+      <div class="scene-bg-num" aria-hidden="true">05</div>
       <!-- Reel carousel — 6 cards, scroll right to see more -->
       <div class="reels-carousel">
         <div class="reels-row">
@@ -1526,7 +1569,7 @@
               </div>
             </div>
 
-            <!-- Card 6 — @properties · 33.9K views (moved to last) -->
+            <!-- Card 6 — @properties · 33.9K views -->
             <div class="reel-card">
               <video muted loop playsinline webkit-playsinline preload="none" data-src="reel5.mp4"></video>
               <div class="reel-metrics">
@@ -1549,34 +1592,11 @@
         </div><!-- /reels-row -->
       </div><!-- /reels-carousel -->
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">04</span><span class="ew-rule"></span><span class="ew-lbl">Client Reels</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">05</span><span class="ew-rule"></span><span class="ew-lbl">Our Work</span></div>
         <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago's top agents · New Found Visuals</span></div>
         <h2 class="scene-quote">
           <span class="q-line"><span class="q-inner">Built to</span></span>
           <span class="q-line"><span class="q-inner">stop the <span class="ink">scroll.</span></span></span>
-        </h2>
-        <div class="scene-clients">
-          <span class="client-name">Laricy Team</span>
-          <span class="client-name">Carrie McCormick</span>
-          <span class="client-name">Dowell</span>
-          <span class="client-name">Dawn McKenna</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 06 — 19.2M VIRAL VIDEO (horizontal format) ──────────────── -->
-    <!-- ASSET NEEDED: stopscrolling-horizontal.mp4 — horizontal/landscape format version of the viral video -->
-    <section class="scene" id="scene-details" data-num="04" data-name="Viral">
-      <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="stoppedscroll.mp4"></video>
-      <div class="scene-overlay"></div><div class="scene-vignette"></div>
-      <div class="scene-bg-num" aria-hidden="true">04</div>
-      <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">04</span><span class="ew-rule"></span><span class="ew-lbl">Aerial</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Aerial · Diego Edu · Chicago</span></div>
-        <h2 class="scene-quote">
-          <span class="q-line"><span class="q-inner">19.2 million</span></span>
-          <span class="q-line"><span class="q-inner">stopped</span></span>
-          <span class="q-line"><span class="q-inner"><span class="ink">scrolling.</span></span></span>
         </h2>
       </div>
     </section>
