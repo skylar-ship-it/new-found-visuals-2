@@ -1032,6 +1032,8 @@
       scrollbar-width: none;
       padding: 0 56px 0;
       cursor: grab;
+      touch-action: pan-x;
+      overscroll-behavior-x: contain;
     }
     .photo-strip-track:active { cursor: grabbing; }
     .photo-strip-track::-webkit-scrollbar { display: none; }
@@ -1048,7 +1050,6 @@
 
     .photo-strip-item {
       flex-shrink: 0;
-      scroll-snap-align: start;
       height: calc(var(--vh, 1svh) * 52);
       max-height: 420px;
       width: auto;
