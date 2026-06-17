@@ -863,26 +863,64 @@
       .testi-dots  { margin-top: 36px; }
     }
 
-    /* ── Monday.com booking form embed ─────────────────────────── */
-    .monday-form {
-      width: 100%; max-width: 650px;
-      margin-top: 32px;
-      border-radius: 4px;
-      overflow: hidden;
+    /* ── Contact Form ────────────────────────────────────────────── */
+    .contact-form-wrap {
+      width: 100%; max-width: 620px;
+      margin-top: 28px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(237,234,228,.1);
+      padding: 32px 36px 28px;
     }
-    .monday-form iframe {
-      width: 100%; height: 500px;
-      border: 0;
-      box-shadow: 5px 5px 56px 0px rgba(0,0,0,0.25);
-      display: block;
+    .contact-form-greeting {
+      font-family: var(--grotesk); font-size: 15px; font-weight: 500;
+      color: var(--wh); margin-bottom: 6px;
     }
-    /* Allow scene 06 content to scroll so form is reachable */
-    #scene-sunset .scene-content {
-      overflow-y: auto;
-      padding-bottom: 80px !important;
+    .contact-form-sub {
+      font-family: var(--inter); font-size: 12px; font-weight: 300;
+      font-style: italic; color: rgba(237,234,228,.4);
+      margin-bottom: 28px;
     }
-    @media (max-width: 700px) {
-      .monday-form iframe { height: 460px; }
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .cf-field { display: flex; flex-direction: column; gap: 6px; }
+    .cf-label {
+      font-family: var(--grotesk); font-size: 8px; font-weight: 600;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(237,234,228,.4);
+    }
+    .cf-input {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(237,234,228,.12);
+      color: var(--wh);
+      font-family: var(--inter); font-size: 13px; font-weight: 300;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color .25s;
+      width: 100%;
+    }
+    .cf-input::placeholder { color: rgba(237,234,228,.25); }
+    .cf-input:focus { border-color: rgba(230,184,0,.5); }
+    .cf-textarea { resize: none; height: 110px; }
+    .cf-submit {
+      display: inline-flex; align-items: center; gap: 10px;
+      align-self: flex-start;
+      font-family: var(--grotesk); font-size: 10px; font-weight: 700;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--k); background: var(--ox);
+      padding: 14px 28px; border: none; cursor: pointer;
+      transition: background .25s, transform .2s;
+      margin-top: 4px;
+    }
+    .cf-submit:hover { background: var(--am); transform: translateY(-2px); }
+    .cf-success {
+      font-family: var(--grotesk); font-size: 10px; font-weight: 600;
+      letter-spacing: .12em; color: rgba(230,184,0,.8);
+      display: none; margin-top: 4px;
+    }
+    .cf-success.show { display: block; }
+    @media (max-width: 600px) {
+      .cf-row { grid-template-columns: 1fr; }
+      .contact-form-wrap { padding: 24px 20px 20px; }
     }
 
     /* ── CTA  ────────────────────────────────────────────────────── */
@@ -1282,6 +1320,181 @@
       .flip-front-name { font-size: 13px; }
       .flip-back-logo img { max-height: 80px; }
       .clients-header { margin-bottom: 36px; }
+    }
+
+    /* ================================================================
+       CHAT WIDGET — fixed bottom right
+       ================================================================ */
+    #chat-widget {
+      position: fixed; bottom: 28px; right: 28px;
+      z-index: 9990;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 14px;
+    }
+    @supports (padding: env(safe-area-inset-bottom)) {
+      #chat-widget { bottom: calc(28px + env(safe-area-inset-bottom)); }
+    }
+
+    /* Chat panel */
+    #chat-panel {
+      width: 320px;
+      background: #111;
+      border: 1px solid rgba(237,234,228,.12);
+      box-shadow: 0 24px 64px rgba(0,0,0,.7);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      opacity: 0; pointer-events: none;
+      transform: translateY(16px) scale(.97);
+      transform-origin: bottom right;
+      transition: opacity .35s var(--ease), transform .35s var(--ease);
+    }
+    #chat-panel.open {
+      opacity: 1; pointer-events: all;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Panel header */
+    .chat-header {
+      background: var(--ox);
+      padding: 16px 18px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .chat-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(0,0,0,.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .chat-header-info { flex: 1; }
+    .chat-header-name {
+      font-family: var(--grotesk); font-size: 13px; font-weight: 700;
+      color: var(--k); line-height: 1.2;
+    }
+    .chat-header-status {
+      font-family: var(--grotesk); font-size: 9px; font-weight: 500;
+      letter-spacing: .08em; color: rgba(8,8,8,.55);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .chat-status-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #22c55e; flex-shrink: 0;
+    }
+    .chat-close {
+      background: none; border: none; cursor: pointer;
+      color: rgba(8,8,8,.5); padding: 4px;
+      display: flex; align-items: center; justify-content: center;
+      transition: color .2s;
+    }
+    .chat-close:hover { color: var(--k); }
+    .chat-close svg { width: 14px; height: 14px; }
+
+    /* Messages area */
+    .chat-messages {
+      padding: 20px 18px 12px;
+      display: flex; flex-direction: column; gap: 12px;
+      max-height: 220px; overflow-y: auto;
+    }
+    .chat-bubble {
+      max-width: 85%;
+      padding: 10px 14px;
+      font-family: var(--inter); font-size: 13px;
+      font-weight: 300; line-height: 1.5;
+      border-radius: 2px;
+    }
+    .chat-bubble.them {
+      background: rgba(237,234,228,.08);
+      color: rgba(237,234,228,.85);
+      align-self: flex-start;
+      border-left: 2px solid rgba(230,184,0,.4);
+    }
+    .chat-bubble.me {
+      background: rgba(230,184,0,.15);
+      color: rgba(237,234,228,.9);
+      align-self: flex-end;
+      border-right: 2px solid var(--ox);
+    }
+    .chat-bubble-meta {
+      font-family: var(--grotesk); font-size: 7.5px;
+      letter-spacing: .08em; color: rgba(237,234,228,.25);
+      margin-top: 4px;
+    }
+
+    /* Typing indicator */
+    .chat-typing {
+      display: none; align-items: center; gap: 4px;
+      padding: 0 18px 8px;
+    }
+    .chat-typing.show { display: flex; }
+    .chat-typing span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(237,234,228,.25);
+      animation: typing-bounce .8s ease-in-out infinite;
+    }
+    .chat-typing span:nth-child(2) { animation-delay: .15s; }
+    .chat-typing span:nth-child(3) { animation-delay: .30s; }
+    @keyframes typing-bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30%            { transform: translateY(-5px); }
+    }
+
+    /* Input area */
+    .chat-input-row {
+      display: flex; align-items: center; gap: 0;
+      border-top: 1px solid rgba(237,234,228,.08);
+      padding: 12px 14px;
+      gap: 10px;
+    }
+    #chat-input {
+      flex: 1;
+      background: none; border: none; outline: none;
+      font-family: var(--inter); font-size: 13px; font-weight: 300;
+      color: var(--wh);
+      padding: 0;
+    }
+    #chat-input::placeholder { color: rgba(237,234,228,.25); }
+    #chat-send {
+      background: var(--ox); border: none; cursor: pointer;
+      width: 32px; height: 32px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, transform .2s;
+    }
+    #chat-send:hover { background: var(--am); transform: scale(1.08); }
+    #chat-send svg { width: 13px; height: 13px; color: var(--k); }
+
+    /* Bubble button */
+    #chat-bubble {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--ox);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 28px rgba(230,184,0,.4);
+      transition: transform .3s var(--ease), box-shadow .3s;
+      position: relative;
+    }
+    #chat-bubble:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 36px rgba(230,184,0,.55);
+    }
+    #chat-bubble svg { width: 24px; height: 24px; color: var(--k); }
+
+    /* Notification dot */
+    #chat-notif {
+      position: absolute; top: 2px; right: 2px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #ef4444;
+      border: 2px solid var(--k);
+      font-family: var(--grotesk); font-size: 7px; font-weight: 700;
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      animation: notif-pulse 2s ease-in-out infinite;
+    }
+    @keyframes notif-pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.15); }
+    }
+    #chat-notif.hide { display: none; }
+
+    @media (max-width: 480px) {
+      #chat-panel { width: calc(100vw - 32px); }
+      #chat-widget { right: 16px; bottom: 16px; }
     }
 
   </style>
@@ -1685,8 +1898,36 @@
           <span class="q-line"><span class="q-inner"><span class="ink">conversation.</span></span></span>
         </h2>
         <div class="cta-block">
-          <div class="monday-form">
-            <iframe src="https://forms.monday.com/forms/embed/c689fb0b8cd3f651fda4816ded9bbf6f?r=use1" width="650" height="500" style="border:0;box-shadow:5px 5px 56px 0px rgba(0,0,0,0.25);"></iframe>
+          <div class="contact-form-wrap">
+            <div class="contact-form-header">
+              <p class="contact-form-greeting">👋 Hey there! We'd love to hear from you.</p>
+              <p class="contact-form-sub">Tell us a little about your project and we'll be in touch.</p>
+            </div>
+            <form class="contact-form" id="contact-form" onsubmit="handleContactSubmit(event)">
+              <div class="cf-row">
+                <div class="cf-field">
+                  <label class="cf-label" for="cf-name">Your Name</label>
+                  <input class="cf-input" id="cf-name" type="text" placeholder="First &amp; last name" required />
+                </div>
+                <div class="cf-field">
+                  <label class="cf-label" for="cf-email">Email Address</label>
+                  <input class="cf-input" id="cf-email" type="email" placeholder="you@email.com" required />
+                </div>
+              </div>
+              <div class="cf-field">
+                <label class="cf-label" for="cf-phone">Phone Number</label>
+                <input class="cf-input" id="cf-phone" type="tel" placeholder="(555) 000-0000" />
+              </div>
+              <div class="cf-field">
+                <label class="cf-label" for="cf-message">Your Message</label>
+                <textarea class="cf-input cf-textarea" id="cf-message" placeholder="Tell us about your property, project, or any questions you have..." required></textarea>
+              </div>
+              <button class="cf-submit" type="submit">
+                <span class="cf-submit-text">Send Message</span>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
+              </button>
+              <p class="cf-success" id="cf-success">✓ Message sent! We'll be in touch soon.</p>
+            </form>
           </div>
           <div class="contact-inline">
             <a href="tel:8153037537" class="ci-link">
@@ -1695,6 +1936,8 @@
             </a>
             <span class="ci-sep">·</span>
             <a href="mailto:diego@lvnstudio.com" class="ci-link">diego@lvnstudio.com</a>
+            <span class="ci-sep">·</span>
+            <a href="mailto:allison@lvnstudio.com" class="ci-link">allison@lvnstudio.com</a>
             <span class="ci-sep">·</span>
             <a href="https://www.instagram.com/newfound_visuals/" target="_blank" rel="noopener" class="ci-link">@newfound_visuals</a>
             <span class="ci-sep">·</span>
@@ -1705,6 +1948,57 @@
     </section>
 
   </div><!-- /#scroll-wrap -->
+
+  <!-- ================================================================
+       CHAT WIDGET
+       ================================================================ -->
+  <div id="chat-widget">
+
+    <!-- Chat panel -->
+    <div id="chat-panel">
+      <div class="chat-header">
+        <div class="chat-avatar">🎬</div>
+        <div class="chat-header-info">
+          <div class="chat-header-name">New Found Visuals</div>
+          <div class="chat-header-status"><span class="chat-status-dot"></span> Usually replies within an hour</div>
+        </div>
+        <button class="chat-close" onclick="toggleChat()" aria-label="Close chat">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg>
+        </button>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <div>
+          <div class="chat-bubble them">Hey! 👋 Thanks for stopping by. We'd love to help with your next listing or project.</div>
+          <div class="chat-bubble-meta">New Found Visuals · now</div>
+        </div>
+        <div>
+          <div class="chat-bubble them">Drop us a message and we'll get back to you ASAP!</div>
+          <div class="chat-bubble-meta">New Found Visuals · now</div>
+        </div>
+      </div>
+
+      <div class="chat-typing" id="chat-typing">
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="chat-input-row">
+        <input id="chat-input" type="text" placeholder="Type a message..." autocomplete="off" />
+        <button id="chat-send" onclick="sendChatMessage()" aria-label="Send">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bubble button -->
+    <button id="chat-bubble" onclick="toggleChat()" aria-label="Open chat">
+      <span id="chat-notif">1</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+    </button>
+
+  </div><!-- /#chat-widget -->
 
 
   <script>
@@ -2164,6 +2458,104 @@
       startAuto();
     });
     outer.addEventListener('mouseleave', function() { mDown = false; });
+  })();
+
+  /* ================================================================
+     CONTACT FORM — opens mailto to diego + allison
+     ================================================================ */
+  function handleContactSubmit(e) {
+    e.preventDefault();
+    const name    = document.getElementById('cf-name').value.trim();
+    const email   = document.getElementById('cf-email').value.trim();
+    const phone   = document.getElementById('cf-phone').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+
+    const subject = encodeURIComponent('New Inquiry from ' + name + ' — New Found Visuals');
+    const body    = encodeURIComponent(
+      'Name: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      'Phone: ' + (phone || 'Not provided') + '\n\n' +
+      'Message:\n' + message
+    );
+
+    const mailto = 'mailto:diego@lvnstudio.com,allison@lvnstudio.com?subject=' + subject + '&body=' + body;
+    window.location.href = mailto;
+
+    /* Show success message */
+    const success = document.getElementById('cf-success');
+    if (success) { success.classList.add('show'); }
+    document.getElementById('contact-form').reset();
+  }
+
+  /* ================================================================
+     CHAT WIDGET
+     ================================================================ */
+  (function() {
+    var isOpen = false;
+
+    window.toggleChat = function() {
+      isOpen = !isOpen;
+      document.getElementById('chat-panel').classList.toggle('open', isOpen);
+      /* Hide notification dot on first open */
+      document.getElementById('chat-notif').classList.add('hide');
+      if (isOpen) { document.getElementById('chat-input').focus(); }
+    };
+
+    window.sendChatMessage = function() {
+      var input = document.getElementById('chat-input');
+      var text  = input.value.trim();
+      if (!text) return;
+
+      /* Add user bubble */
+      var msgs = document.getElementById('chat-messages');
+      var userDiv = document.createElement('div');
+      userDiv.innerHTML =
+        '<div class="chat-bubble me">' + escapeHtml(text) + '</div>' +
+        '<div class="chat-bubble-meta" style="text-align:right;">You · just now</div>';
+      msgs.appendChild(userDiv);
+      input.value = '';
+      msgs.scrollTop = msgs.scrollHeight;
+
+      /* Show typing indicator */
+      var typing = document.getElementById('chat-typing');
+      typing.classList.add('show');
+
+      /* Auto-reply after 1.5s then open mailto */
+      setTimeout(function() {
+        typing.classList.remove('show');
+        var replyDiv = document.createElement('div');
+        replyDiv.innerHTML =
+          '<div class="chat-bubble them">Thanks for reaching out! We\'ll follow up at <strong style="color:var(--ox)">diego@lvnstudio.com</strong> shortly. 🙌</div>' +
+          '<div class="chat-bubble-meta">New Found Visuals · just now</div>';
+        msgs.appendChild(replyDiv);
+        msgs.scrollTop = msgs.scrollHeight;
+
+        /* Open mailto with the message */
+        var subject = encodeURIComponent('Chat Message — New Found Visuals');
+        var body    = encodeURIComponent('Message from website chat:\n\n' + text);
+        setTimeout(function() {
+          window.location.href = 'mailto:diego@lvnstudio.com,allison@lvnstudio.com?subject=' + subject + '&body=' + body;
+        }, 600);
+      }, 1500);
+    };
+
+    /* Send on Enter key */
+    document.getElementById('chat-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { window.sendChatMessage(); }
+    });
+
+    function escapeHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    /* Auto-open after 4s on first visit */
+    setTimeout(function() {
+      if (!isOpen) {
+        document.getElementById('chat-panel').classList.add('open');
+        isOpen = true;
+        document.getElementById('chat-notif').classList.add('hide');
+      }
+    }, 4000);
   })();
 
   </script>
