@@ -976,85 +976,116 @@
     }
 
     /* ================================================================
-       PHOTOGRAPHY GALLERY — masonry grid
+       PHOTOGRAPHY GALLERY — horizontal scroll strip
        ================================================================ */
     #scene-photography {
       background: #040404;
-      overflow-y: auto;
-      overflow-x: hidden;
-      scroll-snap-align: start;
-      height: auto !important;
-      min-height: calc(var(--vh, 1svh) * 100);
+      overflow: hidden;
     }
 
-    /* Wrapper that sits below the header */
-    .photo-masonry-wrap {
-      position: relative; z-index: 5;
-      padding: 88px 3px 3px;
-      min-height: calc(var(--vh, 1svh) * 100);
+    .photo-strip-wrap {
+      position: absolute; inset: 0; z-index: 5;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding-top: 90px;
     }
 
-    /* Eyebrow header */
-    .photo-masonry-header {
-      padding: 0 20px 24px;
+    .photo-strip-header {
+      padding: 0 56px 28px;
       opacity: 0; transform: translateY(14px);
       transition: opacity .7s var(--ease) .1s, transform .7s var(--ease) .1s;
     }
-    #scene-photography.active .photo-masonry-header { opacity: 1; transform: translateY(0); }
-    .photo-masonry-eyebrow {
-      display: flex; align-items: center; gap: 14px; margin-bottom: 6px;
+    #scene-photography.active .photo-strip-header { opacity: 1; transform: translateY(0); }
+
+    .photo-strip-eyebrow {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 8px;
       font-family: var(--grotesk); font-size: 9px; font-weight: 600;
       letter-spacing: .32em; text-transform: uppercase;
       color: rgba(237,234,228,.35);
     }
-    .photo-masonry-eyebrow .t-rule { display: block; width: 32px; height: 1px; background: rgba(237,234,228,.15); }
-    .photo-masonry-title {
-      font-family: var(--syne); font-size: clamp(28px, 4vw, 52px);
-      font-weight: 800; color: var(--wh); letter-spacing: -.02em;
+    .photo-strip-eyebrow .t-rule { display: block; width: 32px; height: 1px; background: rgba(237,234,234,.15); }
+
+    .photo-strip-title {
+      font-family: var(--syne); font-size: clamp(26px, 3.8vw, 48px);
+      font-weight: 800; color: var(--wh); letter-spacing: -.02em; line-height: 1;
     }
 
-    /* 3-column CSS masonry */
-    .photo-masonry-grid {
-      columns: 3;
-      column-gap: 3px;
+    /* Scrollable track */
+    .photo-strip-track {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 0 56px 0;
+      cursor: grab;
     }
-    .photo-masonry-item {
-      break-inside: avoid;
-      margin-bottom: 3px;
+    .photo-strip-track:active { cursor: grabbing; }
+    .photo-strip-track::-webkit-scrollbar { display: none; }
+
+    /* Edge fade */
+    .photo-strip-outer {
+      position: relative;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 92%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 5%, black 92%, transparent 100%);
+      opacity: 0; transform: translateY(18px);
+      transition: opacity .8s var(--ease) .25s, transform .8s var(--ease) .25s;
+    }
+    #scene-photography.active .photo-strip-outer { opacity: 1; transform: translateY(0); }
+
+    .photo-strip-item {
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      height: calc(var(--vh, 1svh) * 52);
+      max-height: 420px;
+      width: auto;
+      aspect-ratio: 4/3;
       overflow: hidden;
       position: relative;
-      opacity: 0; transform: translateY(20px);
-      transition: opacity .8s var(--ease), transform .8s var(--ease);
     }
-    #scene-photography.active .photo-masonry-item { opacity: 1; transform: translateY(0); }
-    #scene-photography.active .photo-masonry-item:nth-child(1) { transition-delay: .05s; }
-    #scene-photography.active .photo-masonry-item:nth-child(2) { transition-delay: .12s; }
-    #scene-photography.active .photo-masonry-item:nth-child(3) { transition-delay: .19s; }
-    #scene-photography.active .photo-masonry-item:nth-child(4) { transition-delay: .26s; }
-    #scene-photography.active .photo-masonry-item:nth-child(5) { transition-delay: .33s; }
-    #scene-photography.active .photo-masonry-item:nth-child(6) { transition-delay: .40s; }
-    #scene-photography.active .photo-masonry-item:nth-child(7) { transition-delay: .47s; }
-    #scene-photography.active .photo-masonry-item:nth-child(8) { transition-delay: .54s; }
-
-    .photo-masonry-item img {
-      width: 100%; height: auto; display: block;
-      filter: brightness(.82) saturate(.88);
-      transition: filter .5s ease, transform .6s var(--ease);
+    .photo-strip-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+      filter: brightness(.82) saturate(.9);
+      transition: filter .5s ease, transform .5s var(--ease);
     }
-    .photo-masonry-item:hover img {
+    .photo-strip-item:hover img {
       filter: brightness(1) saturate(1.05);
-      transform: scale(1.02);
+      transform: scale(1.03);
     }
 
-    /* Make every 3rd item slightly taller by giving it a portrait-crop feel */
-    .photo-masonry-item:nth-child(3n+2) img { object-fit: cover; }
+    /* Scroll hint */
+    .photo-strip-hint {
+      padding: 14px 56px 0;
+      font-family: var(--grotesk); font-size: 8px; font-weight: 600;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: rgba(237,234,228,.22);
+      opacity: 0; transition: opacity .6s var(--ease) .5s;
+      display: flex; align-items: center; gap: 10px;
+    }
+    #scene-photography.active .photo-strip-hint { opacity: 1; }
+    .photo-strip-hint::after {
+      content: ''; display: block;
+      width: 32px; height: 1px;
+      background: rgba(237,234,228,.2);
+      animation: hint-slide 2s ease-in-out infinite;
+    }
+    @keyframes hint-slide {
+      0%, 100% { transform: translateX(0); opacity: .3; }
+      50%       { transform: translateX(8px); opacity: .7; }
+    }
 
     @media (max-width: 700px) {
-      .photo-masonry-grid { columns: 2; }
-      .photo-masonry-wrap { padding-top: 80px; }
-    }
-    @media (max-width: 400px) {
-      .photo-masonry-grid { columns: 1; }
+      .photo-strip-header { padding: 0 20px 20px; }
+      .photo-strip-track  { padding: 0 20px; gap: 4px; }
+      .photo-strip-hint   { padding: 10px 20px 0; }
+      .photo-strip-item {
+        height: calc(var(--vh, 1svh) * 44);
+        max-height: 320px;
+      }
     }
 
     /* ================================================================
@@ -1511,25 +1542,26 @@
 
     <!-- 05 — PHOTOGRAPHY ────────────────────────────────────────── -->
     <section class="scene" id="scene-photography" data-num="05" data-name="Photography">
-      <div class="photo-masonry-wrap">
-        <div class="photo-masonry-header">
-          <div class="photo-masonry-eyebrow">
-            <span class="t-rule"></span>
-            Photography
-            <span class="t-rule"></span>
+      <div class="scene-overlay" style="background:linear-gradient(to top,rgba(4,4,4,.6) 0%,transparent 40%);"></div>
+      <div class="scene-bg-num" aria-hidden="true">05</div>
+      <div class="photo-strip-wrap">
+        <div class="photo-strip-header">
+          <div class="photo-strip-eyebrow"><span class="t-rule"></span>Photography</div>
+          <h2 class="photo-strip-title">Every frame tells a <span class="ink" style="font-family:var(--grf);color:var(--ox);font-size:.88em;">story.</span></h2>
+        </div>
+        <div class="photo-strip-outer">
+          <div class="photo-strip-track" id="photo-strip-track">
+            <div class="photo-strip-item"><img src="photo1.jpg" alt="New Found Visuals" loading="eager" /></div>
+            <div class="photo-strip-item"><img src="photo2.jpg" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo3.jpg" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo4.jpg" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo5.jpg" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo6.jpg" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo7.jpg" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo8.jpg" alt="New Found Visuals" loading="lazy" /></div>
           </div>
-          <h2 class="photo-masonry-title">Every frame tells a <span class="ink" style="font-family:var(--grf);color:var(--ox);font-size:.88em;">story.</span></h2>
         </div>
-        <div class="photo-masonry-grid">
-          <div class="photo-masonry-item"><img src="photo1.jpg" alt="New Found Visuals" loading="eager" /></div>
-          <div class="photo-masonry-item"><img src="photo2.jpg" alt="New Found Visuals" loading="lazy" /></div>
-          <div class="photo-masonry-item"><img src="photo3.jpg" alt="New Found Visuals" loading="lazy" /></div>
-          <div class="photo-masonry-item"><img src="photo4.jpg" alt="New Found Visuals" loading="lazy" /></div>
-          <div class="photo-masonry-item"><img src="photo5.jpg" alt="New Found Visuals" loading="lazy" /></div>
-          <div class="photo-masonry-item"><img src="photo6.jpg" alt="New Found Visuals" loading="lazy" /></div>
-          <div class="photo-masonry-item"><img src="photo7.jpg" alt="New Found Visuals" loading="lazy" /></div>
-          <div class="photo-masonry-item"><img src="photo8.jpg" alt="New Found Visuals" loading="lazy" /></div>
-        </div>
+        <div class="photo-strip-hint">Drag to explore</div>
       </div>
     </section>
 
