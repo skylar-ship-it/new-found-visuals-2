@@ -1155,7 +1155,7 @@
       <a href="pricing.html" class="hdr-pricing-link">Services</a>
       <span id="hdr-name">Chicago</span>
       <div class="hdr-counter" aria-live="polite">
-        <span id="cc">01</span><span style="opacity:.22"> / </span>07
+        <span id="cc">01</span><span style="opacity:.22"> / </span>06
       </div>
     </div>
   </header>
@@ -1165,7 +1165,6 @@
     <div class="snav-item active" data-target="scene-exterior"   role="button" tabindex="0"><span class="snav-label">Chicago</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-entry"       role="button" tabindex="0"><span class="snav-label">Services</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-living"      role="button" tabindex="0"><span class="snav-label">Reels</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-photography" role="button" tabindex="0"><span class="snav-label">Photos</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-clients"     role="button" tabindex="0"><span class="snav-label">Clients</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-details"     role="button" tabindex="0"><span class="snav-label">Viral</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-sunset"      role="button" tabindex="0"><span class="snav-label">Contact</span><span class="snav-dot"></span></div>
@@ -1176,7 +1175,6 @@
     <span class="mob-dot active" data-target="scene-exterior"   role="button" tabindex="0" aria-label="Chicago"></span>
     <span class="mob-dot" data-target="scene-entry"       role="button" tabindex="0" aria-label="Services"></span>
     <span class="mob-dot" data-target="scene-living"      role="button" tabindex="0" aria-label="Reels"></span>
-    <span class="mob-dot" data-target="scene-photography" role="button" tabindex="0" aria-label="Photography"></span>
     <span class="mob-dot" data-target="scene-clients"     role="button" tabindex="0" aria-label="Our Clients"></span>
     <span class="mob-dot" data-target="scene-details"     role="button" tabindex="0" aria-label="Viral"></span>
     <span class="mob-dot" data-target="scene-sunset"      role="button" tabindex="0" aria-label="Contact"></span>
@@ -1204,9 +1202,8 @@
 
     <!-- 01 — HOOK / CHICAGO DRONE ──────────────────────────────── -->
     <section class="scene" id="scene-exterior" data-num="01" data-name="Chicago">
-      <!-- ASSET NEEDED: chicago-skyline.jpg — high-quality skyline image, place in same folder -->
-      <!-- This single image serves both desktop and mobile -->
-      <img class="scene-video" src="chicago-skyline.jpg" alt="Chicago skyline" loading="eager" />
+      <!-- ASSET NEEDED: chicago-skyline.jpg — replace src when client provides new image -->
+      <img class="scene-video" src="" alt="Chicago skyline" loading="eager" style="display:none;" />
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">01</div>
       <div class="scene-content">
@@ -1369,52 +1366,6 @@
       </div>
     </section>
 
-    <!-- 04 — PHOTOGRAPHY ───────────────────────────────────────── -->
-    <!--
-      ASSETS NEEDED for photography gallery:
-        photo1.jpg, photo2.jpg, photo3.jpg, photo4.jpg, photo5.jpg, photo6.jpg
-        (pull from social media or client can send directly)
-        Recommended: high-res landscape shots, min 1400px wide
-    -->
-    <section class="scene" id="scene-photography" data-num="04" data-name="Photography">
-      <!-- Background: first photo as ambient bg -->
-      <img class="scene-video" src="photo1.jpg" alt="" aria-hidden="true" style="filter:brightness(.45) blur(2px); transform:scale(1.06);" />
-      <div class="scene-overlay"></div><div class="scene-vignette"></div>
-      <div class="scene-bg-num" aria-hidden="true">04</div>
-
-      <!-- Photo gallery grid -->
-      <div class="photo-gallery">
-        <div class="photo-grid">
-          <figure class="photo-item photo-item--tall">
-            <img src="photo1.jpg" alt="New Found Visuals photography" loading="lazy" />
-          </figure>
-          <figure class="photo-item">
-            <img src="photo2.jpg" alt="New Found Visuals photography" loading="lazy" />
-          </figure>
-          <figure class="photo-item">
-            <img src="photo3.jpg" alt="New Found Visuals photography" loading="lazy" />
-          </figure>
-          <figure class="photo-item photo-item--wide">
-            <img src="photo4.jpg" alt="New Found Visuals photography" loading="lazy" />
-          </figure>
-          <figure class="photo-item">
-            <img src="photo5.jpg" alt="New Found Visuals photography" loading="lazy" />
-          </figure>
-          <figure class="photo-item">
-            <img src="photo6.jpg" alt="New Found Visuals photography" loading="lazy" />
-          </figure>
-        </div>
-      </div>
-
-      <div class="scene-content" style="pointer-events:none;">
-        <div class="scene-eyebrow"><span class="ew-num">04</span><span class="ew-rule"></span><span class="ew-lbl">Photography</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · Every detail, captured</span></div>
-        <h2 class="scene-quote">
-          <span class="q-line"><span class="q-inner">Every frame</span></span>
-          <span class="q-line"><span class="q-inner">tells a <span class="ink">story.</span></span></span>
-        </h2>
-      </div>
-    </section>
 
     <!-- 05 — OUR CLIENTS ────────────────────────────────────────── -->
     <!--
@@ -1614,7 +1565,6 @@
     'scene-exterior':    document.getElementById('glow-exterior'),
     'scene-entry':       document.getElementById('glow-entry'),
     'scene-living':      document.getElementById('glow-living'),
-    'scene-photography': document.getElementById('glow-photography'),
     'scene-clients':     document.getElementById('glow-clients'),
     'scene-details':     document.getElementById('glow-details'),
     'scene-aerial':      document.getElementById('glow-aerial'),
