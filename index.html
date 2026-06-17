@@ -1030,99 +1030,104 @@
       position: absolute; inset: 0; z-index: 5;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 56px 32px;
+      padding: 56px 48px;
       text-align: center;
     }
 
     .clients-eyebrow {
       display: flex; align-items: center; gap: 16px;
-      margin-bottom: 14px;
-      color: rgba(237,234,228,.42);
+      margin-bottom: 10px;
+      color: rgba(237,234,228,.38);
       font-family: var(--grotesk); font-size: 9px;
-      font-weight: 600; letter-spacing: .32em; text-transform: uppercase;
+      font-weight: 600; letter-spacing: .36em; text-transform: uppercase;
+      opacity: 0; transform: translateY(14px);
+      transition: opacity .7s var(--ease) .1s, transform .7s var(--ease) .1s;
     }
+    #scene-clients.active .clients-eyebrow { opacity: 1; transform: translateY(0); }
     .clients-eyebrow .t-rule {
       display: block; width: 40px; height: 1px;
-      background: rgba(237,234,228,.18);
+      background: rgba(237,234,228,.15);
     }
+
+    .clients-title {
+      font-family: var(--syne); font-size: clamp(28px, 4vw, 52px);
+      font-weight: 800; color: var(--wh);
+      letter-spacing: -.02em; margin-bottom: 12px;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .7s var(--ease) .18s, transform .7s var(--ease) .18s;
+    }
+    #scene-clients.active .clients-title { opacity: 1; transform: translateY(0); }
 
     .clients-sub {
       font-family: var(--inter); font-size: 13px; font-weight: 300;
-      font-style: italic; color: rgba(237,234,228,.28);
-      letter-spacing: .04em; margin-bottom: 72px;
+      font-style: italic; color: rgba(237,234,228,.32);
+      letter-spacing: .04em; margin-bottom: 64px;
+      opacity: 0; transform: translateY(12px);
+      transition: opacity .7s var(--ease) .26s, transform .7s var(--ease) .26s;
     }
+    #scene-clients.active .clients-sub { opacity: 1; transform: translateY(0); }
 
-    /* Marquee container */
-    .clients-marquee-outer {
-      width: 100%; overflow: hidden;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
-    }
-    .clients-marquee-track {
-      display: flex;
-      animation: marquee-scroll 28s linear infinite;
-      width: max-content;
-    }
-    .clients-marquee-track:hover { animation-play-state: paused; }
-    .clients-marquee-row {
-      display: flex; align-items: center; gap: 64px;
-      padding: 0 32px;
-      flex-shrink: 0;
-    }
-    @keyframes marquee-scroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .clients-marquee-track { animation: none; }
+    /* Logo grid — 3 per row desktop, 2 on mobile */
+    .clients-logo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px 48px;
+      width: 100%; max-width: 860px;
+      align-items: center; justify-items: center;
     }
 
     .client-logo-item {
-      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-      opacity: .42;
-      transition: opacity .3s;
+      opacity: 0; transform: translateY(22px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease),
+                  filter .35s ease;
+      filter: grayscale(1) brightness(.55);
     }
-    .client-logo-item:hover { opacity: .85; }
+    /* Stagger each logo */
+    #scene-clients.active .client-logo-item:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: .15s; }
+    #scene-clients.active .client-logo-item:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: .23s; }
+    #scene-clients.active .client-logo-item:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: .31s; }
+    #scene-clients.active .client-logo-item:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: .39s; }
+    #scene-clients.active .client-logo-item:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: .47s; }
+    #scene-clients.active .client-logo-item:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: .55s; }
+
+    /* Hover: full brightness + slight lift */
+    .client-logo-item:hover {
+      filter: grayscale(0) brightness(1);
+      transform: translateY(-4px) !important;
+    }
+
     .client-logo-item img {
-      height: 36px; width: auto; max-width: 160px;
-      object-fit: contain;
-      filter: brightness(0) invert(1); /* force white */
+      height: 48px; width: auto; max-width: 160px;
+      object-fit: contain; display: block;
     }
 
-    /* Text name fallback row (shown when logos not yet provided) */
-    .clients-text-row {
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-      gap: 16px; margin-top: 52px;
-      opacity: 0; transform: translateY(14px);
-      transition: opacity .7s var(--ease) .4s, transform .7s var(--ease) .4s;
+    /* Pulse idle animation — subtle breathe when scene is active */
+    @keyframes logo-breathe {
+      0%, 100% { filter: grayscale(1) brightness(.55); }
+      50%       { filter: grayscale(1) brightness(.75); }
     }
-    #scene-clients.active .clients-text-row { opacity: 1; transform: translateY(0); }
-    .client-text-name {
-      font-family: var(--grotesk); font-size: 10px; font-weight: 600;
-      letter-spacing: .2em; text-transform: uppercase;
-      color: rgba(237,234,228,.35);
+    #scene-clients.active .client-logo-item {
+      animation: logo-breathe 4s ease-in-out infinite;
     }
-    .clients-dot { color: rgba(230,184,0,.5); font-size: 8px; }
-
-    /* Fade-in the marquee when scene activates */
-    .clients-marquee-outer {
-      opacity: 0; transform: translateY(18px);
-      transition: opacity .8s var(--ease) .2s, transform .8s var(--ease) .2s;
-    }
-    #scene-clients.active .clients-marquee-outer { opacity: 1; transform: translateY(0); }
-
-    .clients-eyebrow, .clients-sub {
-      opacity: 0; transform: translateY(12px);
-      transition: opacity .6s var(--ease) .1s, transform .6s var(--ease) .1s;
-    }
-    #scene-clients.active .clients-eyebrow,
-    #scene-clients.active .clients-sub { opacity: 1; transform: translateY(0); }
-    #scene-clients.active .clients-sub { transition-delay: .22s; }
+    #scene-clients.active .client-logo-item:nth-child(1) { animation-delay: 0s; }
+    #scene-clients.active .client-logo-item:nth-child(2) { animation-delay: .6s; }
+    #scene-clients.active .client-logo-item:nth-child(3) { animation-delay: 1.2s; }
+    #scene-clients.active .client-logo-item:nth-child(4) { animation-delay: 1.8s; }
+    #scene-clients.active .client-logo-item:nth-child(5) { animation-delay: 2.4s; }
+    #scene-clients.active .client-logo-item:nth-child(6) { animation-delay: 3.0s; }
+    #scene-clients.active .client-logo-item:hover { animation: none; }
 
     @media (max-width: 700px) {
-      .clients-sub { margin-bottom: 48px; }
-      .client-logo-item img { height: 28px; }
-      .clients-marquee-row { gap: 44px; }
+      .clients-logo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px 32px;
+        max-width: 340px;
+      }
+      .client-logo-item img { height: 36px; max-width: 120px; }
+      .clients-sub { margin-bottom: 40px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #scene-clients.active .client-logo-item { animation: none; }
     }
 
   </style>
@@ -1253,13 +1258,6 @@
     </section>
 
     <!-- 03 — OUR CLIENTS ────────────────────────────────────────── -->
-    <!--
-      ASSETS NEEDED for client logos:
-        logo-laricy.png, logo-atproperties.png, logo-dowell.png,
-        logo-katie-hutchens.png, logo-dawn-mckenna.png, logo-carrie-mccormick.png
-        Recommended: transparent PNG or white SVG, ~240x80px
-        OR provide brokerage logos and we'll size them
-    -->
     <section class="scene loaded" id="scene-clients" data-num="03" data-name="Clients">
       <div class="scene-overlay" style="background:rgba(8,8,8,.97);"></div>
       <div class="scene-bg-num" aria-hidden="true">03</div>
@@ -1267,48 +1265,17 @@
       <div class="clients-wrap">
         <div class="clients-eyebrow">
           <span class="t-rule"></span>
-          Trusted By
+          Our Clients
           <span class="t-rule"></span>
         </div>
-        <p class="clients-sub">Chicago's leading brokerages &amp; agents</p>
+        <h2 class="clients-title">Trusted By</h2>
+        <p class="clients-sub">Chicago's leading brokerages &amp; real estate professionals.</p>
 
-        <!-- Logo marquee — scrolls left continuously -->
-        <div class="clients-marquee-outer" aria-label="Client logos">
-          <div class="clients-marquee-track">
-            <!-- Row duplicated for seamless loop -->
-            <div class="clients-marquee-row">
-              <div class="client-logo-item"><img src="logo-laricy.png" alt="Laricy Team" /></div>
-              <div class="client-logo-item"><img src="logo-atproperties.png" alt="@properties" /></div>
-              <div class="client-logo-item"><img src="logo-dowell.png" alt="Dowell Group" /></div>
-              <div class="client-logo-item"><img src="logo-katie-hutchens.png" alt="Katie Hutchens RE" /></div>
-              <div class="client-logo-item"><img src="logo-dawn-mckenna.png" alt="Dawn McKenna Group" /></div>
-              <div class="client-logo-item"><img src="logo-carrie-mccormick.png" alt="Carrie McCormick RE" /></div>
-            </div>
-            <!-- Duplicate for loop -->
-            <div class="clients-marquee-row" aria-hidden="true">
-              <div class="client-logo-item"><img src="logo-laricy.png" alt="" /></div>
-              <div class="client-logo-item"><img src="logo-atproperties.png" alt="" /></div>
-              <div class="client-logo-item"><img src="logo-dowell.png" alt="" /></div>
-              <div class="client-logo-item"><img src="logo-katie-hutchens.png" alt="" /></div>
-              <div class="client-logo-item"><img src="logo-dawn-mckenna.png" alt="" /></div>
-              <div class="client-logo-item"><img src="logo-carrie-mccormick.png" alt="" /></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Text fallback (visible when logos haven't loaded yet) -->
-        <div class="clients-text-row">
-          <span class="client-text-name">Laricy Team</span>
-          <span class="clients-dot">·</span>
-          <span class="client-text-name">@properties</span>
-          <span class="clients-dot">·</span>
-          <span class="client-text-name">Dowell Group</span>
-          <span class="clients-dot">·</span>
-          <span class="client-text-name">Katie Hutchens</span>
-          <span class="clients-dot">·</span>
-          <span class="client-text-name">Dawn McKenna</span>
-          <span class="clients-dot">·</span>
-          <span class="client-text-name">Carrie McCormick</span>
+        <div class="clients-logo-grid">
+          <div class="client-logo-item"><img src="laricy.png" alt="Laricy Team" /></div>
+          <div class="client-logo-item"><img src="@properties.jpg" alt="@properties" /></div>
+          <div class="client-logo-item"><img src="dowellgroup.jpg" alt="Dowell Group" /></div>
+          <div class="client-logo-item"><img src="dawnmckenna.jpeg" alt="Dawn McKenna Group" /></div>
         </div>
       </div>
     </section>
