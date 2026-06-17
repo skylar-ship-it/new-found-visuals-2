@@ -122,15 +122,15 @@
        ================================================================ */
     #site-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 600;
-      height: 60px; padding: 0 40px 0 44px;
+      height: 90px; padding: 0 40px 0 44px;
       display: flex; align-items: center; justify-content: space-between;
       pointer-events: none;
       background: linear-gradient(to bottom, rgba(8,8,8,.6) 0%, transparent 100%);
     }
     .hdr-logo { pointer-events: all; display: flex; align-items: center; gap: 10px; }
-    .hdr-logo-img { height: 52px; width: auto; object-fit: contain; flex-shrink: 0; }
+    .hdr-logo-img { height: 80px; width: auto; object-fit: contain; flex-shrink: 0; }
     .hdr-logo-text { display: flex; flex-direction: column; gap: 2px; }
-    @media (max-width: 600px) { .hdr-logo-img { height: 40px; } }
+    @media (max-width: 600px) { .hdr-logo-img { height: 64px; } }
     .hdr-right { pointer-events: all; }
     .logo-nf  { font-family: var(--grf); font-size: 17px; color: var(--ox); line-height: 1; text-shadow: 2px 2px 0 rgba(0,0,0,.6); }
     .logo-vis { font-family: var(--syne); font-size: 7px; font-weight: 800; letter-spacing: .42em; text-transform: uppercase; color: rgba(237,234,228,.38); }
@@ -171,7 +171,7 @@
     @keyframes ccIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
     @media (max-width: 600px) {
-      #site-header { padding: 0 16px 0 20px; height: 52px; }
+      #site-header { padding: 0 16px 0 20px; height: 76px; }
       .logo-nf { font-size: 14px; }
       #hdr-name { display: none; }
     }
@@ -1155,7 +1155,7 @@
       <a href="pricing.html" class="hdr-pricing-link">Services</a>
       <span id="hdr-name">Chicago</span>
       <div class="hdr-counter" aria-live="polite">
-        <span id="cc">01</span><span style="opacity:.22"> / </span>06
+        <span id="cc">01</span><span style="opacity:.22"> / </span>05
       </div>
     </div>
   </header>
@@ -1164,8 +1164,8 @@
   <nav id="side-nav" aria-label="Scene navigation">
     <div class="snav-item active" data-target="scene-exterior"   role="button" tabindex="0"><span class="snav-label">Chicago</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-entry"       role="button" tabindex="0"><span class="snav-label">Services</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-living"      role="button" tabindex="0"><span class="snav-label">Reels</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-clients"     role="button" tabindex="0"><span class="snav-label">Clients</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-living"      role="button" tabindex="0"><span class="snav-label">Reels</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-details"     role="button" tabindex="0"><span class="snav-label">Viral</span><span class="snav-dot"></span></div>
     <div class="snav-item" data-target="scene-sunset"      role="button" tabindex="0"><span class="snav-label">Contact</span><span class="snav-dot"></span></div>
   </nav>
@@ -1174,8 +1174,8 @@
   <nav id="mob-nav" aria-label="Scene navigation">
     <span class="mob-dot active" data-target="scene-exterior"   role="button" tabindex="0" aria-label="Chicago"></span>
     <span class="mob-dot" data-target="scene-entry"       role="button" tabindex="0" aria-label="Services"></span>
-    <span class="mob-dot" data-target="scene-living"      role="button" tabindex="0" aria-label="Reels"></span>
     <span class="mob-dot" data-target="scene-clients"     role="button" tabindex="0" aria-label="Our Clients"></span>
+    <span class="mob-dot" data-target="scene-living"      role="button" tabindex="0" aria-label="Reels"></span>
     <span class="mob-dot" data-target="scene-details"     role="button" tabindex="0" aria-label="Viral"></span>
     <span class="mob-dot" data-target="scene-sunset"      role="button" tabindex="0" aria-label="Contact"></span>
   </nav>
@@ -1248,11 +1248,72 @@
       </div>
     </section>
 
-    <!-- 03 — TOP CLIENTS + REELS ───────────────────────────────── -->
-    <section class="scene" id="scene-living" data-num="03" data-name="Clients">
+    <!-- 03 — OUR CLIENTS ────────────────────────────────────────── -->
+    <!--
+      ASSETS NEEDED for client logos:
+        logo-laricy.png, logo-atproperties.png, logo-dowell.png,
+        logo-katie-hutchens.png, logo-dawn-mckenna.png, logo-carrie-mccormick.png
+        Recommended: transparent PNG or white SVG, ~240x80px
+        OR provide brokerage logos and we'll size them
+    -->
+    <section class="scene loaded" id="scene-clients" data-num="03" data-name="Clients">
+      <div class="scene-overlay" style="background:rgba(8,8,8,.97);"></div>
+      <div class="scene-bg-num" aria-hidden="true">03</div>
+
+      <div class="clients-wrap">
+        <div class="clients-eyebrow">
+          <span class="t-rule"></span>
+          Trusted By
+          <span class="t-rule"></span>
+        </div>
+        <p class="clients-sub">Chicago's leading brokerages &amp; agents</p>
+
+        <!-- Logo marquee — scrolls left continuously -->
+        <div class="clients-marquee-outer" aria-label="Client logos">
+          <div class="clients-marquee-track">
+            <!-- Row duplicated for seamless loop -->
+            <div class="clients-marquee-row">
+              <div class="client-logo-item"><img src="logo-laricy.png" alt="Laricy Team" /></div>
+              <div class="client-logo-item"><img src="logo-atproperties.png" alt="@properties" /></div>
+              <div class="client-logo-item"><img src="logo-dowell.png" alt="Dowell Group" /></div>
+              <div class="client-logo-item"><img src="logo-katie-hutchens.png" alt="Katie Hutchens RE" /></div>
+              <div class="client-logo-item"><img src="logo-dawn-mckenna.png" alt="Dawn McKenna Group" /></div>
+              <div class="client-logo-item"><img src="logo-carrie-mccormick.png" alt="Carrie McCormick RE" /></div>
+            </div>
+            <!-- Duplicate for loop -->
+            <div class="clients-marquee-row" aria-hidden="true">
+              <div class="client-logo-item"><img src="logo-laricy.png" alt="" /></div>
+              <div class="client-logo-item"><img src="logo-atproperties.png" alt="" /></div>
+              <div class="client-logo-item"><img src="logo-dowell.png" alt="" /></div>
+              <div class="client-logo-item"><img src="logo-katie-hutchens.png" alt="" /></div>
+              <div class="client-logo-item"><img src="logo-dawn-mckenna.png" alt="" /></div>
+              <div class="client-logo-item"><img src="logo-carrie-mccormick.png" alt="" /></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text fallback (visible when logos haven't loaded yet) -->
+        <div class="clients-text-row">
+          <span class="client-text-name">Laricy Team</span>
+          <span class="clients-dot">·</span>
+          <span class="client-text-name">@properties</span>
+          <span class="clients-dot">·</span>
+          <span class="client-text-name">Dowell Group</span>
+          <span class="clients-dot">·</span>
+          <span class="client-text-name">Katie Hutchens</span>
+          <span class="clients-dot">·</span>
+          <span class="client-text-name">Dawn McKenna</span>
+          <span class="clients-dot">·</span>
+          <span class="client-text-name">Carrie McCormick</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 — TOP CLIENTS + REELS ───────────────────────────────── -->
+    <section class="scene" id="scene-living" data-num="04" data-name="Reels">
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="living.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
-      <div class="scene-bg-num" aria-hidden="true">03</div>
+      <div class="scene-bg-num" aria-hidden="true">04</div>
       <!-- Reel carousel — 6 cards, scroll right to see more -->
       <div class="reels-carousel">
         <div class="reels-row">
@@ -1351,7 +1412,7 @@
         </div><!-- /reels-row -->
       </div><!-- /reels-carousel -->
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">03</span><span class="ew-rule"></span><span class="ew-lbl">Client Reels</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">04</span><span class="ew-rule"></span><span class="ew-lbl">Client Reels</span></div>
         <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago's top agents · New Found Visuals</span></div>
         <h2 class="scene-quote">
           <span class="q-line"><span class="q-inner">Built to</span></span>
@@ -1366,76 +1427,14 @@
       </div>
     </section>
 
-
-    <!-- 05 — OUR CLIENTS ────────────────────────────────────────── -->
-    <!--
-      ASSETS NEEDED for client logos:
-        logo-laricy.png, logo-atproperties.png, logo-dowell.png,
-        logo-katie-hutchens.png, logo-dawn-mckenna.png, logo-carrie-mccormick.png
-        Recommended: transparent PNG or white SVG, ~240x80px
-        OR provide brokerage logos and we'll size them
-    -->
-    <section class="scene loaded" id="scene-clients" data-num="05" data-name="Clients">
-      <div class="scene-overlay" style="background:rgba(8,8,8,.97);"></div>
-      <div class="scene-bg-num" aria-hidden="true">05</div>
-
-      <div class="clients-wrap">
-        <div class="clients-eyebrow">
-          <span class="t-rule"></span>
-          Trusted By
-          <span class="t-rule"></span>
-        </div>
-        <p class="clients-sub">Chicago's leading brokerages &amp; agents</p>
-
-        <!-- Logo marquee — scrolls left continuously -->
-        <div class="clients-marquee-outer" aria-label="Client logos">
-          <div class="clients-marquee-track">
-            <!-- Row duplicated for seamless loop -->
-            <div class="clients-marquee-row">
-              <div class="client-logo-item"><img src="logo-laricy.png" alt="Laricy Team" /></div>
-              <div class="client-logo-item"><img src="logo-atproperties.png" alt="@properties" /></div>
-              <div class="client-logo-item"><img src="logo-dowell.png" alt="Dowell Group" /></div>
-              <div class="client-logo-item"><img src="logo-katie-hutchens.png" alt="Katie Hutchens RE" /></div>
-              <div class="client-logo-item"><img src="logo-dawn-mckenna.png" alt="Dawn McKenna Group" /></div>
-              <div class="client-logo-item"><img src="logo-carrie-mccormick.png" alt="Carrie McCormick RE" /></div>
-            </div>
-            <!-- Duplicate for loop -->
-            <div class="clients-marquee-row" aria-hidden="true">
-              <div class="client-logo-item"><img src="logo-laricy.png" alt="" /></div>
-              <div class="client-logo-item"><img src="logo-atproperties.png" alt="" /></div>
-              <div class="client-logo-item"><img src="logo-dowell.png" alt="" /></div>
-              <div class="client-logo-item"><img src="logo-katie-hutchens.png" alt="" /></div>
-              <div class="client-logo-item"><img src="logo-dawn-mckenna.png" alt="" /></div>
-              <div class="client-logo-item"><img src="logo-carrie-mccormick.png" alt="" /></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Text fallback (visible when logos haven't loaded yet) -->
-        <div class="clients-text-row">
-          <span class="client-text-name">Laricy Team</span>
-          <span class="clients-dot">·</span>
-          <span class="client-text-name">@properties</span>
-          <span class="clients-dot">·</span>
-          <span class="client-text-name">Dowell Group</span>
-          <span class="clients-dot">·</span>
-          <span class="client-text-name">Katie Hutchens</span>
-          <span class="clients-dot">·</span>
-          <span class="client-text-name">Dawn McKenna</span>
-          <span class="clients-dot">·</span>
-          <span class="client-text-name">Carrie McCormick</span>
-        </div>
-      </div>
-    </section>
-
     <!-- 06 — 19.2M VIRAL VIDEO (horizontal format) ──────────────── -->
     <!-- ASSET NEEDED: stopscrolling-horizontal.mp4 — horizontal/landscape format version of the viral video -->
-    <section class="scene" id="scene-details" data-num="06" data-name="Viral">
+    <section class="scene" id="scene-details" data-num="04" data-name="Viral">
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="stopscrolling-horizontal.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
-      <div class="scene-bg-num" aria-hidden="true">06</div>
+      <div class="scene-bg-num" aria-hidden="true">04</div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">06</span><span class="ew-rule"></span><span class="ew-lbl">Aerial</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">04</span><span class="ew-rule"></span><span class="ew-lbl">Aerial</span></div>
         <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Aerial · Diego Edu · Chicago</span></div>
         <h2 class="scene-quote">
           <span class="q-line"><span class="q-inner">19.2 million</span></span>
@@ -1445,64 +1444,14 @@
       </div>
     </section>
 
-    <!-- 05 — TESTIMONIALS (HIDDEN — content pending) ───────────── -->
-    <section class="scene loaded" id="scene-aerial" data-num="07" data-name="Testimonials" style="display:none;">
-      <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="details.mp4"></video>
-      <div class="scene-overlay"></div><div class="scene-vignette"></div>
-
-      <div class="testi-wrap">
-        <div class="testi-eyebrow">
-          <span class="t-rule"></span>
-          What clients say
-          <span class="t-rule"></span>
-        </div>
-
-        <div class="testi-track-outer" id="testi-track-outer">
-          <div class="testi-track" id="testi-track">
-
-            <div class="testi-slide">
-              <p class="testi-quote">Diego's work stopped our listing in its feed. We saw three times more saves within 24 hours of going live.</p>
-              <div class="testi-rule"></div>
-              <div class="testi-attr"><strong>Matt Laricy</strong> &nbsp;·&nbsp; Laricy Team</div>
-            </div>
-
-            <div class="testi-slide">
-              <p class="testi-quote">Every frame felt intentional. Our clients said it was the best listing video they had ever seen.</p>
-              <div class="testi-rule"></div>
-              <div class="testi-attr"><strong>Katie Hutchens</strong> &nbsp;·&nbsp; katiehutchens_realestate</div>
-            </div>
-
-            <div class="testi-slide">
-              <p class="testi-quote">The aerial footage alone generated three out-of-state inquiries. It sells before buyers even walk through the door.</p>
-              <div class="testi-rule"></div>
-              <div class="testi-attr"><strong>Dowell Group</strong> &nbsp;·&nbsp; Chicago</div>
-            </div>
-
-            <div class="testi-slide">
-              <p class="testi-quote">We have worked with a lot of photographers. Diego operates on a different level — the engagement numbers prove it.</p>
-              <div class="testi-rule"></div>
-              <div class="testi-attr"><strong>@properties</strong> &nbsp;·&nbsp; Chicago</div>
-            </div>
-
-          </div><!-- /testi-track -->
-        </div><!-- /testi-track-outer -->
-
-        <div class="testi-dots" id="testi-dots">
-          <button class="tdot active" data-idx="0" aria-label="Testimonial 1"></button>
-          <button class="tdot"        data-idx="1" aria-label="Testimonial 2"></button>
-          <button class="tdot"        data-idx="2" aria-label="Testimonial 3"></button>
-          <button class="tdot"        data-idx="3" aria-label="Testimonial 4"></button>
-        </div>
-      </div><!-- /testi-wrap -->
-    </section>
 
     <!-- 06 — CONTACT ───────────────────────────────────────────── -->
-    <section class="scene loaded" id="scene-sunset" data-num="08" data-name="Contact">
+    <section class="scene loaded" id="scene-sunset" data-num="05" data-name="Contact">
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="sunset.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
-      <div class="scene-bg-num" aria-hidden="true">08</div>
+      <div class="scene-bg-num" aria-hidden="true">05</div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">08</span><span class="ew-rule"></span><span class="ew-lbl">Let's Connect</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">05</span><span class="ew-rule"></span><span class="ew-lbl">Let's Connect</span></div>
         <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · Tell us about your project</span></div>
         <h2 class="scene-quote">
           <span class="q-line"><span class="q-inner">Start the</span></span>
