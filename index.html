@@ -79,12 +79,14 @@
       transition: opacity 2s ease;
     }
     .glow-layer.glow-on { opacity: 1; }
-    #glow-exterior { background: radial-gradient(ellipse 55% 45% at 78% 22%, rgba(255,140,40,.10), transparent 68%); }
-    #glow-entry    { background: radial-gradient(ellipse 50% 45% at 22% 72%, rgba(190,215,255,.08), transparent 68%); }
-    #glow-living   { background: radial-gradient(ellipse 55% 50% at 50% 48%, rgba(245,175,35,.08), transparent 68%); }
-    #glow-details  { background: radial-gradient(ellipse 55% 40% at 32% 32%, rgba(255,248,220,.06), transparent 68%); }
-    #glow-aerial   { background: radial-gradient(ellipse 70% 45% at 50% 12%, rgba(0,80,255,.10), transparent 68%); }
-    #glow-sunset   { background: radial-gradient(ellipse 75% 60% at 50% 68%, rgba(230,184,0,.15), transparent 68%); }
+    #glow-exterior    { background: radial-gradient(ellipse 55% 45% at 78% 22%, rgba(255,140,40,.10), transparent 68%); }
+    #glow-entry       { background: radial-gradient(ellipse 50% 45% at 22% 72%, rgba(190,215,255,.08), transparent 68%); }
+    #glow-living      { background: radial-gradient(ellipse 55% 50% at 50% 48%, rgba(245,175,35,.08), transparent 68%); }
+    #glow-photography { background: radial-gradient(ellipse 60% 50% at 40% 40%, rgba(255,248,235,.07), transparent 68%); }
+    #glow-clients     { background: radial-gradient(ellipse 70% 55% at 50% 50%, rgba(230,184,0,.10), transparent 68%); }
+    #glow-details     { background: radial-gradient(ellipse 55% 40% at 32% 32%, rgba(255,248,220,.06), transparent 68%); }
+    #glow-aerial      { background: radial-gradient(ellipse 70% 45% at 50% 12%, rgba(0,80,255,.10), transparent 68%); }
+    #glow-sunset      { background: radial-gradient(ellipse 75% 60% at 50% 68%, rgba(230,184,0,.15), transparent 68%); }
 
     /* ================================================================
        CURSOR  (desktop)
@@ -125,7 +127,10 @@
       pointer-events: none;
       background: linear-gradient(to bottom, rgba(8,8,8,.6) 0%, transparent 100%);
     }
-    .hdr-logo { pointer-events: all; display: flex; flex-direction: column; gap: 2px; }
+    .hdr-logo { pointer-events: all; display: flex; align-items: center; gap: 10px; }
+    .hdr-logo-img { height: 32px; width: auto; object-fit: contain; flex-shrink: 0; }
+    .hdr-logo-text { display: flex; flex-direction: column; gap: 2px; }
+    @media (max-width: 600px) { .hdr-logo-img { height: 26px; } }
     .hdr-right { pointer-events: all; }
     .logo-nf  { font-family: var(--grf); font-size: 17px; color: var(--ox); line-height: 1; text-shadow: 2px 2px 0 rgba(0,0,0,.6); }
     .logo-vis { font-family: var(--syne); font-size: 7px; font-weight: 800; letter-spacing: .42em; text-transform: uppercase; color: rgba(237,234,228,.38); }
@@ -378,7 +383,7 @@
     }
     .story-credit:hover { color: rgba(237,234,228,.65); }
 
-    /* Hero: same image on desktop and mobile */
+    /* Hero: single skyline image covers full scene */
     .scene-video--desk { display: none; }
     .scene-video--mob  { display: block; object-fit: cover; object-position: center center; }
 
@@ -939,6 +944,183 @@
       #mob-nav { bottom: calc(20px + env(safe-area-inset-bottom)); }
     }
 
+    /* ================================================================
+       PHOTOGRAPHY GALLERY SCENE (scene-photography)
+       ================================================================ */
+    #scene-photography { background: #060606; }
+    #scene-photography .scene-content { pointer-events: none; }
+
+    .photo-gallery {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; align-items: stretch;
+      padding: 72px 0 0;
+      overflow: hidden;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 3px;
+      width: 100%;
+      height: calc(100% - 72px);
+    }
+
+    .photo-item {
+      overflow: hidden;
+      position: relative;
+      margin: 0;
+    }
+    .photo-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+      transition: transform .6s var(--ease), opacity .4s;
+      filter: brightness(.75) saturate(.9);
+    }
+    .photo-item:hover img {
+      transform: scale(1.04);
+      filter: brightness(.9) saturate(1.1);
+    }
+
+    /* Tall item spans 2 rows */
+    .photo-item--tall {
+      grid-row: span 2;
+    }
+    /* Wide item spans 2 columns */
+    .photo-item--wide {
+      grid-column: span 2;
+    }
+
+    /* Subtle entry animation */
+    .photo-item {
+      opacity: 0; transform: scale(.97);
+      transition: opacity .8s var(--ease), transform .8s var(--ease);
+    }
+    #scene-photography.active .photo-item { opacity: 1; transform: scale(1); }
+    #scene-photography.active .photo-item:nth-child(1) { transition-delay: .05s; }
+    #scene-photography.active .photo-item:nth-child(2) { transition-delay: .15s; }
+    #scene-photography.active .photo-item:nth-child(3) { transition-delay: .22s; }
+    #scene-photography.active .photo-item:nth-child(4) { transition-delay: .30s; }
+    #scene-photography.active .photo-item:nth-child(5) { transition-delay: .38s; }
+    #scene-photography.active .photo-item:nth-child(6) { transition-delay: .46s; }
+
+    @media (max-width: 700px) {
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+      }
+      .photo-item--tall  { grid-row: span 1; }
+      .photo-item--wide  { grid-column: span 2; }
+    }
+
+    /* ================================================================
+       OUR CLIENTS SCENE (scene-clients)
+       ================================================================ */
+    #scene-clients {
+      background: #070707;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .clients-wrap {
+      position: absolute; inset: 0; z-index: 5;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 56px 32px;
+      text-align: center;
+    }
+
+    .clients-eyebrow {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 14px;
+      color: rgba(237,234,228,.42);
+      font-family: var(--grotesk); font-size: 9px;
+      font-weight: 600; letter-spacing: .32em; text-transform: uppercase;
+    }
+    .clients-eyebrow .t-rule {
+      display: block; width: 40px; height: 1px;
+      background: rgba(237,234,228,.18);
+    }
+
+    .clients-sub {
+      font-family: var(--inter); font-size: 13px; font-weight: 300;
+      font-style: italic; color: rgba(237,234,228,.28);
+      letter-spacing: .04em; margin-bottom: 72px;
+    }
+
+    /* Marquee container */
+    .clients-marquee-outer {
+      width: 100%; overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    }
+    .clients-marquee-track {
+      display: flex;
+      animation: marquee-scroll 28s linear infinite;
+      width: max-content;
+    }
+    .clients-marquee-track:hover { animation-play-state: paused; }
+    .clients-marquee-row {
+      display: flex; align-items: center; gap: 64px;
+      padding: 0 32px;
+      flex-shrink: 0;
+    }
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .clients-marquee-track { animation: none; }
+    }
+
+    .client-logo-item {
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      opacity: .42;
+      transition: opacity .3s;
+    }
+    .client-logo-item:hover { opacity: .85; }
+    .client-logo-item img {
+      height: 36px; width: auto; max-width: 160px;
+      object-fit: contain;
+      filter: brightness(0) invert(1); /* force white */
+    }
+
+    /* Text name fallback row (shown when logos not yet provided) */
+    .clients-text-row {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: 16px; margin-top: 52px;
+      opacity: 0; transform: translateY(14px);
+      transition: opacity .7s var(--ease) .4s, transform .7s var(--ease) .4s;
+    }
+    #scene-clients.active .clients-text-row { opacity: 1; transform: translateY(0); }
+    .client-text-name {
+      font-family: var(--grotesk); font-size: 10px; font-weight: 600;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(237,234,228,.35);
+    }
+    .clients-dot { color: rgba(230,184,0,.5); font-size: 8px; }
+
+    /* Fade-in the marquee when scene activates */
+    .clients-marquee-outer {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity .8s var(--ease) .2s, transform .8s var(--ease) .2s;
+    }
+    #scene-clients.active .clients-marquee-outer { opacity: 1; transform: translateY(0); }
+
+    .clients-eyebrow, .clients-sub {
+      opacity: 0; transform: translateY(12px);
+      transition: opacity .6s var(--ease) .1s, transform .6s var(--ease) .1s;
+    }
+    #scene-clients.active .clients-eyebrow,
+    #scene-clients.active .clients-sub { opacity: 1; transform: translateY(0); }
+    #scene-clients.active .clients-sub { transition-delay: .22s; }
+
+    @media (max-width: 700px) {
+      .clients-sub { margin-bottom: 48px; }
+      .client-logo-item img { height: 28px; }
+      .clients-marquee-row { gap: 44px; }
+    }
+
   </style>
 </head>
 
@@ -948,6 +1130,8 @@
   <div class="glow-layer glow-on" id="glow-exterior"></div>
   <div class="glow-layer" id="glow-entry"></div>
   <div class="glow-layer" id="glow-living"></div>
+  <div class="glow-layer" id="glow-photography"></div>
+  <div class="glow-layer" id="glow-clients"></div>
   <div class="glow-layer" id="glow-details"></div>
   <div class="glow-layer" id="glow-aerial"></div>
   <div class="glow-layer" id="glow-sunset"></div>
@@ -962,32 +1146,40 @@
 
   <!-- Header -->
   <header id="site-header">
-    <div class="hdr-logo"><span class="logo-nf">New Found</span><span class="logo-vis">Visuals</span></div>
+    <div class="hdr-logo">
+      <!-- ASSET NEEDED: logo.png (or .svg) — place in same folder as index.html -->
+      <img src="logo.png" alt="New Found Visuals" class="hdr-logo-img" onerror="this.style.display='none'" />
+      <span class="logo-nf">New Found</span><span class="logo-vis">Visuals</span>
+    </div>
     <div class="hdr-right">
       <a href="pricing.html" class="hdr-pricing-link">Services</a>
       <span id="hdr-name">Chicago</span>
       <div class="hdr-counter" aria-live="polite">
-        <span id="cc">01</span><span style="opacity:.22"> / </span>05
+        <span id="cc">01</span><span style="opacity:.22"> / </span>07
       </div>
     </div>
   </header>
 
   <!-- Side nav (desktop) -->
   <nav id="side-nav" aria-label="Scene navigation">
-    <div class="snav-item active" data-target="scene-exterior" role="button" tabindex="0"><span class="snav-label">Chicago</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-entry"   role="button" tabindex="0"><span class="snav-label">Services</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-living"  role="button" tabindex="0"><span class="snav-label">Clients</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-details" role="button" tabindex="0"><span class="snav-label">Viral</span><span class="snav-dot"></span></div>
-    <div class="snav-item" data-target="scene-sunset"  role="button" tabindex="0"><span class="snav-label">Book</span><span class="snav-dot"></span></div>
+    <div class="snav-item active" data-target="scene-exterior"   role="button" tabindex="0"><span class="snav-label">Chicago</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-entry"       role="button" tabindex="0"><span class="snav-label">Services</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-living"      role="button" tabindex="0"><span class="snav-label">Reels</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-photography" role="button" tabindex="0"><span class="snav-label">Photos</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-clients"     role="button" tabindex="0"><span class="snav-label">Clients</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-details"     role="button" tabindex="0"><span class="snav-label">Viral</span><span class="snav-dot"></span></div>
+    <div class="snav-item" data-target="scene-sunset"      role="button" tabindex="0"><span class="snav-label">Contact</span><span class="snav-dot"></span></div>
   </nav>
 
   <!-- Mobile dot nav -->
   <nav id="mob-nav" aria-label="Scene navigation">
-    <span class="mob-dot active" data-target="scene-exterior" role="button" tabindex="0" aria-label="Chicago"></span>
-    <span class="mob-dot" data-target="scene-entry"   role="button" tabindex="0" aria-label="Services"></span>
-    <span class="mob-dot" data-target="scene-living"  role="button" tabindex="0" aria-label="Clients"></span>
-    <span class="mob-dot" data-target="scene-details" role="button" tabindex="0" aria-label="Viral"></span>
-    <span class="mob-dot" data-target="scene-sunset"  role="button" tabindex="0" aria-label="Book"></span>
+    <span class="mob-dot active" data-target="scene-exterior"   role="button" tabindex="0" aria-label="Chicago"></span>
+    <span class="mob-dot" data-target="scene-entry"       role="button" tabindex="0" aria-label="Services"></span>
+    <span class="mob-dot" data-target="scene-living"      role="button" tabindex="0" aria-label="Reels"></span>
+    <span class="mob-dot" data-target="scene-photography" role="button" tabindex="0" aria-label="Photography"></span>
+    <span class="mob-dot" data-target="scene-clients"     role="button" tabindex="0" aria-label="Our Clients"></span>
+    <span class="mob-dot" data-target="scene-details"     role="button" tabindex="0" aria-label="Viral"></span>
+    <span class="mob-dot" data-target="scene-sunset"      role="button" tabindex="0" aria-label="Contact"></span>
   </nav>
 
   <!-- Scroll hint -->
@@ -1012,10 +1204,9 @@
 
     <!-- 01 — HOOK / CHICAGO DRONE ──────────────────────────────── -->
     <section class="scene" id="scene-exterior" data-num="01" data-name="Chicago">
-      <!-- Desktop: landscape drone video -->
-      <video class="scene-video scene-video--desk" autoplay muted loop playsinline webkit-playsinline preload="auto" src="droneshot.mp4"></video>
-      <!-- Mobile: portrait hero image (JPG) -->
-      <img class="scene-video scene-video--mob" src="heroimagemobile.jpg" alt="Chicago skyline at golden hour" loading="eager" />
+      <!-- ASSET NEEDED: chicago-skyline.jpg — high-quality skyline image, place in same folder -->
+      <!-- This single image serves both desktop and mobile -->
+      <img class="scene-video" src="chicago-skyline.jpg" alt="Chicago skyline" loading="eager" />
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">01</div>
       <div class="scene-content">
@@ -1051,11 +1242,11 @@
         <div class="scene-cats">
           <span class="cat-chip hero">Property Videos</span>
           <span class="cat-chip hero">Neighborhood Videos</span>
-          <span class="cat-chip hero">Lifestyle</span>
-          <span class="cat-chip hero">Events</span>
+          <span class="cat-chip hero">Lifestyle Content</span>
+          <span class="cat-chip photo">Event Coverage</span>
           <span class="cat-chip photo">Photography</span>
           <span class="cat-chip photo">Virtual Staging</span>
-          <span class="cat-chip">& More</span>
+          <span class="cat-chip">And More</span>
         </div>
       </div>
     </section>
@@ -1103,7 +1294,18 @@
               </div>
             </div>
 
-            <!-- Card 3 — Katie Hutchens RE · 31.7K views -->
+            <!-- Card 3 — Dowell Group · June 2026 -->
+            <div class="reel-card">
+              <video muted loop playsinline webkit-playsinline preload="none" data-src="videosent.mp4"></video>
+              <div class="reel-metrics">
+                <div class="reel-client">Dowell Group</div>
+                <div class="reel-stats">
+                  <div class="reel-stat"><span class="reel-stat-val" style="font-size:11px;opacity:.7;">Posted June 4, 2026</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4 — Katie Hutchens RE · 31.7K views -->
             <div class="reel-card">
               <video muted loop playsinline webkit-playsinline preload="none" data-src="reel3.mp4"></video>
               <div class="reel-metrics">
@@ -1116,7 +1318,7 @@
               </div>
             </div>
 
-            <!-- Card 4 — Wilczek & Bacza Group · 17.7K views -->
+            <!-- Card 5 — Wilczek & Bacza Group · 17.7K views -->
             <div class="reel-card">
               <video muted loop playsinline webkit-playsinline preload="none" data-src="reel6.mp4"></video>
               <div class="reel-metrics">
@@ -1129,7 +1331,7 @@
               </div>
             </div>
 
-            <!-- Card 5 — @properties · 33.9K views -->
+            <!-- Card 6 — @properties · 33.9K views (moved to last) -->
             <div class="reel-card">
               <video muted loop playsinline webkit-playsinline preload="none" data-src="reel5.mp4"></video>
               <div class="reel-metrics">
@@ -1167,13 +1369,122 @@
       </div>
     </section>
 
-    <!-- 04 — 19.2M VIRAL VIDEO ──────────────────────────────────── -->
-    <section class="scene" id="scene-details" data-num="04" data-name="Viral">
-      <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="stopscrolling.mp4"></video>
+    <!-- 04 — PHOTOGRAPHY ───────────────────────────────────────── -->
+    <!--
+      ASSETS NEEDED for photography gallery:
+        photo1.jpg, photo2.jpg, photo3.jpg, photo4.jpg, photo5.jpg, photo6.jpg
+        (pull from social media or client can send directly)
+        Recommended: high-res landscape shots, min 1400px wide
+    -->
+    <section class="scene" id="scene-photography" data-num="04" data-name="Photography">
+      <!-- Background: first photo as ambient bg -->
+      <img class="scene-video" src="photo1.jpg" alt="" aria-hidden="true" style="filter:brightness(.45) blur(2px); transform:scale(1.06);" />
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">04</div>
+
+      <!-- Photo gallery grid -->
+      <div class="photo-gallery">
+        <div class="photo-grid">
+          <figure class="photo-item photo-item--tall">
+            <img src="photo1.jpg" alt="New Found Visuals photography" loading="lazy" />
+          </figure>
+          <figure class="photo-item">
+            <img src="photo2.jpg" alt="New Found Visuals photography" loading="lazy" />
+          </figure>
+          <figure class="photo-item">
+            <img src="photo3.jpg" alt="New Found Visuals photography" loading="lazy" />
+          </figure>
+          <figure class="photo-item photo-item--wide">
+            <img src="photo4.jpg" alt="New Found Visuals photography" loading="lazy" />
+          </figure>
+          <figure class="photo-item">
+            <img src="photo5.jpg" alt="New Found Visuals photography" loading="lazy" />
+          </figure>
+          <figure class="photo-item">
+            <img src="photo6.jpg" alt="New Found Visuals photography" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+
+      <div class="scene-content" style="pointer-events:none;">
+        <div class="scene-eyebrow"><span class="ew-num">04</span><span class="ew-rule"></span><span class="ew-lbl">Photography</span></div>
+        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · Every detail, captured</span></div>
+        <h2 class="scene-quote">
+          <span class="q-line"><span class="q-inner">Every frame</span></span>
+          <span class="q-line"><span class="q-inner">tells a <span class="ink">story.</span></span></span>
+        </h2>
+      </div>
+    </section>
+
+    <!-- 05 — OUR CLIENTS ────────────────────────────────────────── -->
+    <!--
+      ASSETS NEEDED for client logos:
+        logo-laricy.png, logo-atproperties.png, logo-dowell.png,
+        logo-katie-hutchens.png, logo-dawn-mckenna.png, logo-carrie-mccormick.png
+        Recommended: transparent PNG or white SVG, ~240x80px
+        OR provide brokerage logos and we'll size them
+    -->
+    <section class="scene loaded" id="scene-clients" data-num="05" data-name="Clients">
+      <div class="scene-overlay" style="background:rgba(8,8,8,.97);"></div>
+      <div class="scene-bg-num" aria-hidden="true">05</div>
+
+      <div class="clients-wrap">
+        <div class="clients-eyebrow">
+          <span class="t-rule"></span>
+          Trusted By
+          <span class="t-rule"></span>
+        </div>
+        <p class="clients-sub">Chicago's leading brokerages &amp; agents</p>
+
+        <!-- Logo marquee — scrolls left continuously -->
+        <div class="clients-marquee-outer" aria-label="Client logos">
+          <div class="clients-marquee-track">
+            <!-- Row duplicated for seamless loop -->
+            <div class="clients-marquee-row">
+              <div class="client-logo-item"><img src="logo-laricy.png" alt="Laricy Team" /></div>
+              <div class="client-logo-item"><img src="logo-atproperties.png" alt="@properties" /></div>
+              <div class="client-logo-item"><img src="logo-dowell.png" alt="Dowell Group" /></div>
+              <div class="client-logo-item"><img src="logo-katie-hutchens.png" alt="Katie Hutchens RE" /></div>
+              <div class="client-logo-item"><img src="logo-dawn-mckenna.png" alt="Dawn McKenna Group" /></div>
+              <div class="client-logo-item"><img src="logo-carrie-mccormick.png" alt="Carrie McCormick RE" /></div>
+            </div>
+            <!-- Duplicate for loop -->
+            <div class="clients-marquee-row" aria-hidden="true">
+              <div class="client-logo-item"><img src="logo-laricy.png" alt="" /></div>
+              <div class="client-logo-item"><img src="logo-atproperties.png" alt="" /></div>
+              <div class="client-logo-item"><img src="logo-dowell.png" alt="" /></div>
+              <div class="client-logo-item"><img src="logo-katie-hutchens.png" alt="" /></div>
+              <div class="client-logo-item"><img src="logo-dawn-mckenna.png" alt="" /></div>
+              <div class="client-logo-item"><img src="logo-carrie-mccormick.png" alt="" /></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text fallback (visible when logos haven't loaded yet) -->
+        <div class="clients-text-row">
+          <span class="client-text-name">Laricy Team</span>
+          <span class="clients-dot">·</span>
+          <span class="client-text-name">@properties</span>
+          <span class="clients-dot">·</span>
+          <span class="client-text-name">Dowell Group</span>
+          <span class="clients-dot">·</span>
+          <span class="client-text-name">Katie Hutchens</span>
+          <span class="clients-dot">·</span>
+          <span class="client-text-name">Dawn McKenna</span>
+          <span class="clients-dot">·</span>
+          <span class="client-text-name">Carrie McCormick</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 — 19.2M VIRAL VIDEO (horizontal format) ──────────────── -->
+    <!-- ASSET NEEDED: stopscrolling-horizontal.mp4 — horizontal/landscape format version of the viral video -->
+    <section class="scene" id="scene-details" data-num="06" data-name="Viral">
+      <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="stopscrolling-horizontal.mp4"></video>
+      <div class="scene-overlay"></div><div class="scene-vignette"></div>
+      <div class="scene-bg-num" aria-hidden="true">06</div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">04</span><span class="ew-rule"></span><span class="ew-lbl">Aerial</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">06</span><span class="ew-rule"></span><span class="ew-lbl">Aerial</span></div>
         <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Aerial · Diego Edu · Chicago</span></div>
         <h2 class="scene-quote">
           <span class="q-line"><span class="q-inner">19.2 million</span></span>
@@ -1183,8 +1494,8 @@
       </div>
     </section>
 
-    <!-- 05 — TESTIMONIALS (hidden until reviews collected) ──────── -->
-    <section class="scene loaded" id="scene-aerial" data-num="05" data-name="Testimonials" style="display:none;">
+    <!-- 05 — TESTIMONIALS (HIDDEN — content pending) ───────────── -->
+    <section class="scene loaded" id="scene-aerial" data-num="07" data-name="Testimonials" style="display:none;">
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="details.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
 
@@ -1234,17 +1545,17 @@
       </div><!-- /testi-wrap -->
     </section>
 
-    <!-- 06 — SUNSET + CTA ───────────────────────────────────────── -->
-    <section class="scene loaded" id="scene-sunset" data-num="06" data-name="Sunset">
+    <!-- 06 — CONTACT ───────────────────────────────────────────── -->
+    <section class="scene loaded" id="scene-sunset" data-num="08" data-name="Contact">
       <video class="scene-video" muted loop playsinline webkit-playsinline preload="none" data-src="sunset.mp4"></video>
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
-      <div class="scene-bg-num" aria-hidden="true">06</div>
+      <div class="scene-bg-num" aria-hidden="true">08</div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">06</span><span class="ew-rule"></span><span class="ew-lbl">Sunset</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Golden hour · Every listing deserves this</span></div>
+        <div class="scene-eyebrow"><span class="ew-num">08</span><span class="ew-rule"></span><span class="ew-lbl">Let's Connect</span></div>
+        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · Tell us about your project</span></div>
         <h2 class="scene-quote">
-          <span class="q-line"><span class="q-inner">Ready to tell your</span></span>
-          <span class="q-line"><span class="q-inner">next listing's story?</span></span>
+          <span class="q-line"><span class="q-inner">Start the</span></span>
+          <span class="q-line"><span class="q-inner"><span class="ink">conversation.</span></span></span>
         </h2>
         <div class="cta-block">
           <div class="monday-form">
@@ -1259,9 +1570,8 @@
             <a href="mailto:diego@lvnstudio.com" class="ci-link">diego@lvnstudio.com</a>
             <span class="ci-sep">·</span>
             <a href="https://www.instagram.com/newfound_visuals/" target="_blank" rel="noopener" class="ci-link">@newfound_visuals</a>
-            <!-- Privacy Policy hidden until needed -->
-            <!-- <span class="ci-sep">·</span> -->
-            <!-- <a href="privacy.html" class="ci-link" style="opacity:.5;">Privacy Policy</a> -->
+            <span class="ci-sep">·</span>
+            <a href="privacy.html" class="ci-link" style="opacity:.5;">Privacy Policy</a>
           </div>
         </div>
       </div>
@@ -1301,12 +1611,14 @@
 
   /* Glow layer map */
   const glowMap = {
-    'scene-exterior': document.getElementById('glow-exterior'),
-    'scene-entry':    document.getElementById('glow-entry'),
-    'scene-living':   document.getElementById('glow-living'),
-    'scene-details':  document.getElementById('glow-details'),
-    'scene-aerial':   document.getElementById('glow-aerial'),
-    'scene-sunset':   document.getElementById('glow-sunset'),
+    'scene-exterior':    document.getElementById('glow-exterior'),
+    'scene-entry':       document.getElementById('glow-entry'),
+    'scene-living':      document.getElementById('glow-living'),
+    'scene-photography': document.getElementById('glow-photography'),
+    'scene-clients':     document.getElementById('glow-clients'),
+    'scene-details':     document.getElementById('glow-details'),
+    'scene-aerial':      document.getElementById('glow-aerial'),
+    'scene-sunset':      document.getElementById('glow-sunset'),
   };
 
   let activeIdx = 0;
