@@ -992,6 +992,8 @@
     #scene-photography {
       background: #040404;
       overflow: hidden;
+      /* Allow vertical scroll to pass through on mobile */
+      touch-action: pan-y;
     }
 
     .photo-strip-wrap {
@@ -1027,12 +1029,10 @@
       gap: 6px;
       overflow-x: auto;
       overflow-y: hidden;
-      scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       padding: 0 56px 0;
       cursor: grab;
-      touch-action: pan-x;
       overscroll-behavior-x: contain;
     }
     .photo-strip-track:active { cursor: grabbing; }
@@ -2518,6 +2518,34 @@
         document.getElementById('chat-notif').classList.add('hide');
       }
     }, 4000);
+  })();
+
+  /* ================================================================
+     PHOTO STRIP — prevent horizontal scroll from hijacking vertical snap
+     ================================================================ */
+  (function() {
+    var track = document.getElementById('photo-strip-track');
+    if (!track) return;
+    var startX = 0, startY = 0, locked = null;
+
+    track.addEventListener('touchstart', function(e) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      locked = null;
+    }, { passive: true });
+
+    track.addEventListener('touchmove', function(e) {
+      if (locked === null) {
+        var dx = Math.abs(e.touches[0].clientX - startX);
+        var dy = Math.abs(e.touches[0].clientY - startY);
+        locked = dx > dy ? 'x' : 'y';
+      }
+      /* Only prevent default (and thus allow horizontal scroll) when clearly swiping horizontally */
+      if (locked === 'x') {
+        e.stopPropagation();
+      }
+      /* If vertical, let the event bubble up to the page scroll */
+    }, { passive: true });
   })();
 
   </script>
