@@ -267,33 +267,6 @@
     #btm-prog-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--ox), var(--am), var(--bl)); transition: width .4s var(--ease); }
 
     /* ================================================================
-       PRICING FAB  (fixed bottom-right, always visible)
-       ================================================================ */
-    #pricing-fab {
-      position: fixed; bottom: 32px; right: 36px; z-index: 650;
-      display: inline-flex; align-items: center; gap: 9px;
-      font-family: var(--grotesk); font-size: 8px; font-weight: 700;
-      letter-spacing: .28em; text-transform: uppercase;
-      color: var(--wh); text-decoration: none;
-      background: rgba(230,184,0,.92);
-      padding: 12px 20px;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: background .3s, transform .3s, opacity .5s;
-      opacity: 0; pointer-events: none; /* hidden until JS reveals */
-    }
-    #pricing-fab.fab-ready { opacity: 1; pointer-events: all; }
-    #pricing-fab:hover { background: var(--am); transform: translateY(-3px); }
-    #pricing-fab svg { width: 10px; height: 10px; flex-shrink: 0; }
-    @supports (padding: env(safe-area-inset-bottom)) {
-      #pricing-fab { bottom: calc(32px + env(safe-area-inset-bottom)); }
-    }
-    @media (max-width: 900px) {
-      /* On mobile, hide FAB — the header Pricing link + CTA button are enough */
-      #pricing-fab { display: none; }
-    }
-
-    /* ================================================================
        SCENE  (fullscreen section)
        ================================================================ */
     .scene {
@@ -1565,13 +1538,6 @@
   <div id="btm-prog" aria-hidden="true"><div id="btm-prog-bar"></div></div>
 
   <!-- Pricing FAB — fixed bottom-right pill -->
-  <a href="pricing.html" id="pricing-fab" aria-label="View services">
-    <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    See Services
-  </a>
-
 
   <!-- ================================================================
        SCROLL CONTAINER
@@ -2025,11 +1991,6 @@
   const hdrNameEl  = document.getElementById('hdr-name');
   const scrollHint = document.getElementById('scroll-hint');
   const progBar    = document.getElementById('btm-prog-bar');
-  const pricingFab = document.getElementById('pricing-fab');
-
-  /* Reveal the pricing FAB after 2s so it doesn't crowd the opening moment */
-  setTimeout(() => { if (pricingFab) pricingFab.classList.add('fab-ready'); }, 2000);
-
   /* Glow layer map */
   const glowMap = {
     'scene-exterior':    document.getElementById('glow-exterior'),
