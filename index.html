@@ -200,6 +200,8 @@
       footer { bottom: calc(24px + env(safe-area-inset-bottom)); }
     }
 
+    #wrap { padding-bottom: 80px; }
+
     @keyframes fade-up {
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -279,7 +281,7 @@
       if (!email || !email.includes('@')) return;
       var subject = encodeURIComponent('Launch Notification Request — New Found Visuals');
       var body    = encodeURIComponent('Please notify me when the site launches.\n\nEmail: ' + email);
-      window.location.href = 'mailto:diego@lvnstudio.com?subject=' + subject + '&body=' + body;
+      window.location.href = 'mailto:diego@lvnstudio.com,allison@lvnstudio.com?subject=' + subject + '&body=' + body;
       document.getElementById('notify-email').value = '';
       document.getElementById('notify-success').classList.add('show');
     }
