@@ -1022,112 +1022,175 @@
        OUR CLIENTS SCENE (scene-clients)
        ================================================================ */
     #scene-clients {
-      background: #070707;
+      background: #060606;
       display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
     }
 
     .clients-wrap {
       position: absolute; inset: 0; z-index: 5;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 56px 48px;
+      padding: 0;
       text-align: center;
+      gap: 0;
     }
+
+    /* Header block */
+    .clients-header {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 10px; margin-bottom: 52px;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .7s var(--ease) .1s, transform .7s var(--ease) .1s;
+    }
+    #scene-clients.active .clients-header { opacity: 1; transform: translateY(0); }
 
     .clients-eyebrow {
       display: flex; align-items: center; gap: 16px;
-      margin-bottom: 10px;
-      color: rgba(237,234,228,.38);
+      color: rgba(237,234,228,.35);
       font-family: var(--grotesk); font-size: 9px;
       font-weight: 600; letter-spacing: .36em; text-transform: uppercase;
-      opacity: 0; transform: translateY(14px);
-      transition: opacity .7s var(--ease) .1s, transform .7s var(--ease) .1s;
     }
-    #scene-clients.active .clients-eyebrow { opacity: 1; transform: translateY(0); }
     .clients-eyebrow .t-rule {
-      display: block; width: 40px; height: 1px;
+      display: block; width: 36px; height: 1px;
       background: rgba(237,234,228,.15);
     }
-
     .clients-title {
-      font-family: var(--syne); font-size: clamp(28px, 4vw, 52px);
-      font-weight: 800; color: var(--wh);
-      letter-spacing: -.02em; margin-bottom: 12px;
-      opacity: 0; transform: translateY(16px);
-      transition: opacity .7s var(--ease) .18s, transform .7s var(--ease) .18s;
+      font-family: var(--syne); font-size: clamp(26px, 3.8vw, 48px);
+      font-weight: 800; color: var(--wh); letter-spacing: -.02em;
+      line-height: 1;
     }
-    #scene-clients.active .clients-title { opacity: 1; transform: translateY(0); }
-
     .clients-sub {
-      font-family: var(--inter); font-size: 13px; font-weight: 300;
-      font-style: italic; color: rgba(237,234,228,.32);
-      letter-spacing: .04em; margin-bottom: 64px;
-      opacity: 0; transform: translateY(12px);
-      transition: opacity .7s var(--ease) .26s, transform .7s var(--ease) .26s;
-    }
-    #scene-clients.active .clients-sub { opacity: 1; transform: translateY(0); }
-
-    /* Logo grid — 3 per row desktop, 2 on mobile */
-    .clients-logo-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px 48px;
-      width: 100%; max-width: 860px;
-      align-items: center; justify-items: center;
+      font-family: var(--inter); font-size: 12px; font-weight: 300;
+      font-style: italic; color: rgba(237,234,228,.28); letter-spacing: .04em;
     }
 
-    .client-logo-item {
-      opacity: 0; transform: translateY(22px);
-      transition: opacity .6s var(--ease), transform .6s var(--ease),
-                  filter .35s ease;
-      filter: grayscale(1) brightness(.55);
+    /* ── Marquee ─────────────────────────────────────────────────── */
+    .clients-marquee-outer {
+      width: 100%; overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .8s var(--ease) .3s, transform .8s var(--ease) .3s;
     }
-    /* Stagger each logo */
-    #scene-clients.active .client-logo-item:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: .15s; }
-    #scene-clients.active .client-logo-item:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: .23s; }
-    #scene-clients.active .client-logo-item:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: .31s; }
-    #scene-clients.active .client-logo-item:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: .39s; }
-    #scene-clients.active .client-logo-item:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: .47s; }
-    #scene-clients.active .client-logo-item:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: .55s; }
+    #scene-clients.active .clients-marquee-outer { opacity: 1; transform: translateY(0); }
 
-    /* Hover: full brightness + slight lift */
-    .client-logo-item:hover {
-      filter: grayscale(0) brightness(1);
-      transform: translateY(-4px) !important;
+    .clients-marquee-track {
+      display: flex; align-items: center;
+      gap: 24px;
+      width: max-content;
+      animation: clients-scroll 32s linear infinite;
+      padding: 16px 0;
     }
-
-    .client-logo-item img {
-      height: 48px; width: auto; max-width: 160px;
-      object-fit: contain; display: block;
-    }
-
-    /* Pulse idle animation — subtle breathe when scene is active */
-    @keyframes logo-breathe {
-      0%, 100% { filter: grayscale(1) brightness(.55); }
-      50%       { filter: grayscale(1) brightness(.75); }
-    }
-    #scene-clients.active .client-logo-item {
-      animation: logo-breathe 4s ease-in-out infinite;
-    }
-    #scene-clients.active .client-logo-item:nth-child(1) { animation-delay: 0s; }
-    #scene-clients.active .client-logo-item:nth-child(2) { animation-delay: .6s; }
-    #scene-clients.active .client-logo-item:nth-child(3) { animation-delay: 1.2s; }
-    #scene-clients.active .client-logo-item:nth-child(4) { animation-delay: 1.8s; }
-    #scene-clients.active .client-logo-item:nth-child(5) { animation-delay: 2.4s; }
-    #scene-clients.active .client-logo-item:nth-child(6) { animation-delay: 3.0s; }
-    #scene-clients.active .client-logo-item:hover { animation: none; }
-
-    @media (max-width: 700px) {
-      .clients-logo-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 28px 32px;
-        max-width: 340px;
-      }
-      .client-logo-item img { height: 36px; max-width: 120px; }
-      .clients-sub { margin-bottom: 40px; }
+    .clients-marquee-track:hover { animation-play-state: paused; }
+    @keyframes clients-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
     @media (prefers-reduced-motion: reduce) {
-      #scene-clients.active .client-logo-item { animation: none; }
+      .clients-marquee-track { animation: none; }
+    }
+
+    /* ── Flip Card ───────────────────────────────────────────────── */
+    .flip-card {
+      flex-shrink: 0;
+      width: 280px; height: 180px;
+      perspective: 900px;
+      cursor: pointer;
+    }
+    .flip-card-inner {
+      position: relative; width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform .7s cubic-bezier(.4,0,.2,1);
+    }
+    .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+
+    /* Cards that start "already flipped" */
+    .flip-card.pre-flipped .flip-card-inner { transform: rotateY(180deg); }
+    .flip-card.pre-flipped:hover .flip-card-inner { transform: rotateY(0deg); }
+
+    .flip-front, .flip-back {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border: 1px solid rgba(237,234,228,.1);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 28px;
+      background: #0e0e0e;
+    }
+    .flip-back { transform: rotateY(180deg); background: #111; }
+
+    /* Front: subtle pattern */
+    .flip-front {
+      background:
+        linear-gradient(135deg, rgba(230,184,0,.04) 0%, transparent 60%),
+        #0c0c0c;
+    }
+    .flip-front-label {
+      font-family: var(--grotesk); font-size: 8px; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(237,234,228,.2); margin-top: 12px;
+    }
+    .flip-front-icon {
+      width: 32px; height: 1px;
+      background: rgba(230,184,0,.3);
+      margin-bottom: 16px;
+    }
+    .flip-front-name {
+      font-family: var(--syne); font-size: clamp(14px, 1.6vw, 18px);
+      font-weight: 700; color: rgba(237,234,228,.55);
+      letter-spacing: .02em; text-align: center;
+      line-height: 1.2;
+    }
+
+    /* Back: logo or text logo */
+    .flip-back-logo {
+      width: 100%; max-width: 200px;
+      height: 80px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .flip-back-logo img {
+      max-width: 100%; max-height: 72px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: .85;
+    }
+
+    /* Text-only logo card back */
+    .flip-back-text {
+      font-family: var(--syne); font-weight: 800;
+      font-size: clamp(16px, 2vw, 22px);
+      color: var(--wh); letter-spacing: -.01em;
+      text-align: center; line-height: 1.15;
+    }
+    .flip-back-text span {
+      display: block; color: var(--ox);
+      font-size: .65em; font-family: var(--grotesk);
+      font-weight: 600; letter-spacing: .22em;
+      text-transform: uppercase; margin-top: 6px;
+    }
+    .flip-back-sub {
+      font-family: var(--grotesk); font-size: 8px; font-weight: 500;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(237,234,228,.28); margin-top: 14px;
+    }
+
+    /* Gold accent line on back */
+    .flip-back::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, rgba(230,184,0,.5), transparent);
+    }
+
+    @media (max-width: 700px) {
+      .flip-card { width: 200px; height: 140px; }
+      .clients-marquee-track { gap: 16px; }
+      .flip-front-name { font-size: 13px; }
+      .flip-back-text { font-size: 14px; }
+      .flip-back-logo img { max-height: 52px; }
+      .clients-header { margin-bottom: 36px; }
     }
 
   </style>
@@ -1259,25 +1322,143 @@
 
     <!-- 03 — OUR CLIENTS ────────────────────────────────────────── -->
     <section class="scene loaded" id="scene-clients" data-num="03" data-name="Clients">
-      <div class="scene-overlay" style="background:rgba(8,8,8,.97);"></div>
+      <div class="scene-overlay" style="background:rgba(6,6,6,.96);"></div>
       <div class="scene-bg-num" aria-hidden="true">03</div>
 
       <div class="clients-wrap">
-        <div class="clients-eyebrow">
-          <span class="t-rule"></span>
-          Our Clients
-          <span class="t-rule"></span>
-        </div>
-        <h2 class="clients-title">Trusted By</h2>
-        <p class="clients-sub">Chicago's leading brokerages &amp; real estate professionals.</p>
 
-        <div class="clients-logo-grid">
-          <div class="client-logo-item"><img src="laricy.png" alt="Laricy Team" /></div>
-          <div class="client-logo-item"><img src="@properties.jpg" alt="@properties" /></div>
-          <div class="client-logo-item"><img src="dowellgroup.jpg" alt="Dowell Group" /></div>
-          <div class="client-logo-item"><img src="dawnmckenna.jpeg" alt="Dawn McKenna Group" /></div>
+        <div class="clients-header">
+          <div class="clients-eyebrow">
+            <span class="t-rule"></span>
+            Our Clients
+            <span class="t-rule"></span>
+          </div>
+          <h2 class="clients-title">Trusted By</h2>
+          <p class="clients-sub">Chicago's leading brokerages &amp; real estate professionals.</p>
         </div>
-      </div>
+
+        <!-- Marquee — duplicated for seamless loop -->
+        <div class="clients-marquee-outer">
+          <div class="clients-marquee-track" id="clients-track">
+
+            <!-- Card 1: Laricy Team — logo -->
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-front">
+                  <div class="flip-front-icon"></div>
+                  <div class="flip-front-name">Laricy Team</div>
+                  <div class="flip-front-label">Chicago</div>
+                </div>
+                <div class="flip-back">
+                  <div class="flip-back-logo"><img src="laricy.png" alt="Laricy Team" /></div>
+                  <div class="flip-back-sub">Chicago, IL</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: @properties — logo -->
+            <div class="flip-card pre-flipped">
+              <div class="flip-card-inner">
+                <div class="flip-front">
+                  <div class="flip-front-icon"></div>
+                  <div class="flip-front-name">@properties</div>
+                  <div class="flip-front-label">Chicago</div>
+                </div>
+                <div class="flip-back">
+                  <div class="flip-back-logo"><img src="@properties.jpg" alt="@properties" /></div>
+                  <div class="flip-back-sub">Chicago, IL</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Dowell Group — logo -->
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-front">
+                  <div class="flip-front-icon"></div>
+                  <div class="flip-front-name">Dowell Group</div>
+                  <div class="flip-front-label">Gold Coast</div>
+                </div>
+                <div class="flip-back">
+                  <div class="flip-back-logo"><img src="dowellgroup.jpg" alt="Dowell Group" /></div>
+                  <div class="flip-back-sub">Gold Coast, Chicago</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: Dawn McKenna — logo -->
+            <div class="flip-card pre-flipped">
+              <div class="flip-card-inner">
+                <div class="flip-front">
+                  <div class="flip-front-icon"></div>
+                  <div class="flip-front-name">Dawn McKenna Group</div>
+                  <div class="flip-front-label">Chicago</div>
+                </div>
+                <div class="flip-back">
+                  <div class="flip-back-logo"><img src="dawnmckenna.jpeg" alt="Dawn McKenna Group" /></div>
+                  <div class="flip-back-sub">Chicago, IL</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 5: Katie Hutchens — text only -->
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-front">
+                  <div class="flip-front-icon"></div>
+                  <div class="flip-front-name">Katie Hutchens RE</div>
+                  <div class="flip-front-label">Chicago</div>
+                </div>
+                <div class="flip-back">
+                  <div class="flip-back-text">Katie Hutchens<span>Real Estate</span></div>
+                  <div class="flip-back-sub">Chicago, IL</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 6: Wilczek & Bacza — text only -->
+            <div class="flip-card pre-flipped">
+              <div class="flip-card-inner">
+                <div class="flip-front">
+                  <div class="flip-front-icon"></div>
+                  <div class="flip-front-name">Wilczek &amp; Bacza Group</div>
+                  <div class="flip-front-label">Chicago</div>
+                </div>
+                <div class="flip-back">
+                  <div class="flip-back-text">Wilczek &amp; Bacza<span>Group</span></div>
+                  <div class="flip-back-sub">Chicago, IL</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 7: Carrie McCormick — text only -->
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-front">
+                  <div class="flip-front-icon"></div>
+                  <div class="flip-front-name">Carrie McCormick</div>
+                  <div class="flip-front-label">Chicago</div>
+                </div>
+                <div class="flip-back">
+                  <div class="flip-back-text">Carrie McCormick<span>Real Estate</span></div>
+                  <div class="flip-back-sub">Chicago, IL</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Duplicate set for seamless loop -->
+            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-icon"></div><div class="flip-front-name">Laricy Team</div><div class="flip-front-label">Chicago</div></div><div class="flip-back"><div class="flip-back-logo"><img src="laricy.png" alt="" /></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
+            <div class="flip-card pre-flipped"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-icon"></div><div class="flip-front-name">@properties</div><div class="flip-front-label">Chicago</div></div><div class="flip-back"><div class="flip-back-logo"><img src="@properties.jpg" alt="" /></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
+            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-icon"></div><div class="flip-front-name">Dowell Group</div><div class="flip-front-label">Gold Coast</div></div><div class="flip-back"><div class="flip-back-logo"><img src="dowellgroup.jpg" alt="" /></div><div class="flip-back-sub">Gold Coast, Chicago</div></div></div></div>
+            <div class="flip-card pre-flipped"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-icon"></div><div class="flip-front-name">Dawn McKenna Group</div><div class="flip-front-label">Chicago</div></div><div class="flip-back"><div class="flip-back-logo"><img src="dawnmckenna.jpeg" alt="" /></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
+            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-icon"></div><div class="flip-front-name">Katie Hutchens RE</div><div class="flip-front-label">Chicago</div></div><div class="flip-back"><div class="flip-back-text">Katie Hutchens<span>Real Estate</span></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
+            <div class="flip-card pre-flipped"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-icon"></div><div class="flip-front-name">Wilczek &amp; Bacza Group</div><div class="flip-front-label">Chicago</div></div><div class="flip-back"><div class="flip-back-text">Wilczek &amp; Bacza<span>Group</span></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
+            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-icon"></div><div class="flip-front-name">Carrie McCormick</div><div class="flip-front-label">Chicago</div></div><div class="flip-back"><div class="flip-back-text">Carrie McCormick<span>Real Estate</span></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
+
+          </div><!-- /clients-marquee-track -->
+        </div><!-- /clients-marquee-outer -->
+
+      </div><!-- /clients-wrap -->
     </section>
 
     <!-- 04 — TOP CLIENTS + REELS ───────────────────────────────── -->
