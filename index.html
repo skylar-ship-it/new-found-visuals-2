@@ -136,6 +136,13 @@
     .hdr-logo-img { height: 80px; width: auto; object-fit: contain; flex-shrink: 0; }
     .hdr-logo-text { display: flex; flex-direction: column; gap: 2px; }
     @media (max-width: 600px) { .hdr-logo-img { height: 64px; } }
+
+    /* Hide logo on mobile contact scene so it doesn't cover the headline */
+    @media (max-width: 900px) {
+      #scene-sunset.active ~ #site-header .hdr-logo-img,
+      #scene-sunset.active ~ #site-header .logo-nf,
+      #scene-sunset.active ~ #site-header .logo-vis { opacity: 0; pointer-events: none; transition: opacity .4s; }
+    }
     .hdr-right { pointer-events: all; }
     .logo-nf  { font-family: var(--grf); font-size: 17px; color: var(--ox); line-height: 1; text-shadow: 2px 2px 0 rgba(0,0,0,.6); }
     .logo-vis { font-family: var(--syne); font-size: 7px; font-weight: 800; letter-spacing: .42em; text-transform: uppercase; color: rgba(237,234,228,.38); }
@@ -217,7 +224,10 @@
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
       z-index: 600; gap: 12px; align-items: center;
     }
-    @media (max-width: 900px) { #mob-nav { display: flex; } }
+    /* Hide mobile nav dots on last (contact) scene */
+    #scene-sunset.active ~ #mob-nav,
+    body.on-last-scene #mob-nav { opacity: 0; pointer-events: none; transition: opacity .4s; }
+    #mob-nav { transition: opacity .4s; }
 
     .mob-dot {
       width: 8px; height: 8px; border-radius: 50%;
@@ -2563,6 +2573,36 @@
       }
       /* If vertical, let the event bubble up to the page scroll */
     }, { passive: true });
+  })();
+
+  /* Hide logo on contact scene on mobile */
+  (function() {
+    var logoImg = document.querySelector('.hdr-logo-img');
+    var contactScene = document.getElementById('scene-sunset');
+    if (!logoImg || !contactScene) return;
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (window.innerWidth <= 900) {
+          logoImg.style.opacity = e.isIntersecting ? '0' : '';
+          logoImg.style.pointerEvents = e.isIntersecting ? 'none' : '';
+        }
+      });
+    }, { threshold: 0.5 });
+    obs.observe(contactScene);
+  })();
+
+  /* Hide mobile nav dots on last scene */
+  (function() {
+    var mobNav = document.getElementById('mob-nav');
+    var lastScene = document.getElementById('scene-sunset');
+    if (!mobNav || !lastScene) return;
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        mobNav.style.opacity = e.isIntersecting ? '0' : '';
+        mobNav.style.pointerEvents = e.isIntersecting ? 'none' : '';
+      });
+    }, { threshold: 0.5 });
+    obs.observe(lastScene);
   })();
 
   </script>
