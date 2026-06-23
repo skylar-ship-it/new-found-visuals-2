@@ -2616,30 +2616,57 @@
     }, { passive: true });
   })();
 
+  /* Ensure scroll-wrap always resets snap on non-contact scenes */
+  (function() {
+    var wrap = document.getElementById('scroll-wrap');
+    var sunset = document.getElementById('scene-sunset');
+    if (!wrap || !sunset) return;
+
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (!e.isIntersecting) {
+          /* Left the contact scene — make sure snap is fully restored */
+          wrap.style.overflowY = 'scroll';
+          wrap.style.scrollSnapType = 'y mandatory';
+        }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(sunset);
+  })();
+
   /* Allow scrolling back up from contact scene on mobile */
   (function() {
     var content = document.querySelector('#scene-sunset .scene-content');
     var wrap    = document.getElementById('scroll-wrap');
     if (!content || !wrap) return;
 
+    var startY = 0;
+
     content.addEventListener('touchstart', function(e) {
-      this._touchStartY = e.touches[0].clientY;
+      startY = e.touches[0].clientY;
     }, { passive: true });
 
     content.addEventListener('touchmove', function(e) {
-      var dy = e.touches[0].clientY - this._touchStartY;
-      var atTop = this.scrollTop <= 0;
-      /* If swiping down (finger moving down) and already at top — let page scroll handle it */
-      if (atTop && dy > 0) {
+      var dy = e.touches[0].clientY - startY;
+      var atTop = content.scrollTop <= 0;
+      var atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 2;
+
+      if (atTop && dy > 4) {
+        /* Swiping down at top — release to page snap */
         wrap.style.overflowY = 'scroll';
+        wrap.style.scrollSnapType = 'y mandatory';
       } else {
+        /* Inside form scroll — lock page */
         wrap.style.overflowY = 'hidden';
+        wrap.style.scrollSnapType = 'none';
       }
     }, { passive: true });
 
     content.addEventListener('touchend', function() {
-      /* Reset after a short delay */
-      setTimeout(function() { wrap.style.overflowY = 'scroll'; }, 300);
+      setTimeout(function() {
+        wrap.style.overflowY = 'scroll';
+        wrap.style.scrollSnapType = 'y mandatory';
+      }, 400);
     }, { passive: true });
   })();
 
