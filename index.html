@@ -957,26 +957,38 @@
       .scene-quote   { font-size: clamp(34px, 7vw, 58px); }
     }
     @media (max-width: 600px) {
-      /* Reduce font sizes so nothing is "zoomed in" on phone */
       .scene-content              { padding: 0 20px 100px; }
       .scene-quote                { font-size: clamp(26px, 7.5vw, 44px); max-width: 100%; line-height: .96; }
       .loc-text                   { font-size: 10px; }
       .scene-eyebrow              { gap: 10px; margin-bottom: 8px; }
       .ew-num                     { font-size: 8px; }
       .ew-lbl                     { font-size: 8px; }
-      /* Sunset scene: centre content, allow scroll if content taller than screen */
-      #scene-sunset .scene-content{ padding: 72px 20px 100px; justify-content: center; align-items: center; text-align: center; overflow-y: auto; }
-      #scene-sunset .scene-quote  { font-size: clamp(20px, 6vw, 34px); }
-      /* CTA button — full width, no overlap */
-      .cta-block                  { margin-top: 20px; width: 100%; gap: 10px; }
+      /* Sunset scene: full scroll, starts below header */
+      #scene-sunset .scene-content{
+        padding: 96px 16px 40px;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+      }
+      #scene-sunset .scene-quote  { font-size: clamp(22px, 7vw, 32px); margin-bottom: 16px; }
+      .cta-block                  { margin-top: 16px; width: 100%; gap: 10px; }
+      .contact-form-wrap          { padding: 20px 16px 16px; margin-top: 0; }
+      .contact-form-greeting      { font-size: 13px; }
+      .cf-textarea                { height: 80px; }
+      .cf-submit                  { width: 100%; justify-content: center; padding: 14px; }
+      .contact-inline             { flex-direction: row; flex-wrap: wrap; gap: 6px 10px; justify-content: center; padding-bottom: 16px; }
+      .ci-link                    { font-size: 8px; }
+      .ci-sep                     { display: inline; font-size: 8px; }
       .cta-btn                    { cursor: pointer; padding: 14px 24px; font-size: 9px; display: block; text-align: center; width: 100%; }
-      .cta-sub                    { font-size: 7px; }
-      .scene-bg-num               { font-size: clamp(60px, 20vw, 110px); opacity: .6; }
+      .scene-bg-num               { display: none; }
     }
     @media (max-width: 400px) {
       .scene-quote   { font-size: clamp(22px, 7vw, 36px); }
       .scene-content { padding: 0 16px 110px; }
-      #scene-sunset .scene-content{ padding: 0 16px 130px; }
+      #scene-sunset .scene-content{ padding: 96px 14px 40px; }
     }
 
     /* iPhone notch / Dynamic Island safe areas */
@@ -984,7 +996,7 @@
       .scene-content { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
       @media (max-width: 600px) {
         .scene-content { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
-        #scene-sunset .scene-content { padding-bottom: calc(120px + env(safe-area-inset-bottom)); }
+        #scene-sunset .scene-content { padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
       }
       #mob-nav { bottom: calc(20px + env(safe-area-inset-bottom)); }
     }
