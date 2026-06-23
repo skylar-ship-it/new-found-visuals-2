@@ -849,7 +849,61 @@
       .testi-dots  { margin-top: 36px; }
     }
 
-    /* ── Contact Form ────────────────────────────────────────────── */
+    /* Contact scene — desktop/mobile split */
+    .sunset-mobile-header { display: none; }
+    .sunset-desktop-header { display: block; }
+
+    @media (max-width: 900px) {
+      /* Hide desktop headline, show compact mobile one */
+      .sunset-desktop-header { display: none; }
+      .sunset-mobile-header  { display: block; margin-bottom: 12px; }
+      .sunset-mobile-title {
+        font-family: var(--syne); font-size: 28px; font-weight: 800;
+        color: var(--wh); letter-spacing: -.02em; line-height: 1.1;
+        margin-bottom: 4px;
+      }
+
+      /* Hide header entirely on contact scene */
+      #scene-sunset.active ~ * #site-header { display: none; }
+
+      /* Full scrollable contact scene */
+      #scene-sunset .scene-content {
+        position: absolute; inset: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        padding: 24px 16px 40px;
+        padding-top: env(safe-area-inset-top, 24px);
+      }
+
+      #scene-sunset .cta-block {
+        display: flex; flex-direction: column;
+        gap: 12px; width: 100%; margin-top: 0;
+      }
+
+      .contact-form-wrap {
+        margin-top: 0;
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 16px;
+      }
+
+      .cf-row { grid-template-columns: 1fr; gap: 12px; }
+      .cf-textarea { height: 80px; }
+      .cf-submit { width: 100%; justify-content: center; }
+
+      .contact-inline {
+        flex-wrap: wrap; gap: 6px 8px;
+        justify-content: center;
+        padding-bottom: 20px;
+      }
+      .ci-link { font-size: 9px; }
+    }
     .contact-form-wrap {
       width: 100%; max-width: 620px;
       margin-top: 28px;
@@ -973,27 +1027,7 @@
       .scene-eyebrow              { gap: 10px; margin-bottom: 8px; }
       .ew-num                     { font-size: 8px; }
       .ew-lbl                     { font-size: 8px; }
-      /* Sunset scene: full scroll, starts below header */
-      #scene-sunset .scene-content{
-        padding: 96px 16px 40px;
-        justify-content: flex-start;
-        align-items: center;
-        text-align: center;
-        overflow-y: auto;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch;
-      }
-      #scene-sunset .scene-quote  { font-size: clamp(22px, 7vw, 32px); margin-bottom: 16px; }
-      .cta-block                  { margin-top: 16px; width: 100%; gap: 10px; }
-      .contact-form-wrap          { padding: 20px 16px 16px; margin-top: 0; }
-      .contact-form-greeting      { font-size: 13px; }
-      .cf-textarea                { height: 80px; }
-      .cf-submit                  { width: 100%; justify-content: center; padding: 14px; }
-      .contact-inline             { flex-direction: row; flex-wrap: wrap; gap: 6px 10px; justify-content: center; padding-bottom: 16px; }
-      .ci-link                    { font-size: 8px; }
-      .ci-sep                     { display: inline; font-size: 8px; }
-      .cta-btn                    { cursor: pointer; padding: 14px 24px; font-size: 9px; display: block; text-align: center; width: 100%; }
-      .scene-bg-num               { display: none; }
+      /* Sunset handled separately above */
     }
     @media (max-width: 400px) {
       .scene-quote   { font-size: clamp(22px, 7vw, 36px); }
@@ -1885,13 +1919,20 @@
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">07</div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">07</span><span class="ew-rule"></span><span class="ew-lbl">Let's Connect</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · Tell us about your project</span></div>
-        <h2 class="scene-quote">
-          <span class="q-line"><span class="q-inner">Start the</span></span>
-          <span class="q-line"><span class="q-inner"><span class="ink">conversation.</span></span></span>
-        </h2>
+        <!-- Desktop headline (hidden on mobile) -->
+        <div class="sunset-desktop-header">
+          <div class="scene-eyebrow"><span class="ew-num">07</span><span class="ew-rule"></span><span class="ew-lbl">Let's Connect</span></div>
+          <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · Tell us about your project</span></div>
+          <h2 class="scene-quote">
+            <span class="q-line"><span class="q-inner">Start the</span></span>
+            <span class="q-line"><span class="q-inner"><span class="ink">conversation.</span></span></span>
+          </h2>
+        </div>
         <div class="cta-block">
+          <!-- Mobile-only compact header -->
+          <div class="sunset-mobile-header">
+            <p class="sunset-mobile-title">Start the <span style="font-family:var(--grf);color:var(--ox);">conversation.</span></p>
+          </div>
           <div class="contact-form-wrap">
             <div class="contact-form-header">
               <p class="contact-form-greeting">👋 Hey there! We'd love to hear from you.</p>
@@ -2575,16 +2616,43 @@
     }, { passive: true });
   })();
 
-  /* Hide logo on contact scene on mobile */
+  /* Allow scrolling back up from contact scene on mobile */
   (function() {
-    var logoImg = document.querySelector('.hdr-logo-img');
+    var content = document.querySelector('#scene-sunset .scene-content');
+    var wrap    = document.getElementById('scroll-wrap');
+    if (!content || !wrap) return;
+
+    content.addEventListener('touchstart', function(e) {
+      this._touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    content.addEventListener('touchmove', function(e) {
+      var dy = e.touches[0].clientY - this._touchStartY;
+      var atTop = this.scrollTop <= 0;
+      /* If swiping down (finger moving down) and already at top — let page scroll handle it */
+      if (atTop && dy > 0) {
+        wrap.style.overflowY = 'scroll';
+      } else {
+        wrap.style.overflowY = 'hidden';
+      }
+    }, { passive: true });
+
+    content.addEventListener('touchend', function() {
+      /* Reset after a short delay */
+      setTimeout(function() { wrap.style.overflowY = 'scroll'; }, 300);
+    }, { passive: true });
+  })();
+
+  /* Hide logo + header on contact scene on mobile */
+  (function() {
+    var header = document.getElementById('site-header');
     var contactScene = document.getElementById('scene-sunset');
-    if (!logoImg || !contactScene) return;
+    if (!header || !contactScene) return;
     var obs = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
         if (window.innerWidth <= 900) {
-          logoImg.style.opacity = e.isIntersecting ? '0' : '';
-          logoImg.style.pointerEvents = e.isIntersecting ? 'none' : '';
+          header.style.opacity = e.isIntersecting ? '0' : '';
+          header.style.pointerEvents = e.isIntersecting ? 'none' : '';
         }
       });
     }, { threshold: 0.5 });
