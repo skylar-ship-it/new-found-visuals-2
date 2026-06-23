@@ -136,6 +136,13 @@
     .hdr-logo-img { height: 80px; width: auto; object-fit: contain; flex-shrink: 0; }
     .hdr-logo-text { display: flex; flex-direction: column; gap: 2px; }
     @media (max-width: 600px) { .hdr-logo-img { height: 64px; } }
+
+    /* Hide logo on mobile contact scene so it doesn't cover the headline */
+    @media (max-width: 900px) {
+      #scene-sunset.active ~ #site-header .hdr-logo-img,
+      #scene-sunset.active ~ #site-header .logo-nf,
+      #scene-sunset.active ~ #site-header .logo-vis { opacity: 0; pointer-events: none; transition: opacity .4s; }
+    }
     .hdr-right { pointer-events: all; }
     .logo-nf  { font-family: var(--grf); font-size: 17px; color: var(--ox); line-height: 1; text-shadow: 2px 2px 0 rgba(0,0,0,.6); }
     .logo-vis { font-family: var(--syne); font-size: 7px; font-weight: 800; letter-spacing: .42em; text-transform: uppercase; color: rgba(237,234,228,.38); }
@@ -217,7 +224,10 @@
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
       z-index: 600; gap: 12px; align-items: center;
     }
-    @media (max-width: 900px) { #mob-nav { display: flex; } }
+    /* Hide mobile nav dots on last (contact) scene */
+    #scene-sunset.active ~ #mob-nav,
+    body.on-last-scene #mob-nav { opacity: 0; pointer-events: none; transition: opacity .4s; }
+    #mob-nav { transition: opacity .4s; }
 
     .mob-dot {
       width: 8px; height: 8px; border-radius: 50%;
@@ -839,7 +849,56 @@
       .testi-dots  { margin-top: 36px; }
     }
 
-    /* ── Contact Form ────────────────────────────────────────────── */
+    /* Contact scene — desktop/mobile split */
+    .sunset-mobile-header { display: none; }
+    .sunset-desktop-header { display: block; }
+
+    @media (max-width: 900px) {
+      .sunset-desktop-header { display: none; }
+      .sunset-mobile-header  { display: block; margin-bottom: 12px; }
+      .sunset-mobile-title {
+        font-family: var(--syne); font-size: 28px; font-weight: 800;
+        color: var(--wh); letter-spacing: -.02em; line-height: 1.1;
+        margin-bottom: 4px;
+      }
+
+      /* On mobile, contact scene is auto height and scrolls with the page */
+      #scene-sunset {
+        height: auto !important;
+        min-height: 100svh;
+        scroll-snap-align: start;
+      }
+
+      #scene-sunset .scene-content {
+        position: relative;
+        overflow: visible;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        padding: 24px 16px 60px;
+        min-height: 100svh;
+      }
+
+      #scene-sunset .cta-block {
+        display: flex; flex-direction: column;
+        gap: 12px; width: 100%; margin-top: 0;
+      }
+
+      .contact-form-wrap {
+        margin-top: 0; width: 100%; max-width: 100%; padding: 20px 16px;
+      }
+
+      .cf-row { grid-template-columns: 1fr; gap: 12px; }
+      .cf-textarea { height: 80px; }
+      .cf-submit { width: 100%; justify-content: center; }
+
+      .contact-inline {
+        flex-wrap: wrap; gap: 6px 8px;
+        justify-content: center; padding-bottom: 20px;
+      }
+      .ci-link { font-size: 9px; }
+    }
     .contact-form-wrap {
       width: 100%; max-width: 620px;
       margin-top: 28px;
@@ -957,26 +1016,18 @@
       .scene-quote   { font-size: clamp(34px, 7vw, 58px); }
     }
     @media (max-width: 600px) {
-      /* Reduce font sizes so nothing is "zoomed in" on phone */
       .scene-content              { padding: 0 20px 100px; }
       .scene-quote                { font-size: clamp(26px, 7.5vw, 44px); max-width: 100%; line-height: .96; }
       .loc-text                   { font-size: 10px; }
       .scene-eyebrow              { gap: 10px; margin-bottom: 8px; }
       .ew-num                     { font-size: 8px; }
       .ew-lbl                     { font-size: 8px; }
-      /* Sunset scene: centre content, allow scroll if content taller than screen */
-      #scene-sunset .scene-content{ padding: 72px 20px 100px; justify-content: center; align-items: center; text-align: center; overflow-y: auto; }
-      #scene-sunset .scene-quote  { font-size: clamp(20px, 6vw, 34px); }
-      /* CTA button — full width, no overlap */
-      .cta-block                  { margin-top: 20px; width: 100%; gap: 10px; }
-      .cta-btn                    { cursor: pointer; padding: 14px 24px; font-size: 9px; display: block; text-align: center; width: 100%; }
-      .cta-sub                    { font-size: 7px; }
-      .scene-bg-num               { font-size: clamp(60px, 20vw, 110px); opacity: .6; }
+      /* Sunset handled separately above */
     }
     @media (max-width: 400px) {
       .scene-quote   { font-size: clamp(22px, 7vw, 36px); }
       .scene-content { padding: 0 16px 110px; }
-      #scene-sunset .scene-content{ padding: 0 16px 130px; }
+      #scene-sunset .scene-content{ padding: 96px 14px 40px; }
     }
 
     /* iPhone notch / Dynamic Island safe areas */
@@ -984,7 +1035,7 @@
       .scene-content { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
       @media (max-width: 600px) {
         .scene-content { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
-        #scene-sunset .scene-content { padding-bottom: calc(120px + env(safe-area-inset-bottom)); }
+        #scene-sunset .scene-content { padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
       }
       #mob-nav { bottom: calc(20px + env(safe-area-inset-bottom)); }
     }
@@ -1736,14 +1787,14 @@
         </div>
         <div class="photo-strip-outer">
           <div class="photo-strip-track" id="photo-strip-track">
-            <div class="photo-strip-item"><img src="photo1.jpg" alt="New Found Visuals" loading="eager" /></div>
-            <div class="photo-strip-item"><img src="photo2.jpg" alt="New Found Visuals" loading="lazy" /></div>
-            <div class="photo-strip-item"><img src="photo3.jpg" alt="New Found Visuals" loading="lazy" /></div>
-            <div class="photo-strip-item"><img src="photo4.jpg" alt="New Found Visuals" loading="lazy" /></div>
-            <div class="photo-strip-item"><img src="photo5.jpg" alt="New Found Visuals" loading="lazy" /></div>
-            <div class="photo-strip-item"><img src="photo6.jpg" alt="New Found Visuals" loading="lazy" /></div>
-            <div class="photo-strip-item"><img src="photo7.jpg" alt="New Found Visuals" loading="lazy" /></div>
-            <div class="photo-strip-item"><img src="photo8.jpg" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo1.webp" alt="New Found Visuals" loading="eager" /></div>
+            <div class="photo-strip-item"><img src="photo2.webp" alt="New Found Visuals" loading="eager" /></div>
+            <div class="photo-strip-item"><img src="photo3.webp" alt="New Found Visuals" loading="eager" /></div>
+            <div class="photo-strip-item"><img src="photo4.webp" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo5.webp" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo6.webp" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo7.webp" alt="New Found Visuals" loading="lazy" /></div>
+            <div class="photo-strip-item"><img src="photo8.webp" alt="New Found Visuals" loading="lazy" /></div>
           </div>
         </div>
         <div class="photo-strip-hint">Drag to explore</div>
@@ -1863,13 +1914,19 @@
       <div class="scene-overlay"></div><div class="scene-vignette"></div>
       <div class="scene-bg-num" aria-hidden="true">07</div>
       <div class="scene-content">
-        <div class="scene-eyebrow"><span class="ew-num">07</span><span class="ew-rule"></span><span class="ew-lbl">Let's Connect</span></div>
-        <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · Tell us about your project</span></div>
-        <h2 class="scene-quote">
-          <span class="q-line"><span class="q-inner">Start the</span></span>
-          <span class="q-line"><span class="q-inner"><span class="ink">conversation.</span></span></span>
-        </h2>
+        <!-- Desktop only header -->
+        <div class="sunset-desktop-header">
+          <div class="scene-eyebrow"><span class="ew-num">07</span><span class="ew-rule"></span><span class="ew-lbl">Let's Connect</span></div>
+          <div class="scene-location"><span class="loc-dash"></span><span class="loc-text">Chicago, IL · Tell us about your project</span></div>
+          <h2 class="scene-quote">
+            <span class="q-line"><span class="q-inner">Start the</span></span>
+            <span class="q-line"><span class="q-inner"><span class="ink">conversation.</span></span></span>
+          </h2>
+        </div>
         <div class="cta-block">
+          <div class="sunset-mobile-header">
+            <p class="sunset-mobile-title">Start the <span style="font-family:var(--grf);color:var(--ox);">conversation.</span></p>
+          </div>
           <div class="contact-form-wrap">
             <div class="contact-form-header">
               <p class="contact-form-greeting">👋 Hey there! We'd love to hear from you.</p>
@@ -2551,6 +2608,36 @@
       }
       /* If vertical, let the event bubble up to the page scroll */
     }, { passive: true });
+  })();
+
+  /* Hide header on contact scene on mobile */
+  (function() {
+    var header = document.getElementById('site-header');
+    var contactScene = document.getElementById('scene-sunset');
+    if (!header || !contactScene) return;
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (window.innerWidth <= 900) {
+          header.style.opacity = e.isIntersecting ? '0' : '';
+          header.style.pointerEvents = e.isIntersecting ? 'none' : '';
+        }
+      });
+    }, { threshold: 0.5 });
+    obs.observe(contactScene);
+  })();
+
+  /* Hide mobile nav dots on last scene */
+  (function() {
+    var mobNav = document.getElementById('mob-nav');
+    var lastScene = document.getElementById('scene-sunset');
+    if (!mobNav || !lastScene) return;
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        mobNav.style.opacity = e.isIntersecting ? '0' : '';
+        mobNav.style.pointerEvents = e.isIntersecting ? 'none' : '';
+      });
+    }, { threshold: 0.5 });
+    obs.observe(lastScene);
   })();
 
   </script>
