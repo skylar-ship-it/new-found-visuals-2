@@ -1236,34 +1236,35 @@
     .flip-card-inner {
       position: relative; width: 100%; height: 100%;
     }
-    /* Remove all flip transforms */
-    .flip-card:hover .flip-card-inner { transform: none; }
-    .flip-card.pre-flipped .flip-card-inner { transform: none; }
-    .flip-card.pre-flipped:hover .flip-card-inner { transform: none; }
-
     .flip-front, .flip-back {
       position: absolute; inset: 0;
-      border: 1px solid rgba(237,234,228,.1);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       padding: 20px;
-      background: #0e0e0e;
-      transition: transform .45s cubic-bezier(.2,0,.2,1),
-                  border-color .35s ease,
-                  box-shadow .45s ease;
+      transition: transform .45s cubic-bezier(.2,0,.2,1);
     }
 
-    /* Hide the back face entirely — no flip */
+    /* Hide the back face entirely */
     .flip-back { display: none; }
 
-    /* Front: subtle gold gradient */
-    .flip-front {
-      background: linear-gradient(135deg, rgba(230,184,0,.03) 0%, transparent 60%), #0c0c0c;
+    /* Logo cards — no box, just the logo */
+    .flip-card.has-logo .flip-front {
+      background: transparent;
+      border: none;
+      padding: 12px;
     }
 
-    /* Hover: lift + brighten + gold border glow */
+    /* Text cards — keep subtle dark box */
+    .flip-card.has-text .flip-front {
+      background: linear-gradient(135deg, rgba(230,184,0,.03) 0%, transparent 60%), #0c0c0c;
+      border: 1px solid rgba(237,234,228,.1);
+    }
+
+    /* Hover: lift + brighten */
     .flip-card:hover .flip-front {
       transform: translateY(-6px);
+    }
+    .flip-card.has-text:hover .flip-front {
       border-color: rgba(230,184,0,.35);
       box-shadow: 0 20px 48px rgba(0,0,0,.55), 0 0 24px rgba(230,184,0,.08);
     }
@@ -1275,70 +1276,49 @@
       transition: color .3s;
     }
     .flip-card:hover .flip-front-label { color: rgba(230,184,0,.6); }
+    .flip-front-icon { display: none; }
 
-    .flip-front-icon {
-      width: 32px; height: 1px;
-      background: rgba(230,184,0,.25);
-      margin-bottom: 0; display: none; /* hidden — not needed without flip */
-    }
     .flip-front-name {
       font-family: var(--syne); font-size: clamp(14px, 1.6vw, 18px);
       font-weight: 700; color: rgba(237,234,228,.55);
       letter-spacing: .02em; text-align: center; line-height: 1.2;
     }
 
-    /* Logo image — fills most of the card */
+    /* Logo image — fills the card, no box */
     .flip-back-logo {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
-      padding: 18px;
+      padding: 8px;
     }
     .flip-back-logo img {
-      max-width: 90%; max-height: 120px;
+      max-width: 100%; max-height: 140px;
       object-fit: contain;
-      filter: brightness(.7) saturate(.8);
-      transition: filter .45s ease;
+      filter: brightness(.75) saturate(.85);
+      transition: filter .45s ease, transform .45s var(--ease);
       display: block;
     }
     .flip-card:hover .flip-back-logo img {
-      filter: brightness(1.1) saturate(1);
+      filter: brightness(1.05) saturate(1);
+      transform: scale(1.05);
     }
 
-    /* For logo cards — show the logo in the front face */
-    .flip-card.pre-flipped .flip-front {
-      padding: 18px;
-    }
-
-    /* Text-only card back (now unused visually but kept for structure) */
-    .flip-back-text {
-      font-family: var(--syne); font-weight: 800;
-      font-size: clamp(16px, 2vw, 22px);
-      color: var(--wh); letter-spacing: -.01em;
-      text-align: center; line-height: 1.15;
-    }
-    .flip-back-text span {
-      display: block; color: var(--ox);
-      font-size: .65em; font-family: var(--grotesk);
-      font-weight: 600; letter-spacing: .22em;
-      text-transform: uppercase; margin-top: 6px;
-    }
     .flip-back-sub {
       font-family: var(--grotesk); font-size: 8px; font-weight: 500;
       letter-spacing: .22em; text-transform: uppercase;
-      color: rgba(237,234,228,.28); margin-top: 14px;
+      color: rgba(237,234,228,.22); margin-top: 10px;
       transition: color .3s;
     }
     .flip-card:hover .flip-back-sub { color: rgba(230,184,0,.5); }
 
-    /* Gold accent line bottom */
-    .flip-front::after {
+    /* Gold accent line bottom — only on text cards */
+    .flip-card.has-text .flip-front::after {
       content: '';
       position: absolute; bottom: 0; left: 0; right: 0;
       height: 2px;
       background: linear-gradient(to right, transparent, rgba(230,184,0,.0), transparent);
       transition: background .4s ease;
     }
-    .flip-card:hover .flip-front::after {
+    .flip-card.has-text:hover .flip-front::after {
       background: linear-gradient(to right, transparent, rgba(230,184,0,.5), transparent);
     }
 
@@ -1346,7 +1326,7 @@
       .flip-card { width: 200px; height: 140px; }
       .clients-marquee-track { gap: 16px; }
       .flip-front-name { font-size: 13px; }
-      .flip-back-logo img { max-height: 80px; }
+      .flip-back-logo img { max-height: 100px; }
       .clients-header { margin-bottom: 36px; }
     }
 
@@ -1823,7 +1803,7 @@
           <div class="clients-marquee-track" id="clients-track">
 
             <!-- Card 1: Laricy Team — logo -->
-            <div class="flip-card">
+            <div class="flip-card has-logo">
               <div class="flip-card-inner">
                 <div class="flip-front">
                   <div class="flip-back-logo"><img src="laricy.png" alt="Laricy Team" /></div>
@@ -1833,7 +1813,7 @@
             </div>
 
             <!-- Card 2: Katie Hutchens — text -->
-            <div class="flip-card">
+            <div class="flip-card has-text">
               <div class="flip-card-inner">
                 <div class="flip-front">
                   <div class="flip-front-name">Katie Hutchens<br><span style="font-size:.65em;color:var(--ox);font-family:var(--grotesk);font-weight:600;letter-spacing:.2em;text-transform:uppercase;">Real Estate</span></div>
@@ -1843,7 +1823,7 @@
             </div>
 
             <!-- Card 3: @properties — logo -->
-            <div class="flip-card">
+            <div class="flip-card has-logo">
               <div class="flip-card-inner">
                 <div class="flip-front">
                   <div class="flip-back-logo"><img src="@properties.jpg" alt="@properties" /></div>
@@ -1853,7 +1833,7 @@
             </div>
 
             <!-- Card 4: Wilczek & Bacza — text -->
-            <div class="flip-card">
+            <div class="flip-card has-text">
               <div class="flip-card-inner">
                 <div class="flip-front">
                   <div class="flip-front-name">Wilczek &amp; Bacza<br><span style="font-size:.65em;color:var(--ox);font-family:var(--grotesk);font-weight:600;letter-spacing:.2em;text-transform:uppercase;">Group</span></div>
@@ -1863,7 +1843,7 @@
             </div>
 
             <!-- Card 5: Dowell Group — logo -->
-            <div class="flip-card">
+            <div class="flip-card has-logo">
               <div class="flip-card-inner">
                 <div class="flip-front">
                   <div class="flip-back-logo"><img src="dowellgroup.jpg" alt="Dowell Group" /></div>
@@ -1873,7 +1853,7 @@
             </div>
 
             <!-- Card 6: Carrie McCormick — text -->
-            <div class="flip-card">
+            <div class="flip-card has-text">
               <div class="flip-card-inner">
                 <div class="flip-front">
                   <div class="flip-front-name">Carrie McCormick<br><span style="font-size:.65em;color:var(--ox);font-family:var(--grotesk);font-weight:600;letter-spacing:.2em;text-transform:uppercase;">Real Estate</span></div>
@@ -1883,7 +1863,7 @@
             </div>
 
             <!-- Card 7: Dawn McKenna — logo -->
-            <div class="flip-card">
+            <div class="flip-card has-logo">
               <div class="flip-card-inner">
                 <div class="flip-front">
                   <div class="flip-back-logo"><img src="dawnmckenna.jpeg" alt="Dawn McKenna Group" /></div>
@@ -1893,13 +1873,13 @@
             </div>
 
             <!-- Duplicate set for seamless loop -->
-            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-back-logo"><img src="laricy.png" alt="" /></div><div class="flip-back-sub">Laricy Team · Chicago</div></div></div></div>
-            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-name">Katie Hutchens<br><span style="font-size:.65em;color:var(--ox);font-family:var(--grotesk);font-weight:600;letter-spacing:.2em;text-transform:uppercase;">Real Estate</span></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
-            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-back-logo"><img src="@properties.jpg" alt="" /></div><div class="flip-back-sub">@properties · Chicago</div></div></div></div>
-            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-name">Wilczek &amp; Bacza<br><span style="font-size:.65em;color:var(--ox);font-family:var(--grotesk);font-weight:600;letter-spacing:.2em;text-transform:uppercase;">Group</span></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
-            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-back-logo"><img src="dowellgroup.jpg" alt="" /></div><div class="flip-back-sub">Dowell Group · Gold Coast</div></div></div></div>
-            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-name">Carrie McCormick<br><span style="font-size:.65em;color:var(--ox);font-family:var(--grotesk);font-weight:600;letter-spacing:.2em;text-transform:uppercase;">Real Estate</span></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
-            <div class="flip-card"><div class="flip-card-inner"><div class="flip-front"><div class="flip-back-logo"><img src="dawnmckenna.jpeg" alt="" /></div><div class="flip-back-sub">Dawn McKenna Group · Chicago</div></div></div></div>
+            <div class="flip-card has-logo"><div class="flip-card-inner"><div class="flip-front"><div class="flip-back-logo"><img src="laricy.png" alt="" /></div><div class="flip-back-sub">Laricy Team · Chicago</div></div></div></div>
+            <div class="flip-card has-text"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-name">Katie Hutchens<br><span style="font-size:.65em;color:var(--ox);font-family:var(--grotesk);font-weight:600;letter-spacing:.2em;text-transform:uppercase;">Real Estate</span></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
+            <div class="flip-card has-logo"><div class="flip-card-inner"><div class="flip-front"><div class="flip-back-logo"><img src="@properties.jpg" alt="" /></div><div class="flip-back-sub">@properties · Chicago</div></div></div></div>
+            <div class="flip-card has-text"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-name">Wilczek &amp; Bacza<br><span style="font-size:.65em;color:var(--ox);font-family:var(--grotesk);font-weight:600;letter-spacing:.2em;text-transform:uppercase;">Group</span></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
+            <div class="flip-card has-logo"><div class="flip-card-inner"><div class="flip-front"><div class="flip-back-logo"><img src="dowellgroup.jpg" alt="" /></div><div class="flip-back-sub">Dowell Group · Gold Coast</div></div></div></div>
+            <div class="flip-card has-text"><div class="flip-card-inner"><div class="flip-front"><div class="flip-front-name">Carrie McCormick<br><span style="font-size:.65em;color:var(--ox);font-family:var(--grotesk);font-weight:600;letter-spacing:.2em;text-transform:uppercase;">Real Estate</span></div><div class="flip-back-sub">Chicago, IL</div></div></div></div>
+            <div class="flip-card has-logo"><div class="flip-card-inner"><div class="flip-front"><div class="flip-back-logo"><img src="dawnmckenna.jpeg" alt="" /></div><div class="flip-back-sub">Dawn McKenna Group · Chicago</div></div></div></div>
 
           </div><!-- /clients-marquee-track -->
         </div><!-- /clients-marquee-outer -->
