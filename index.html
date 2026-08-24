@@ -1507,6 +1507,48 @@
       #chat-widget { right: 16px; bottom: 16px; }
     }
 
+    /* ================================================================
+       MOBILE SIMPLIFICATION — cleaner, less text on screen
+       ================================================================ */
+    @media (max-width: 600px) {
+
+      /* Hide italic location/subtitle lines on all scenes */
+      .scene-location { display: none; }
+
+      /* Hide the numbered eyebrow rows (01 — label) */
+      .scene-eyebrow { display: none; }
+
+      /* Larger, cleaner headline spacing without the rows above */
+      .scene-quote { margin-top: 0; }
+
+      /* Services: show only the core chips, hide the rest */
+      .scene-cats { gap: 6px; margin-top: 18px; }
+      .cat-chip:nth-child(n+5) { display: none; } /* keep first 4 chips only */
+
+      /* Big background numbers off */
+      .scene-bg-num { display: none; }
+
+      /* Photography: hide drag hint */
+      .photo-strip-hint { display: none; }
+
+      /* Clients: hide subtitle, keep just Trusted By */
+      .clients-sub { display: none; }
+      .clients-eyebrow { display: none; }
+      .clients-header { margin-bottom: 28px; }
+
+      /* Contact form: hide the sub line, keep greeting */
+      .contact-form-sub { display: none; }
+      .contact-form-header { margin-bottom: 4px; }
+      .contact-form-greeting { margin-bottom: 16px; }
+
+      /* Contact links: trim to essentials — hide privacy link */
+      .contact-inline .ci-link[href="privacy.html"],
+      .contact-inline .ci-link[href="privacy.html"] + .ci-sep { display: none; }
+
+      /* Scroll hint: shorter */
+      #scroll-hint .sh-txt { font-size: 7px; }
+    }
+
   </style>
 </head>
 
